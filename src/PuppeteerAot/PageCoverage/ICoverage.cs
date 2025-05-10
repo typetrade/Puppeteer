@@ -1,3 +1,7 @@
+// <copyright file="ICoverage.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Threading.Tasks;
 
 namespace Puppeteer.PageCoverage

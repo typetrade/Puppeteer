@@ -1,3 +1,7 @@
+// <copyright file="ExitingState.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
