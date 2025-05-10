@@ -84,6 +84,12 @@ namespace Puppeteer
             return HandleAsync(false, null);
         }
 
+        /// <summary>
+        /// Handle the dialog.
+        /// </summary>
+        /// <param name="accept"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public abstract Task HandleAsync(bool accept, string text);
     }
 }

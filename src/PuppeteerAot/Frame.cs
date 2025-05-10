@@ -71,7 +71,10 @@ namespace Puppeteer
 
         public bool HasStartedLoading { get; private set; }
 
-        public abstract Frame ParentFrame { get; }
+        /// <summary>
+        /// Gets the parent frame of this frame.
+        /// </summary>
+        public abstract Frame? ParentFrame { get; }
 
         /// <summary>
         /// Logger.

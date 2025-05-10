@@ -26,14 +26,14 @@ namespace Puppeteer.Cdp
 
         public FrameManager(CDPSession client, Page page, bool ignoreHTTPSErrors, TimeoutSettings timeoutSettings)
         {
-            Client = client;
-            Page = page;
-            _logger = Client.Connection.LoggerFactory.CreateLogger<FrameManager>();
-            NetworkManager = new NetworkManager(ignoreHTTPSErrors, this, client.Connection.LoggerFactory);
-            TimeoutSettings = timeoutSettings;
+            this.Client = client;
+            this.Page = page;
+            this._logger = Client.Connection.LoggerFactory.CreateLogger<FrameManager>();
+            this.NetworkManager = new NetworkManager(ignoreHTTPSErrors, this, client.Connection.LoggerFactory);
+            this.TimeoutSettings = timeoutSettings;
 
-            Client.MessageReceived += Client_MessageReceived;
-            Client.Disconnected += (sender, e) => _ = OnClientDisconnectAsync();
+            this.Client.MessageReceived += Client_MessageReceived;
+            this.Client.Disconnected += (sender, e) => _ = OnClientDisconnectAsync();
         }
 
         public event EventHandler<FrameEventArgs> FrameAttached;

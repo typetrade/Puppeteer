@@ -1,11 +1,9 @@
+using Microsoft.Extensions.Logging;
+using Puppeteer.Cdp;
+using Puppeteer.Helpers.Json;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Puppeteer;
-using Puppeteer.Cdp;
-using Puppeteer.Helpers;
-using Puppeteer.Helpers.Json;
 
 namespace Puppeteer
 {
@@ -24,6 +22,9 @@ namespace Puppeteer
         /// <inheritdoc/>
         public event EventHandler<SessionEventArgs> SessionDetached;
 
+        /// <summary>
+        /// Emitted when the session is ready to be used.
+        /// </summary>
         public event EventHandler<SessionEventArgs> Ready;
 
         public event EventHandler<SessionEventArgs> Swapped;

@@ -59,13 +59,27 @@ namespace Puppeteer.Helpers.Json
         }
     }
 
+    /// <summary>
+    /// Case insensitive comparer for strings.
+    /// </summary>
     public class CaseInsensitiveComparer : IEqualityComparer<string>
     {
+        /// <summary>
+        /// Compares two strings for equality, ignoring case.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public bool Equals(string x, string y)
         {
             return string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Returns a hash code for the string, ignoring case.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int GetHashCode(string obj)
         {
             return obj.ToLowerInvariant().GetHashCode();

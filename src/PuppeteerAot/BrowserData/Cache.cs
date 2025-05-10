@@ -65,6 +65,9 @@ namespace Puppeteer.BrowserData
             }
         }
 
+        /// <summary>
+        /// Uninstall all browsers.
+        /// </summary>
         public void Clear() => new DirectoryInfo(_rootDir).Delete(true);
 
         private (string Platform, string BuildId)? ParseFolderPath(DirectoryInfo directory)

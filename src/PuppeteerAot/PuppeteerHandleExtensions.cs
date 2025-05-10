@@ -125,7 +125,7 @@ namespace Puppeteer
                 throw new PuppeteerException("JSHandle is disposed!");
             }
 
-            if ((jSHandle as JSHandle).Realm != context.World)
+            if ((jSHandle as JSHandle)?.Realm != context.World)
             {
                 throw new PuppeteerException("JSHandles can be evaluated only in the context they were created!");
             }
@@ -147,6 +147,11 @@ namespace Puppeteer
             return new MessageArgument() { ObjectId = objectId };
         }
 
+        /// <summary>
+        /// Transposes an iterable handle to an async enumerable of <see cref="IElementHandle"/>.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
         public static async IAsyncEnumerable<IElementHandle> TransposeIterableHandleAsync(this IJSHandle handle)
         {
             var iterator = await handle.EvaluateFunctionHandleAsync(@"iterable => {
@@ -161,6 +166,11 @@ namespace Puppeteer
             }
         }
 
+        /// <summary>
+        /// Transposes an iterator handle to an async enumerable of <see cref="IElementHandle"/>.
+        /// </summary>
+        /// <param name="iterator"></param>
+        /// <returns></returns>
         public static async IAsyncEnumerable<IElementHandle> TransposeIteratorHandleAsync(this IJSHandle iterator)
         {
             try

@@ -32,7 +32,7 @@ namespace Puppeteer.Cdp;
 /// <inheritdoc />
 public class CdpWebWorker : WebWorker
 {
-    private readonly ILogger _logger;
+    private readonly ILogger? _logger;
     private readonly Func<ConsoleType, IJSHandle[], StackTrace, Task> _consoleAPICalled;
     private readonly Action<EvaluateExceptionResponseDetails> _exceptionThrown;
     private readonly string _id;
@@ -46,14 +46,14 @@ public class CdpWebWorker : WebWorker
         Func<ConsoleType, IJSHandle[], StackTrace, Task> consoleAPICalled,
         Action<EvaluateExceptionResponseDetails> exceptionThrown) : base(url)
     {
-        _logger = client.Connection.LoggerFactory.CreateLogger<WebWorker>();
-        _id = targetId;
-        Client = client;
-        _targetType = targetType;
-        World = new IsolatedWorld(null, this, new TimeoutSettings(), true);
-        _consoleAPICalled = consoleAPICalled;
-        _exceptionThrown = exceptionThrown;
-        client.MessageReceived += OnMessageReceived;
+        this._logger = client.Connection?.LoggerFactory.CreateLogger<WebWorker>();
+        this._id = targetId;
+        this.Client = client;
+        this._targetType = targetType;
+        this.World = new IsolatedWorld(null, this, new TimeoutSettings(), true);
+        this._consoleAPICalled = consoleAPICalled;
+        this._exceptionThrown = exceptionThrown;
+        client.MessageReceived += this.OnMessageReceived;
 
         _ = client.SendAsync("Runtime.enable").ContinueWith(
             task =>

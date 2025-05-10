@@ -59,6 +59,9 @@ public class CdpHttpRequest : Request<CdpHttpResponse>
     /// <inheritdoc cref="Response"/>
     public override CdpHttpResponse Response { get; set; }
 
+    /// <summary>
+    /// Gets the request interception id.
+    /// </summary>
     public override Payload ContinueRequestOverrides
     {
         get

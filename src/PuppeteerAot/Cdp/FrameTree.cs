@@ -131,6 +131,11 @@ namespace Puppeteer.Cdp
                 .ToArray();
         }
 
+        /// <summary>
+        /// Gets the parent frame of the specified frame.
+        /// </summary>
+        /// <param name="frameId"></param>
+        /// <returns></returns>
         public Frame? GetParentFrame(string frameId)
         {
             this._parentIds.TryGetValue(frameId, out var parentId);

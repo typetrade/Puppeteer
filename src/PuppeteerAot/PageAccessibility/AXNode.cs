@@ -28,8 +28,8 @@ namespace Puppeteer.PageAccessibility
         {
             Payload = payload;
 
-            name = payload.Name != null ? payload.Name.Value.GetString() : string.Empty;
-            role = payload.Role != null ? payload.Role.Value.GetString() : "Unknown";
+            this.name = payload.Name != null ? payload.Name.Value.GetString() : string.Empty;
+            this.role = payload.Role != null ? payload.Role.Value.GetString() : "Unknown";
             ignored = payload.Ignored;
 
             richlyEditable = payload.Properties?.FirstOrDefault(p => p.Name == "editable")?.Value.Value.GetString() == "richtext";
@@ -102,7 +102,7 @@ namespace Puppeteer.PageAccessibility
             // HTML5 Specs should be hidden from screen readers.
             // (Note that whilst ARIA buttons can have only presentational children, HTML5
             // buttons are allowed to have content.)
-            switch (role)
+            switch (this.role)
             {
                 case "doc-cover":
                 case "graphics-symbol":
@@ -122,12 +122,12 @@ namespace Puppeteer.PageAccessibility
                 return false;
             }
 
-            if (Focusable && !string.IsNullOrEmpty(name))
+            if (Focusable && !string.IsNullOrEmpty(this.name))
             {
                 return true;
             }
 
-            if (role == "heading" && !string.IsNullOrEmpty(name))
+            if (this.role == "heading" && !string.IsNullOrEmpty(this.name))
             {
                 return true;
             }
@@ -137,7 +137,7 @@ namespace Puppeteer.PageAccessibility
 
         public bool IsControl()
         {
-            switch (role)
+            switch (this.role)
             {
                 case "button":
                 case "checkbox":
@@ -168,7 +168,7 @@ namespace Puppeteer.PageAccessibility
 
         public bool IsInteresting(bool insideControl)
         {
-            if (role == "Ignored" || hidden || ignored)
+            if (this.role == "Ignored" || hidden || ignored)
             {
                 return false;
             }
@@ -190,7 +190,7 @@ namespace Puppeteer.PageAccessibility
                 return false;
             }
 
-            return IsLeafNode() && !string.IsNullOrEmpty(name);
+            return IsLeafNode() && !string.IsNullOrEmpty(this.name);
         }
 
         public SerializedAXNode Serialize()
@@ -222,7 +222,7 @@ namespace Puppeteer.PageAccessibility
 
             var node = new SerializedAXNode
             {
-                Role = role,
+                Role = this.role,
                 Name = properties.GetValueOrDefault("name").GetString(),
                 Value = properties.GetValueOrDefault("value").GetString(),
                 Description = properties.GetValueOrDefault("description").GetString(),
@@ -234,7 +234,7 @@ namespace Puppeteer.PageAccessibility
 
                 // RootWebArea's treat focus differently than other nodes. They report whether their frame  has focus,
                 // not whether focus is specifically on the root node.
-                Focused = properties.GetValueOrDefault("focused").GetBoolean() == true && role != "RootWebArea",
+                Focused = properties.GetValueOrDefault("focused").GetBoolean() == true && this.role != "RootWebArea",
                 Modal = properties.GetValueOrDefault("modal").GetBoolean() ,
                 Multiline = properties.GetValueOrDefault("multiline").GetBoolean(),
                 Multiselectable = properties.GetValueOrDefault("multiselectable").GetBoolean(),
@@ -256,13 +256,13 @@ namespace Puppeteer.PageAccessibility
         }
 
         private bool IsPlainTextField()
-            => !richlyEditable && (editable || role == "textbox" || role == "ComboBox" || role == "searchbox");
+            => !richlyEditable && (editable || this.role == "textbox" || this.role == "ComboBox" || this.role == "searchbox");
 
         private bool IsTextOnlyObject()
-            => role == "LineBreak" ||
-                role == "text" ||
-                role == "InlineTextBox" ||
-                role == "StaticText";
+            => this.role == "LineBreak" ||
+                this.role == "text" ||
+                this.role == "InlineTextBox" ||
+                this.role == "StaticText";
 
         private bool HasFocusableChild()
         {

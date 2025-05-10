@@ -21,32 +21,32 @@ namespace Puppeteer.PageAccessibility
         /// <summary>
         /// A human readable name for the node.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// The current value of the node.
         /// </summary>
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         /// <summary>
         /// An additional human readable description of the node.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Keyboard shortcuts associated with this node.
         /// </summary>
-        public string KeyShortcuts { get; set; }
+        public string? KeyShortcuts { get; set; }
 
         /// <summary>
         /// A human readable alternative to the role.
         /// </summary>
-        public string RoleDescription { get; set; }
+        public string? RoleDescription { get; set; }
 
         /// <summary>
         /// A description of the current value.
         /// </summary>
-        public string ValueText { get; set; }
+        public string? ValueText { get; set; }
 
         /// <summary>
         /// Whether the node is disabled.

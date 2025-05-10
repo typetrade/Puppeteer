@@ -22,7 +22,7 @@ namespace Puppeteer
         /// Specifies clipping region of the page.
         /// </summary>
         /// <value>The clip.</value>
-        public Clip Clip { get; set; }
+        public Clip? Clip { get; set; }
 
         /// <summary>
         /// When <c>true</c>, takes a screenshot of the full scrollable page. Defaults to <c>false</c>.

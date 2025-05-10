@@ -38,48 +38,60 @@ namespace Puppeteer
 
         public int ContextId { get; }
 
+        /// <summary>
+        /// The name of the execution context.
+        /// </summary>
         public string ContextName { get; }
 
+        /// <summary>
+        /// The <see cref="CDPSession"/> associated with this execution context.
+        /// </summary>
         public CDPSession Client { get; }
 
+        /// <summary>
+        /// The <see cref="IsolatedWorld"/> associated with this execution context.
+        /// </summary>
         public IsolatedWorld World { get; }
 
-        private Frame Frame => World?.Frame;
+        /// <summary>
+        /// The <see cref="IFrame"/> associated with this execution context.
+        /// </summary>
+        private Frame Frame => this.World.Frame;
 
         /// <inheritdoc/>
-        public Task<JsonElement> EvaluateExpressionAsync(string script) => EvaluateExpressionAsync<JsonElement>(script);
+        public Task<JsonElement> EvaluateExpressionAsync(string script) => this.EvaluateExpressionAsync<JsonElement>(script);
 
         /// <inheritdoc/>
         public Task<T> EvaluateExpressionAsync<T>(string script)
-            => RemoteObjectTaskToObject<T>(EvaluateExpressionInternalAsync(true, script));
+            => this.RemoteObjectTaskToObject<T>(this.EvaluateExpressionInternalAsync(true, script));
 
         /// <inheritdoc/>
         public async Task<IJSHandle> EvaluateExpressionHandleAsync(string script)
-            => CreateJSHandle(await EvaluateExpressionInternalAsync(false, script).ConfigureAwait(false));
+            => this.CreateJSHandle(await this.EvaluateExpressionInternalAsync(false, script).ConfigureAwait(false));
 
         /// <inheritdoc/>
         public async Task<IJSHandle> EvaluateFunctionHandleAsync(string script, params object[] args)
-            => CreateJSHandle(await EvaluateFunctionInternalAsync(false, script, args).ConfigureAwait(false));
+            => this.CreateJSHandle(await this.EvaluateFunctionInternalAsync(false, script, args).ConfigureAwait(false));
 
         /// <inheritdoc/>
         public Task<JsonElement> EvaluateFunctionAsync(string script, params object[] args)
-            => EvaluateFunctionAsync<JsonElement>(script, args);
+            => this.EvaluateFunctionAsync<JsonElement>(script, args);
 
         /// <inheritdoc/>
         public Task<T> EvaluateFunctionAsync<T>(string script, params object[] args)
-            => RemoteObjectTaskToObject<T>(EvaluateFunctionInternalAsync(true, script, args));
+            => this.RemoteObjectTaskToObject<T>(this.EvaluateFunctionInternalAsync(true, script, args));
 
         /// <inheritdoc />
         public async ValueTask DisposeAsync()
         {
-            if (_puppeteerUtilQueue != null)
+            if (this._puppeteerUtilQueue != null)
             {
-                await _puppeteerUtilQueue.DisposeAsync().ConfigureAwait(false);
+                await this._puppeteerUtilQueue.DisposeAsync().ConfigureAwait(false);
             }
 
-            if (_puppeteerUtil != null)
+            if (this._puppeteerUtil != null)
             {
-                await _puppeteerUtil.DisposeAsync().ConfigureAwait(false);
+                await this._puppeteerUtil.DisposeAsync().ConfigureAwait(false);
             }
 
             if (World != null)
@@ -99,28 +111,28 @@ namespace Puppeteer
 
         public async Task<IJSHandle> GetPuppeteerUtilAsync()
         {
-            await _puppeteerUtilQueue.Enqueue(async () =>
+            await this._puppeteerUtilQueue.Enqueue(async () =>
             {
-                if (_puppeteerUtil == null)
+                if (this._puppeteerUtil == null)
                 {
                     await Client.Connection.ScriptInjector.InjectAsync(
                         async (script) =>
                         {
-                            if (_puppeteerUtil != null)
+                            if (this._puppeteerUtil != null)
                             {
-                                await _puppeteerUtil.DisposeAsync().ConfigureAwait(false);
+                                await this._puppeteerUtil.DisposeAsync().ConfigureAwait(false);
                             }
 
                             await InstallGlobalBindingAsync(new Binding(
                                 "__ariaQuerySelector",
                                 (Func<IElementHandle, string, Task<IElementHandle>>)Client.Connection.CustomQuerySelectorRegistry.InternalQueryHandlers["aria"].QueryOneAsync))
                                 .ConfigureAwait(false);
-                            _puppeteerUtil = await EvaluateExpressionHandleAsync(script).ConfigureAwait(false);
+                            this._puppeteerUtil = await EvaluateExpressionHandleAsync(script).ConfigureAwait(false);
                         },
-                        _puppeteerUtil == null).ConfigureAwait(false);
+                        this._puppeteerUtil == null).ConfigureAwait(false);
                 }
             }).ConfigureAwait(false);
-            return _puppeteerUtil;
+            return this._puppeteerUtil;
         }
 
         public IJSHandle CreateJSHandle(RemoteObject remoteObject)

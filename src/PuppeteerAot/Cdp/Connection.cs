@@ -262,11 +262,11 @@ namespace Puppeteer.Cdp
         /// <param name="disposing">Indicates whether disposal was initiated by <see cref="Dispose()"/> operation.</param>
         private void Dispose(bool disposing)
         {
-            Close("Connection disposed");
-            Transport.MessageReceived -= Transport_MessageReceived;
-            Transport.Closed -= Transport_Closed;
-            Transport.Dispose();
-            _callbackQueue.Dispose();
+            this.Close("Connection disposed");
+            this.Transport.MessageReceived -= Transport_MessageReceived;
+            this.Transport.Closed -= Transport_Closed;
+            this.Transport.Dispose();
+            this._callbackQueue.Dispose();
         }
 
         private Task<CdpCDPSession> GetSessionAsync(string sessionId) => _sessions.GetItemAsync(sessionId);

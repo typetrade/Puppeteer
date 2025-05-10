@@ -56,7 +56,7 @@ namespace Puppeteer.Cdp
             }).ConfigureAwait(false);
 
             _targetsIdsForInit = [.. _discoveredTargetsByTargetId.Keys];
-            await _initializeCompletionSource.Task.ConfigureAwait(false);
+            await this._initializeCompletionSource.Task.ConfigureAwait(false);
         }
 
         public AsyncDictionaryHelper<string, CdpTarget> GetAvailableTargets() => _availableTargetsByTargetId;

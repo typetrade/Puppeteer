@@ -9,28 +9,50 @@ using Puppeteer.Helpers;
 
 namespace Puppeteer.States
 {
-    public class ExitingState : State
+    /// <summary>
+    /// Represents the state of the launcher when it is exiting.
+    /// </summary>
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="ExitingState"/> class.
+    /// </remarks>
+    /// <param name="stateManager"></param>
+    public class ExitingState(StateManager stateManager) : State(stateManager)
     {
-        public ExitingState(StateManager stateManager) : base(stateManager)
-        {
-        }
 
+        /// <summary>
+        /// Enters the Exiting state from the specified state.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="fromState"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         public override Task EnterFromAsync(LauncherBase p, State fromState, TimeSpan timeout)
-            => !StateManager.TryEnter(p, fromState, this) ? StateManager.CurrentState.ExitAsync(p, timeout) : ExitAsync(p, timeout);
+            => !this.StateManager.TryEnter(p, fromState, this) ? this.StateManager.CurrentState.ExitAsync(p, timeout) : this.ExitAsync(p, timeout);
 
+        /// <summary>
+        /// Exits the Exiting state.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         public override async Task ExitAsync(LauncherBase p, TimeSpan timeout)
         {
-            var waitForExitTask = WaitForExitAsync(p);
+            var waitForExitTask = this.WaitForExitAsync(p);
             await waitForExitTask.WithTimeout(
                 async () =>
                 {
-                    await StateManager.Killing.EnterFromAsync(p, this, timeout).ConfigureAwait(false);
+                    await this.StateManager.Killing.EnterFromAsync(p, this, timeout).ConfigureAwait(false);
                     await waitForExitTask.ConfigureAwait(false);
                 },
                 timeout,
                 CancellationToken.None).ConfigureAwait(false);
         }
 
-        public override Task KillAsync(LauncherBase p) => StateManager.Killing.EnterFromAsync(p, this);
+        /// <summary>
+        /// Waits for the process to exit.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public override Task KillAsync(LauncherBase p) => this.StateManager.Killing.EnterFromAsync(p, this);
     }
 }

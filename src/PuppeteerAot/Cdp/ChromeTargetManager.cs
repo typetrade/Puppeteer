@@ -357,8 +357,8 @@ namespace Puppeteer.Cdp
         private void HandleExceptionOnMessageReceived(string messageId, Exception ex)
         {
             var message = $"Browser failed to process {messageId}. {ex.Message}. {ex.StackTrace}";
-            _logger.LogError(ex, message);
-            _connection.Close(message);
+            this._logger.LogError(ex, message);
+            this._connection.Close(message);
         }
 
         private void FinishInitializationIfReady(string? targetId = null)

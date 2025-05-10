@@ -22,9 +22,18 @@
 
 namespace Puppeteer.Cdp.Messaging;
 
+/// <summary>
+/// Request to select a device for access.
+/// </summary>
 public class DeviceAccessSelectPrompt
 {
+    /// <summary>
+    /// The id of the request.
+    /// </summary>
     public string RequestId { get; set; }
 
+    /// <summary>
+    /// The id of the device to select.
+    /// </summary>
     public string DeviceId { get; set; }
 }

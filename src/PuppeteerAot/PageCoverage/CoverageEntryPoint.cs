@@ -8,8 +8,16 @@ namespace Puppeteer.PageCoverage
 
         public int Type { get; set; }
 
+        /// <summary>
+        /// The range of the entry point.
+        /// </summary>
         public CoverageRange Range { get; set; }
 
+        /// <summary>
+        /// Compares this instance with a specified object and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the specified object.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(CoverageEntryPoint other)
         {
             // Sort with increasing offsets.
