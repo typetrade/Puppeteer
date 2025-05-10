@@ -1,9 +1,10 @@
 using System;
 using System.Net.WebSockets;
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Transport;
+using Puppeteer;
+using Puppeteer.Cdp;
+using Puppeteer.Transport;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options for connecting to an existing browser.
@@ -82,7 +83,7 @@ namespace PuppeteerAot
         /// </summary>
         /// <remarks>
         /// This should normally be set to <c>true</c> to support applications that aren't <c>async</c> "all the way up"; i.e., the application
-        /// has legacy code that is not async which makes calls into PuppeteerAot. If you experience issues, or your application is not mixed sync/async use, you
+        /// has legacy code that is not async which makes calls into Puppeteer. If you experience issues, or your application is not mixed sync/async use, you
         /// can set this to <c>false</c> (default).
         /// </remarks>
         public bool EnqueueAsyncMessages { get; set; }

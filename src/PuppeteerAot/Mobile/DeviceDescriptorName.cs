@@ -1,4 +1,4 @@
-namespace PuppeteerAot.Mobile
+namespace Puppeteer.Mobile
 {
     /// <summary>
     /// Device descriptor name.

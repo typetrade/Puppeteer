@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public static class StringExtensions
     {

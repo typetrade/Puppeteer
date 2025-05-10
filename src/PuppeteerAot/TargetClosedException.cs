@@ -1,7 +1,11 @@
-using System.Runtime.Serialization;
-using PuppeteerAot.Cdp;
+// <copyright file="TargetClosedException.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace PuppeteerAot
+using System.Runtime.Serialization;
+using Puppeteer.Cdp;
+
+namespace Puppeteer
 {
     /// <summary>
     /// Exception thrown by the <see cref="Connection"/> when it detects that the target was closed.

@@ -23,10 +23,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Input;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Input;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc/>
 public class CdpKeyboard : Keyboard
@@ -40,7 +40,7 @@ public class CdpKeyboard : Keyboard
     }
 
     /// <inheritdoc/>
-    public override Task DownAsync(string key, DownOptions options = null)
+    public override Task DownAsync(string key, DownOptions? options = null)
     {
         var description = KeyDescriptionForString(key);
 
@@ -92,7 +92,7 @@ public class CdpKeyboard : Keyboard
         });
 
     /// <inheritdoc/>
-    public override async Task TypeAsync(string text, TypeOptions options = null)
+    public override async Task TypeAsync(string text, TypeOptions? options = null)
     {
         var delay = 0;
         if (options?.Delay != null)
@@ -121,7 +121,7 @@ public class CdpKeyboard : Keyboard
     }
 
     /// <inheritdoc/>
-    public override async Task PressAsync(string key, PressOptions options = null)
+    public override async Task PressAsync(string key, PressOptions? options = null)
     {
         await DownAsync(key, options).ConfigureAwait(false);
         if (options?.Delay > 0)

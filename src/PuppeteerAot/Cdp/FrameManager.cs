@@ -5,11 +5,11 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     public class FrameManager : IDisposable, IAsyncDisposable, IFrameProvider
     {
@@ -72,15 +72,21 @@ namespace PuppeteerAot.Cdp
 
         public Task<CdpFrame> GetFrameAsync(string frameId) => FrameTree.TryGetFrameAsync(frameId);
 
-        public ExecutionContext ExecutionContextById(int contextId, CDPSession session = null)
+        /// <summary>
+        /// Returns the execution context by its ID.
+        /// </summary>
+        /// <param name="contextId"></param>
+        /// <param name="session"></param>
+        /// <returns></returns>
+        public ExecutionContext? ExecutionContextById(int contextId, CDPSession? session = null)
         {
-            session ??= Client;
+            session ??= this.Client;
             var key = $"{session.Id}:{contextId}";
-            _contextIdToContext.TryGetValue(key, out var context);
+            this._contextIdToContext.TryGetValue(key, out var context);
 
             if (context == null)
             {
-                _logger.LogError("INTERNAL ERROR: missing context with id = {ContextId}", contextId);
+                this._logger.LogError("INTERNAL ERROR: missing context with id = {ContextId}", contextId);
             }
 
             return context;
@@ -311,7 +317,7 @@ namespace PuppeteerAot.Cdp
         {
             var frameId = contextPayload.AuxData?.FrameId;
             var frame = !string.IsNullOrEmpty(frameId) ? await FrameTree.GetFrameAsync(frameId).ConfigureAwait(false) : null;
-            IsolatedWorld world = null;
+            IsolatedWorld? world = null;
 
             if (frame != null)
             {

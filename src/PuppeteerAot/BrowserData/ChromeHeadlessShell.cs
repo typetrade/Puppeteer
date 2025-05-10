@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     /// <summary>
     /// Chrome info.

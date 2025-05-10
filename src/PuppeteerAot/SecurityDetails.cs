@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Represents the security details when response was received over the secure connection.

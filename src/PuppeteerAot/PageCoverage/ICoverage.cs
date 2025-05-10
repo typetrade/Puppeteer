@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     /// <summary>
     /// gathers information about parts of JavaScript and CSS that were used by the page.
@@ -12,14 +12,14 @@ namespace PuppeteerAot.PageCoverage
         /// </summary>
         /// <param name="options">Set of configurable options for coverage.</param>
         /// <returns>A task that resolves when coverage is started.</returns>
-        Task StartCSSCoverageAsync(CoverageStartOptions options = null);
+        Task StartCSSCoverageAsync(CoverageStartOptions? options = null);
 
         /// <summary>
         /// Starts JS coverage.
         /// </summary>
         /// <param name="options">Set of configurable options for coverage.</param>
         /// <returns>A task that resolves when coverage is started.</returns>
-        Task StartJSCoverageAsync(CoverageStartOptions options = null);
+        Task StartJSCoverageAsync(CoverageStartOptions? options = null);
 
         /// <summary>
         /// Stops JS coverage and returns coverage reports for all non-anonymous scripts.

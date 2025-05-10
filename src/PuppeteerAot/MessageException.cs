@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.Serialization;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Exception thrown by. <seealso cref="CDPSession.SendAsync{T}(string, object, CommandOptions)"/>

@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
-    /// Base exception used to identify any exception thrown by PuppeteerAot.
+    /// Base exception used to identify any exception thrown by Puppeteer.
     /// </summary>
     [Serializable]
     public class PuppeteerException : Exception

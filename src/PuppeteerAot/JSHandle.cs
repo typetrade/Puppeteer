@@ -4,10 +4,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     [JsonConverter(typeof(JSHandleMethodConverter))]

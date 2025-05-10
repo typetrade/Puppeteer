@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc/>
 public class CdpHttpResponse : Response<CdpHttpRequest>
@@ -19,7 +19,7 @@ public class CdpHttpResponse : Response<CdpHttpRequest>
         CDPSession client,
         CdpHttpRequest request,
         ResponsePayload responseMessage,
-        ResponseReceivedExtraInfoResponse extraInfo)
+        ResponseReceivedExtraInfoResponse? extraInfo)
     {
         _client = client;
         Request = request;
@@ -82,7 +82,12 @@ public class CdpHttpResponse : Response<CdpHttpRequest>
         return _buffer;
     }
 
-    private string ParseStatusTextFromExtraInfo(ResponseReceivedExtraInfoResponse extraInfo)
+    /// <summary>
+    /// Parses the status text from the extra info response.
+    /// </summary>
+    /// <param name="extraInfo"></param>
+    /// <returns></returns>
+    private string? ParseStatusTextFromExtraInfo(ResponseReceivedExtraInfoResponse? extraInfo)
     {
         if (extraInfo == null || extraInfo.HeadersText == null)
         {

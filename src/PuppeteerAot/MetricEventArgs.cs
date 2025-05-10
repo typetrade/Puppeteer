@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// <seealso cref="IPage.Metrics"/> arguments.

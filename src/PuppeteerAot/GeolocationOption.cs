@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Geolocation option.
@@ -27,11 +27,11 @@ namespace PuppeteerAot
         public decimal Accuracy { get; set; }
 
         /// <summary>
-        /// Determines whether the specified <see cref="PuppeteerAot.GeolocationOption"/> is equal to the current <see cref="T:PuppeteerAot.GeolocationOption"/>.
+        /// Determines whether the specified <see cref="Puppeteer.GeolocationOption"/> is equal to the current <see cref="T:Puppeteer.GeolocationOption"/>.
         /// </summary>
-        /// <param name="other">The <see cref="PuppeteerAot.GeolocationOption"/> to compare with the current <see cref="T:PuppeteerAot.GeolocationOption"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="PuppeteerAot.GeolocationOption"/> is equal to the current
-        /// <see cref="T:PuppeteerAot.GeolocationOption"/>; otherwise, <c>false</c>.</returns>
+        /// <param name="other">The <see cref="Puppeteer.GeolocationOption"/> to compare with the current <see cref="T:Puppeteer.GeolocationOption"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="Puppeteer.GeolocationOption"/> is equal to the current
+        /// <see cref="T:Puppeteer.GeolocationOption"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(GeolocationOption other)
             => other != null &&
                 Latitude == other.Latitude &&

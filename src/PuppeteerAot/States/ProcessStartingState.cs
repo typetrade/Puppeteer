@@ -1,3 +1,7 @@
+// <copyright file="ProcessStartingState.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Diagnostics;
 using System.Text;
@@ -5,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.States
+namespace Puppeteer.States
 {
     public class ProcessStartingState : State
     {
@@ -62,7 +66,7 @@ namespace PuppeteerAot.States
             p.Process.ErrorDataReceived += OnProcessDataReceivedWhileStarting;
             p.Process.Exited += OnProcessExitedWhileStarting;
             p.Process.Exited += OnProcessExited;
-            CancellationTokenSource cts = null;
+            CancellationTokenSource? cts = null;
             try
             {
                 p.Process.Start();

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json.Serialization;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Payload information.

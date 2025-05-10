@@ -1,6 +1,6 @@
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     public class RedirectInfo
     {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PuppeteerAot.BrowserData;
-using PuppeteerAot.Helpers;
+using Puppeteer.BrowserData;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Represents a Chromium process and any associated temporary user data directory that have created
@@ -162,7 +162,7 @@ namespace PuppeteerAot
                 chromiumArgs.AddRange(options.Args);
             }
 
-            TempDirectory tempUserDataDirectory = null;
+            TempDirectory? tempUserDataDirectory = null;
 
             if (!chromiumArgs.Any(argument => argument.StartsWith("--remote-debugging-", StringComparison.Ordinal)))
             {

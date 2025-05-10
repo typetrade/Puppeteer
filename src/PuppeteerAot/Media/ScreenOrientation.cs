@@ -1,4 +1,4 @@
-namespace PuppeteerAot.Media
+namespace Puppeteer.Media
 {
     public class ScreenOrientation
     {

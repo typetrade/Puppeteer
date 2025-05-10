@@ -24,10 +24,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpWebWorker : WebWorker

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     public abstract class Request<TResponse>
@@ -75,7 +75,7 @@ namespace PuppeteerAot
         public bool FromMemoryCache { get; set; }
 
         /// <inheritdoc/>
-        public abstract Task ContinueAsync(Payload overrides = null, int? priority = null);
+        public abstract Task ContinueAsync(Payload? overrides = null, int? priority = null);
 
         /// <inheritdoc/>
         public abstract Task RespondAsync(ResponseData response, int? priority = null);

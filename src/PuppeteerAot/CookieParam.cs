@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Cookie data.

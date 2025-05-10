@@ -6,13 +6,13 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.QueryHandlers;
-using PuppeteerAot.Transport;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
+using Puppeteer.QueryHandlers;
+using Puppeteer.Transport;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     /// <summary>
     /// A connection handles the communication with a Chromium browser.
@@ -28,7 +28,7 @@ namespace PuppeteerAot.Cdp
         private readonly List<string> _manuallyAttached = [];
         private int _lastId;
 
-        private Connection(string url, int delay, bool enqueueAsyncMessages, IConnectionTransport transport, ILoggerFactory loggerFactory = null, int protocolTimeout = DefaultCommandTimeout)
+        private Connection(string url, int delay, bool enqueueAsyncMessages, IConnectionTransport transport, ILoggerFactory? loggerFactory = null, int protocolTimeout = DefaultCommandTimeout)
         {
             LoggerFactory = loggerFactory ?? new LoggerFactory();
             Url = url;
@@ -53,8 +53,14 @@ namespace PuppeteerAot.Cdp
         /// </summary>
         public event EventHandler<MessageEventArgs> MessageReceived;
 
+        /// <summary>
+        /// Occurs when a session is attached.
+        /// </summary>
         public event EventHandler<SessionEventArgs> SessionAttached;
 
+        /// <summary>
+        /// Occurs when a session is detached.
+        /// </summary>
         public event EventHandler<SessionEventArgs> SessionDetached;
 
         /// <summary>
@@ -111,7 +117,7 @@ namespace PuppeteerAot.Cdp
         }
 
         /// <inheritdoc/>
-        public async Task<JsonElement> SendAsync(string method, object args = null, bool waitForCallback = true, CommandOptions options = null)
+        public async Task<JsonElement> SendAsync(string method, object? args = null, bool waitForCallback = true, CommandOptions? options = null)
         {
             if (IsClosed)
             {
@@ -121,7 +127,7 @@ namespace PuppeteerAot.Cdp
             var id = GetMessageID();
             var message = GetMessage(id, method, args);
 
-            MessageTask callback = null;
+            MessageTask? callback = null;
             if (waitForCallback)
             {
                 callback = new MessageTask
@@ -130,21 +136,23 @@ namespace PuppeteerAot.Cdp
                     Method = method,
                     Message = message,
                 };
-                _callbacks[id] = callback;
+                this._callbacks[id] = callback;
+                await this.RawSendAsync(message, options).ConfigureAwait(false);
+                return await callback.TaskWrapper.Task.WithTimeout(this.ProtocolTimeout).ConfigureAwait(false);
             }
 
-            await RawSendAsync(message, options).ConfigureAwait(false);
-            return waitForCallback ? await callback.TaskWrapper.Task.WithTimeout(ProtocolTimeout).ConfigureAwait(false) : default;
+            await this.RawSendAsync(message, options).ConfigureAwait(false);
+            return default;
         }
 
         /// <inheritdoc/>
-        public async Task<T> SendAsync<T>(string method, object args = null, CommandOptions options = null)
+        public async Task<T> SendAsync<T>(string method, object? args = null, CommandOptions? options = null)
         {
-            var response = await SendAsync(method, args, true, options).ConfigureAwait(false);
+            var response = await this.SendAsync(method, args, true, options).ConfigureAwait(false);
             return response.ToObject<T>(true);
         }
 
-        public static async Task<Connection> Create(string url, IConnectionOptions connectionOptions, ILoggerFactory loggerFactory = null, CancellationToken cancellationToken = default)
+        public static async Task<Connection> Create(string url, IConnectionOptions connectionOptions, ILoggerFactory? loggerFactory = null, CancellationToken cancellationToken = default)
         {
             var transportFactory = connectionOptions.TransportFactory ?? WebSocketTransport.DefaultTransportFactory;
             var transport = await transportFactory(new Uri(url), connectionOptions, cancellationToken).ConfigureAwait(false);
@@ -152,17 +160,32 @@ namespace PuppeteerAot.Cdp
             return new Connection(url, connectionOptions.SlowMo, connectionOptions.EnqueueAsyncMessages, transport, loggerFactory, connectionOptions.ProtocolTimeout);
         }
 
+        /// <summary>
+        /// Creates a new <see cref="Connection"/> from an existing session.
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public static Connection FromSession(CdpCDPSession session) => session.Connection;
 
+        /// <summary>
+        /// Gets the next message ID.
+        /// </summary>
+        /// <returns></returns>
         public int GetMessageID() => Interlocked.Increment(ref _lastId);
 
-        public Task RawSendAsync(string message, CommandOptions options = null)
+        /// <summary>
+        /// Sends a message to the transport.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Task RawSendAsync(string message, CommandOptions? options = null)
         {
-            _logger.LogTrace("Send ► {Message}", message);
+            this._logger.LogTrace("Send ► {Message}", message);
             return Transport.SendAsync(message);
         }
 
-        public string GetMessage(int id, string method, object args, string sessionId = null)
+        public string GetMessage(int id, string method, object args, string? sessionId = null)
         {
             var msg = JsonSerializer.Serialize(
                        new ConnectionRequest { Id = id, Method = method, Params = args, SessionId = sessionId },
@@ -267,7 +290,7 @@ namespace PuppeteerAot.Cdp
             try
             {
                 var response = e.Message;
-                ConnectionResponse obj = null;
+                ConnectionResponse? obj = null;
 
                 if (response.Length > 0 && Delay > 0)
                 {

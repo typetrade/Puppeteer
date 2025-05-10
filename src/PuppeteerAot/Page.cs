@@ -5,17 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Puppeteer.Cdp;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Input;
+using Puppeteer.Media;
+using Puppeteer.Mobile;
+using Puppeteer.PageAccessibility;
+using Puppeteer.PageCoverage;
 
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Input;
-using PuppeteerAot.Media;
-using PuppeteerAot.Mobile;
-using PuppeteerAot.PageAccessibility;
-using PuppeteerAot.PageCoverage;
-
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     [DebuggerDisplay("Page {Url}")]
@@ -139,7 +138,7 @@ namespace PuppeteerAot
         public bool IsServiceWorkerBypassed { get; protected set; }
 
         /// <inheritdoc/>
-        public string Url => MainFrame.Url;
+        public string Url => this.MainFrame.Url;
 
         /// <inheritdoc/>
         ITarget IPage.Target => Target;
@@ -241,32 +240,32 @@ namespace PuppeteerAot
 
         /// <inheritdoc/>
         public Task TapAsync(string selector)
-            => MainFrame.TapAsync(selector);
+            => this.MainFrame.TapAsync(selector);
 
         /// <inheritdoc/>
         public Task<IElementHandle> QuerySelectorAsync(string selector)
-            => MainFrame.QuerySelectorAsync(selector);
+            => this.MainFrame.QuerySelectorAsync(selector);
 
         /// <inheritdoc/>
         public Task<IElementHandle[]> QuerySelectorAllAsync(string selector)
-            => MainFrame.QuerySelectorAllAsync(selector);
+            => this.MainFrame.QuerySelectorAllAsync(selector);
 
         /// <inheritdoc/>
         public Task<IJSHandle> QuerySelectorAllHandleAsync(string selector)
-            => MainFrame.QuerySelectorAllHandleAsync(selector);
+            => this.MainFrame.QuerySelectorAllHandleAsync(selector);
 
         /// <inheritdoc/>
         public Task<DeviceRequestPrompt> WaitForDevicePromptAsync(
             WaitForOptions options = default(WaitForOptions))
-            => MainFrame.WaitForDevicePromptAsync(options);
+            => this.MainFrame.WaitForDevicePromptAsync(options);
 
         /// <inheritdoc/>
         public Task<IJSHandle> EvaluateExpressionHandleAsync(string script)
-            => MainFrame.EvaluateExpressionHandleAsync(script);
+            => this.MainFrame.EvaluateExpressionHandleAsync(script);
 
         /// <inheritdoc/>
         public Task<IJSHandle> EvaluateFunctionHandleAsync(string pageFunction, params object[] args)
-            => MainFrame.EvaluateFunctionHandleAsync(pageFunction, args);
+            => this.MainFrame.EvaluateFunctionHandleAsync(pageFunction, args);
 
         /// <inheritdoc/>
         public abstract Task<NewDocumentScriptEvaluation> EvaluateFunctionOnNewDocumentAsync(
@@ -302,7 +301,7 @@ namespace PuppeteerAot
 
         /// <inheritdoc/>
         public Task<IElementHandle> AddScriptTagAsync(AddTagOptions options)
-            => MainFrame.AddScriptTagAsync(options);
+            => this.MainFrame.AddScriptTagAsync(options);
 
         /// <inheritdoc/>
         public Task<IElementHandle> AddScriptTagAsync(string url)
@@ -310,7 +309,7 @@ namespace PuppeteerAot
 
         /// <inheritdoc/>
         public Task<IElementHandle> AddStyleTagAsync(AddTagOptions options)
-            => MainFrame.AddStyleTagAsync(options);
+            => this.MainFrame.AddStyleTagAsync(options);
 
         /// <inheritdoc/>
         public Task<IElementHandle> AddStyleTagAsync(string url)
@@ -346,18 +345,18 @@ namespace PuppeteerAot
         public abstract Task RemoveExposedFunctionAsync(string name);
 
         /// <inheritdoc/>
-        public Task<string> GetContentAsync() => MainFrame.GetContentAsync();
+        public Task<string> GetContentAsync() => this.MainFrame.GetContentAsync();
 
         /// <inheritdoc/>
-        public Task SetContentAsync(string html, NavigationOptions options = null)
-            => MainFrame.SetContentAsync(html, options);
+        public Task SetContentAsync(string html, NavigationOptions? options = null)
+            => this.MainFrame.SetContentAsync(html, options);
 
         /// <inheritdoc/>
         public Task<IResponse> GoToAsync(string url, NavigationOptions options)
-            => MainFrame.GoToAsync(url, options);
+            => this.MainFrame.GoToAsync(url, options);
 
         /// <inheritdoc/>
-        public Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[] waitUntil = null)
+        public Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[]? waitUntil = null)
             => GoToAsync(url, new NavigationOptions { Timeout = timeout, WaitUntil = waitUntil });
 
         /// <inheritdoc/>
@@ -548,7 +547,7 @@ namespace PuppeteerAot
 
                                 if (!captureBeyondViewport)
                                 {
-                                    var scrollDimensions = await ((Frame)MainFrame).IsolatedRealm
+                                    var scrollDimensions = await ((Frame)this.MainFrame).IsolatedRealm
                                         .EvaluateFunctionAsync<BoundingBox>(@"() => {
                                             const element = document.documentElement;
                                             return {
@@ -597,46 +596,46 @@ namespace PuppeteerAot
             => Convert.FromBase64String(await ScreenshotBase64Async(options).ConfigureAwait(false));
 
         /// <inheritdoc/>
-        public Task<string> GetTitleAsync() => MainFrame.GetTitleAsync();
+        public Task<string> GetTitleAsync() => this.MainFrame.GetTitleAsync();
 
         /// <inheritdoc/>
-        public abstract Task CloseAsync(PageCloseOptions options = null);
+        public abstract Task CloseAsync(PageCloseOptions? options = null);
 
         /// <inheritdoc/>
         public abstract Task SetCacheEnabledAsync(bool enabled = true);
 
         /// <inheritdoc/>
-        public Task ClickAsync(string selector, ClickOptions options = null)
-            => MainFrame.ClickAsync(selector, options);
+        public Task ClickAsync(string selector, ClickOptions? options = null)
+            => this.MainFrame.ClickAsync(selector, options);
 
         /// <inheritdoc/>
-        public Task HoverAsync(string selector) => MainFrame.HoverAsync(selector);
+        public Task HoverAsync(string selector) => this.MainFrame.HoverAsync(selector);
 
         /// <inheritdoc/>
-        public Task FocusAsync(string selector) => MainFrame.FocusAsync(selector);
+        public Task FocusAsync(string selector) => this.MainFrame.FocusAsync(selector);
 
         /// <inheritdoc/>
-        public Task TypeAsync(string selector, string text, TypeOptions options = null)
-            => MainFrame.TypeAsync(selector, text, options);
+        public Task TypeAsync(string selector, string text, TypeOptions? options = null)
+            => this.MainFrame.TypeAsync(selector, text, options);
 
         /// <inheritdoc/>
         public Task<JsonElement> EvaluateExpressionAsync(string script)
-            => MainFrame.EvaluateExpressionAsync<JsonElement>(script);
+            => this.MainFrame.EvaluateExpressionAsync<JsonElement>(script);
 
         /// <inheritdoc/>
         public Task<T> EvaluateExpressionAsync<T>(string script)
-            => MainFrame.EvaluateExpressionAsync<T>(script);
+            => this.MainFrame.EvaluateExpressionAsync<T>(script);
 
         /// <inheritdoc/>
         public Task<JsonElement> EvaluateFunctionAsync(string script, params object[] args)
-            => MainFrame.EvaluateFunctionAsync<JsonElement>(script, args);
+            => this.MainFrame.EvaluateFunctionAsync<JsonElement>(script, args);
 
         /// <inheritdoc/>
         public Task<T> EvaluateFunctionAsync<T>(string script, params object[] args)
-            => MainFrame.EvaluateFunctionAsync<T>(script, args);
+            => this.MainFrame.EvaluateFunctionAsync<T>(script, args);
 
         /// <inheritdoc/>
-        public abstract Task SetUserAgentAsync(string userAgent, UserAgentMetadata userAgentData = null);
+        public abstract Task SetUserAgentAsync(string userAgent, UserAgentMetadata? userAgentData = null);
 
         /// <inheritdoc/>
         public abstract Task SetExtraHttpHeadersAsync(Dictionary<string, string> headers);
@@ -648,71 +647,71 @@ namespace PuppeteerAot
         public abstract Task<IResponse> ReloadAsync(NavigationOptions options);
 
         /// <inheritdoc/>
-        public Task<IResponse> ReloadAsync(int? timeout = null, WaitUntilNavigation[] waitUntil = null)
+        public Task<IResponse> ReloadAsync(int? timeout = null, WaitUntilNavigation[]? waitUntil = null)
             => ReloadAsync(new NavigationOptions { Timeout = timeout, WaitUntil = waitUntil });
 
         /// <inheritdoc/>
         public Task<string[]> SelectAsync(string selector, params string[] values)
-            => MainFrame.SelectAsync(selector, values);
+            => this.MainFrame.SelectAsync(selector, values);
 
         /// <inheritdoc/>
-        public Task<IJSHandle> WaitForFunctionAsync(string script, WaitForFunctionOptions options = null, params object[] args)
-            => MainFrame.WaitForFunctionAsync(script, options ?? new WaitForFunctionOptions(), args);
+        public Task<IJSHandle> WaitForFunctionAsync(string script, WaitForFunctionOptions? options = null, params object[] args)
+            => this.MainFrame.WaitForFunctionAsync(script, options ?? new WaitForFunctionOptions(), args);
 
         /// <inheritdoc/>
         public Task<IJSHandle> WaitForFunctionAsync(string script, params object[] args) =>
             WaitForFunctionAsync(script, null, args);
 
         /// <inheritdoc/>
-        public Task<IJSHandle> WaitForExpressionAsync(string script, WaitForFunctionOptions options = null)
-            => MainFrame.WaitForExpressionAsync(script, options ?? new WaitForFunctionOptions());
+        public Task<IJSHandle> WaitForExpressionAsync(string script, WaitForFunctionOptions? options = null)
+            => this.MainFrame.WaitForExpressionAsync(script, options ?? new WaitForFunctionOptions());
 
         /// <inheritdoc/>
-        public Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions options = null)
-            => MainFrame.WaitForSelectorAsync(selector, options ?? new WaitForSelectorOptions());
+        public Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions? options = null)
+            => this.MainFrame.WaitForSelectorAsync(selector, options ?? new WaitForSelectorOptions());
 
         /// <inheritdoc/>
-        public Task<IResponse> WaitForNavigationAsync(NavigationOptions options = null)
-            => MainFrame.WaitForNavigationAsync(options);
+        public Task<IResponse> WaitForNavigationAsync(NavigationOptions? options = null)
+            => this.MainFrame.WaitForNavigationAsync(options);
 
         /// <inheritdoc/>
-        public abstract Task WaitForNetworkIdleAsync(WaitForNetworkIdleOptions options = null);
+        public abstract Task WaitForNetworkIdleAsync(WaitForNetworkIdleOptions? options = null);
 
         /// <inheritdoc/>
-        public Task<IRequest> WaitForRequestAsync(string url, WaitForOptions options = null)
+        public Task<IRequest> WaitForRequestAsync(string url, WaitForOptions? options = null)
             => WaitForRequestAsync(request => request.Url == url, options);
 
         /// <inheritdoc/>
-        public abstract Task<IRequest> WaitForRequestAsync(Func<IRequest, bool> predicate, WaitForOptions options = null);
+        public abstract Task<IRequest> WaitForRequestAsync(Func<IRequest, bool> predicate, WaitForOptions? options = null);
 
         /// <inheritdoc/>
-        public Task<IFrame> WaitForFrameAsync(string url, WaitForOptions options = null)
+        public Task<IFrame> WaitForFrameAsync(string url, WaitForOptions? options = null)
             => WaitForFrameAsync((frame) => frame.Url == url, options);
 
         /// <inheritdoc/>
-        public abstract Task<IFrame> WaitForFrameAsync(Func<IFrame, bool> predicate, WaitForOptions options = null);
+        public abstract Task<IFrame> WaitForFrameAsync(Func<IFrame, bool> predicate, WaitForOptions? options = null);
 
         /// <inheritdoc/>
-        public Task<IResponse> WaitForResponseAsync(string url, WaitForOptions options = null)
+        public Task<IResponse> WaitForResponseAsync(string url, WaitForOptions? options = null)
             => WaitForResponseAsync(response => response.Url == url, options);
 
         /// <inheritdoc/>
-        public Task<IResponse> WaitForResponseAsync(Func<IResponse, bool> predicate, WaitForOptions options = null)
+        public Task<IResponse> WaitForResponseAsync(Func<IResponse, bool> predicate, WaitForOptions? options = null)
             => WaitForResponseAsync((response) => Task.FromResult(predicate(response)), options);
 
         /// <inheritdoc/>
         public abstract Task<IResponse> WaitForResponseAsync(
             Func<IResponse, Task<bool>> predicate,
-            WaitForOptions options = null);
+            WaitForOptions? options = null);
 
         /// <inheritdoc/>
-        public abstract Task<FileChooser> WaitForFileChooserAsync(WaitForOptions options = null);
+        public abstract Task<FileChooser> WaitForFileChooserAsync(WaitForOptions? options = null);
 
         /// <inheritdoc/>
-        public abstract Task<IResponse> GoBackAsync(NavigationOptions options = null);
+        public abstract Task<IResponse?> GoBackAsync(NavigationOptions? options = null);
 
         /// <inheritdoc/>
-        public abstract Task<IResponse> GoForwardAsync(NavigationOptions options = null);
+        public abstract Task<IResponse> GoForwardAsync(NavigationOptions? options = null);
 
         /// <inheritdoc/>
         public abstract Task SetBurstModeOffAsync();
@@ -727,7 +726,7 @@ namespace PuppeteerAot
         public abstract Task EmulateTimezoneAsync(string timezoneId);
 
         /// <inheritdoc/>
-        public abstract Task EmulateIdleStateAsync(EmulateIdleOverrides overrides = null);
+        public abstract Task EmulateIdleStateAsync(EmulateIdleOverrides? overrides = null);
 
         /// <inheritdoc/>
         public abstract Task EmulateCPUThrottlingAsync(decimal? factor = null);

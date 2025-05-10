@@ -22,7 +22,7 @@
 
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <summary>
 /// Provides a way to get a frame.

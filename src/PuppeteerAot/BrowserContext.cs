@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     public abstract class BrowserContext : IBrowserContext
@@ -19,10 +19,16 @@ namespace PuppeteerAot
         public event EventHandler<TargetChangedArgs> TargetDestroyed;
 
         /// <inheritdoc/>
-        public string Id { get; protected init; }
+        public string? Id { get; protected init; }
 
         /// <inheritdoc/>
-        public bool IsIncognito => Id != null;
+        public bool IsIncognito
+        {
+            get
+            {
+                return this.Id != null;
+            }
+        }
 
         /// <inheritdoc/>
         public bool IsClosed => Browser.BrowserContexts().Contains(this);
@@ -37,7 +43,7 @@ namespace PuppeteerAot
         public abstract ITarget[] Targets();
 
         /// <inheritdoc/>
-        public Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions options = null)
+        public Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions? options = null)
             => Browser.WaitForTargetAsync((target) => target.BrowserContext == this && predicate(target), options);
 
         /// <inheritdoc />

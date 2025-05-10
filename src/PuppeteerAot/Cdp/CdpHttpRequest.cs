@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Cdp.Messaging.Protocol.Network;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging.Protocol.Network;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc/>
 public class CdpHttpRequest : Request<CdpHttpResponse>
@@ -116,7 +116,7 @@ public class CdpHttpRequest : Request<CdpHttpResponse>
     private bool IsInterceptResolutionHandled { get; set; }
 
     /// <inheritdoc/>
-    public override async Task ContinueAsync(Payload overrides = null, int? priority = null)
+    public override async Task ContinueAsync(Payload? overrides = null, int? priority = null)
     {
         // Request interception is not supported for data: urls.
         if (Url.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase))
@@ -286,7 +286,7 @@ public class CdpHttpRequest : Request<CdpHttpResponse>
     private Header[] HeadersArray(Dictionary<string, string> headers)
         => headers?.Select(pair => new Header { Name = pair.Key, Value = pair.Value }).ToArray();
 
-    private async Task ContinueInternalAsync(Payload overrides = null)
+    private async Task ContinueInternalAsync(Payload? overrides = null)
     {
         IsInterceptResolutionHandled = true;
 

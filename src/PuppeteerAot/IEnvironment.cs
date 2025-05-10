@@ -1,4 +1,8 @@
-namespace PuppeteerAot
+// <copyright file="IEnvironment.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer
 {
     /// <summary>
     /// Represents an environment.

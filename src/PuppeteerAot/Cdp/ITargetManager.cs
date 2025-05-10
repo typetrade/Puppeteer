@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Target manager.

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Predefined network conditions.

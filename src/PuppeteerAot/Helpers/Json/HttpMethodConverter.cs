@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot.Helpers.Json
+namespace Puppeteer.Helpers.Json
 {
     public class HttpMethodConverter : JsonConverter<HttpMethod>
     {

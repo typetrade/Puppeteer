@@ -20,11 +20,11 @@
 //  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  * SOFTWARE.
 
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.Input;
+using Puppeteer.Helpers.Json;
+using Puppeteer.Input;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// Represents the cookie's 'Priority' status.

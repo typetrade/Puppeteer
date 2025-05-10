@@ -1,8 +1,12 @@
-using PuppeteerAot.Helpers.Json;
+// <copyright file="MouseButton.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Puppeteer.Helpers.Json;
 using System;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     /// <summary>
     /// The type of button click to use with <see cref="IMouse.DownAsync(ClickOptions)"/>, <see cref="IMouse.UpAsync(ClickOptions)"/> and <see cref="IMouse.ClickAsync(decimal, decimal, ClickOptions)"/>.

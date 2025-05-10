@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Dialog type.

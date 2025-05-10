@@ -5,11 +5,11 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     public class NetworkManager
     {
@@ -21,14 +21,14 @@ namespace PuppeteerAot.Cdp
         private readonly IFrameProvider _frameManager;
         private readonly ILoggerFactory _loggerFactory;
 
-        private InternalNetworkConditions _emulatedNetworkConditions;
+        private InternalNetworkConditions? emulatedNetworkConditions;
         private Dictionary<string, string> _extraHTTPHeaders;
         private Credentials _credentials;
         private bool _userRequestInterceptionEnabled;
         private bool _protocolRequestInterceptionEnabled;
         private bool? _userCacheDisabled;
         private string _userAgent;
-        private UserAgentMetadata _userAgentMetadata;
+        private UserAgentMetadata? userAgentMetadata;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkManager"/> class.
@@ -116,11 +116,17 @@ namespace PuppeteerAot.Cdp
             return ApplyToAllClientsAsync(ApplyExtraHTTPHeadersAsync);
         }
 
-        public Task SetUserAgentAsync(string userAgent, UserAgentMetadata userAgentMetadata)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="userAgent"></param>
+        /// <param name="userAgentMetadata"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        public Task SetUserAgentAsync(string userAgent, UserAgentMetadata? userAgentMetadata)
         {
-            _userAgent = userAgent;
-            _userAgentMetadata = userAgentMetadata;
-            return ApplyToAllClientsAsync(ApplyUserAgentAsync);
+            this._userAgent = userAgent;
+            this.userAgentMetadata = userAgentMetadata;
+            return this.ApplyToAllClientsAsync(this.ApplyUserAgentAsync);
         }
 
         public Task SetCacheEnabledAsync(bool enabled)
@@ -145,17 +151,17 @@ namespace PuppeteerAot.Cdp
 
         public Task SetOfflineModeAsync(bool value)
         {
-            _emulatedNetworkConditions ??= new InternalNetworkConditions();
-            _emulatedNetworkConditions.Offline = value;
+            emulatedNetworkConditions ??= new InternalNetworkConditions();
+            emulatedNetworkConditions.Offline = value;
             return ApplyToAllClientsAsync(ApplyNetworkConditionsAsync);
         }
 
         public Task EmulateNetworkConditionsAsync(NetworkConditions networkConditions)
         {
-            _emulatedNetworkConditions ??= new InternalNetworkConditions();
-            _emulatedNetworkConditions.Upload = networkConditions?.Upload ?? -1;
-            _emulatedNetworkConditions.Download = networkConditions?.Download ?? -1;
-            _emulatedNetworkConditions.Latency = networkConditions?.Latency ?? 0;
+            emulatedNetworkConditions ??= new InternalNetworkConditions();
+            emulatedNetworkConditions.Upload = networkConditions?.Upload ?? -1;
+            emulatedNetworkConditions.Download = networkConditions?.Download ?? -1;
+            emulatedNetworkConditions.Latency = networkConditions?.Latency ?? 0;
             return ApplyToAllClientsAsync(ApplyNetworkConditionsAsync);
         }
 
@@ -210,40 +216,40 @@ namespace PuppeteerAot.Cdp
 
             if (redirectInfo != null)
             {
-                _networkEventManager.ResponseExtraInfo(e.RequestId).Add(e);
+                this._networkEventManager.ResponseExtraInfo(e.RequestId).Add(e);
                 await OnRequestAsync(client, redirectInfo.Event, redirectInfo.FetchRequestId).ConfigureAwait(false);
                 return;
             }
 
             // We may have skipped response and loading events because we didn't have
             // this ExtraInfo event yet. If so, emit those events now.
-            var queuedEvents = _networkEventManager.GetQueuedEventGroup(e.RequestId);
+            var queuedEvents = this._networkEventManager.GetQueuedEventGroup(e.RequestId);
 
             if (queuedEvents != null)
             {
-                _networkEventManager.ForgetQueuedEventGroup(e.RequestId);
-                EmitResponseEvent(client, queuedEvents.ResponseReceivedEvent, e);
+                this._networkEventManager.ForgetQueuedEventGroup(e.RequestId);
+                this.EmitResponseEvent(client, queuedEvents.ResponseReceivedEvent, e);
 
                 if (queuedEvents.LoadingFinishedEvent != null)
                 {
-                    EmitLoadingFinished(queuedEvents.LoadingFinishedEvent);
+                    this.EmitLoadingFinished(queuedEvents.LoadingFinishedEvent);
                 }
 
                 if (queuedEvents.LoadingFailedEvent != null)
                 {
-                    EmitLoadingFailed(queuedEvents.LoadingFailedEvent);
+                    this.EmitLoadingFailed(queuedEvents.LoadingFailedEvent);
                 }
 
                 return;
             }
 
             // Wait until we get another event that can use this ExtraInfo event.
-            _networkEventManager.ResponseExtraInfo(e.RequestId).Add(e);
+            this._networkEventManager.ResponseExtraInfo(e.RequestId).Add(e);
         }
 
         private void OnLoadingFailed(LoadingFailedEventResponse e)
         {
-            var queuedEvents = _networkEventManager.GetQueuedEventGroup(e.RequestId);
+            var queuedEvents = this._networkEventManager.GetQueuedEventGroup(e.RequestId);
 
             if (queuedEvents != null)
             {
@@ -257,7 +263,7 @@ namespace PuppeteerAot.Cdp
 
         private void EmitLoadingFailed(LoadingFailedEventResponse e)
         {
-            var request = _networkEventManager.GetRequest(e.RequestId);
+            var request = this._networkEventManager.GetRequest(e.RequestId);
             if (request == null)
             {
                 return;
@@ -273,7 +279,7 @@ namespace PuppeteerAot.Cdp
 
         private void OnLoadingFinished(LoadingFinishedEventResponse e)
         {
-            var queuedEvents = _networkEventManager.GetQueuedEventGroup(e.RequestId);
+            var queuedEvents = this._networkEventManager.GetQueuedEventGroup(e.RequestId);
 
             if (queuedEvents != null)
             {
@@ -287,7 +293,7 @@ namespace PuppeteerAot.Cdp
 
         private void EmitLoadingFinished(LoadingFinishedEventResponse e)
         {
-            var request = _networkEventManager.GetRequest(e.RequestId);
+            var request = this._networkEventManager.GetRequest(e.RequestId);
             if (request == null)
             {
                 return;
@@ -301,7 +307,7 @@ namespace PuppeteerAot.Cdp
 
         private void ForgetRequest(CdpHttpRequest request, bool events)
         {
-            _networkEventManager.ForgetRequest(request.Id);
+            this._networkEventManager.ForgetRequest(request.Id);
 
             if (request.InterceptionId != null)
             {
@@ -310,22 +316,22 @@ namespace PuppeteerAot.Cdp
 
             if (events)
             {
-                _networkEventManager.Forget(request.Id);
+                this._networkEventManager.Forget(request.Id);
             }
         }
 
         private void OnResponseReceived(CDPSession client, ResponseReceivedResponse e)
         {
-            var request = _networkEventManager.GetRequest(e.RequestId);
-            ResponseReceivedExtraInfoResponse extraInfo = null;
+            var request = this._networkEventManager.GetRequest(e.RequestId);
+            ResponseReceivedExtraInfoResponse? extraInfo = null;
 
             if (request is { FromMemoryCache: false } && e.HasExtraInfo)
             {
-                extraInfo = _networkEventManager.ShiftResponseExtraInfo(e.RequestId);
+                extraInfo = this._networkEventManager.ShiftResponseExtraInfo(e.RequestId);
 
                 if (extraInfo == null)
                 {
-                    _networkEventManager.QueuedEventGroup(e.RequestId, new()
+                    this._networkEventManager.QueuedEventGroup(e.RequestId, new()
                     {
                         ResponseReceivedEvent = e,
                     });
@@ -333,12 +339,18 @@ namespace PuppeteerAot.Cdp
                 }
             }
 
-            EmitResponseEvent(client, e, extraInfo);
+            this.EmitResponseEvent(client, e, extraInfo);
         }
 
-        private void EmitResponseEvent(CDPSession client, ResponseReceivedResponse e, ResponseReceivedExtraInfoResponse extraInfo)
+        /// <summary>
+        /// Emits the response event.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="e"></param>
+        /// <param name="extraInfo"></param>
+        private void EmitResponseEvent(CDPSession client, ResponseReceivedResponse e, ResponseReceivedExtraInfoResponse? extraInfo)
         {
-            var request = _networkEventManager.GetRequest(e.RequestId);
+            var request = this._networkEventManager.GetRequest(e.RequestId);
 
             // FileUpload sends a response without a matching request.
             if (request == null)
@@ -359,13 +371,13 @@ namespace PuppeteerAot.Cdp
 
             request.Response = response;
 
-            Response?.Invoke(this, new ResponseCreatedEventArgs(response));
+            this.Response?.Invoke(this, new ResponseCreatedEventArgs(response));
         }
 
         private async Task OnAuthRequiredAsync(CDPSession client, FetchAuthRequiredResponse e)
         {
             var response = "Default";
-            if (_attemptedAuthentications.Contains(e.RequestId))
+            if (this._attemptedAuthentications.Contains(e.RequestId))
             {
                 response = "CancelAuth";
             }
@@ -418,7 +430,7 @@ namespace PuppeteerAot.Cdp
                 return;
             }
 
-            var requestWillBeSentEvent = _networkEventManager.GetRequestWillBeSent(e.NetworkId);
+            var requestWillBeSentEvent = this._networkEventManager.GetRequestWillBeSent(e.NetworkId);
 
             // redirect requests have the same `requestId`,
             if (
@@ -426,18 +438,18 @@ namespace PuppeteerAot.Cdp
                 (requestWillBeSentEvent.Request.Url != e.Request.Url ||
                 requestWillBeSentEvent.Request.Method != e.Request.Method))
             {
-                _networkEventManager.ForgetRequestWillBeSent(e.NetworkId);
+                this._networkEventManager.ForgetRequestWillBeSent(e.NetworkId);
                 requestWillBeSentEvent = null;
             }
 
             if (requestWillBeSentEvent != null)
             {
-                PatchRequestEventHeaders(requestWillBeSentEvent, e);
-                await OnRequestAsync(client, requestWillBeSentEvent, e.RequestId).ConfigureAwait(false);
+                this.PatchRequestEventHeaders(requestWillBeSentEvent, e);
+                await this.OnRequestAsync(client, requestWillBeSentEvent, e.RequestId).ConfigureAwait(false);
             }
             else
             {
-                _networkEventManager.StoreRequestPaused(e.NetworkId, e);
+                this._networkEventManager.StoreRequestPaused(e.NetworkId, e);
             }
         }
 
@@ -468,13 +480,13 @@ namespace PuppeteerAot.Cdp
             var redirectChain = new List<IRequest>();
             if (e.RedirectResponse != null)
             {
-                ResponseReceivedExtraInfoResponse redirectResponseExtraInfo = null;
+                ResponseReceivedExtraInfoResponse? redirectResponseExtraInfo = null;
                 if (e.RedirectHasExtraInfo)
                 {
-                    redirectResponseExtraInfo = _networkEventManager.ShiftResponseExtraInfo(e.RequestId);
+                    redirectResponseExtraInfo = this._networkEventManager.ShiftResponseExtraInfo(e.RequestId);
                     if (redirectResponseExtraInfo == null)
                     {
-                        _networkEventManager.QueueRedirectInfo(e.RequestId, new()
+                        this._networkEventManager.QueueRedirectInfo(e.RequestId, new()
                         {
                             Event = e,
                             FetchRequestId = fetchRequestId,
@@ -483,7 +495,7 @@ namespace PuppeteerAot.Cdp
                     }
                 }
 
-                request = _networkEventManager.GetRequest(e.RequestId);
+                request = this._networkEventManager.GetRequest(e.RequestId);
 
                 // If we connect late to the target, we could have missed the requestWillBeSent event.
                 if (request != null)
@@ -504,7 +516,7 @@ namespace PuppeteerAot.Cdp
                 redirectChain,
                 _loggerFactory);
 
-            _networkEventManager.StoreRequest(e.RequestId, request);
+            this._networkEventManager.StoreRequest(e.RequestId, request);
 
             Request?.Invoke(this, new RequestEventArgs(request));
 
@@ -520,7 +532,7 @@ namespace PuppeteerAot.Cdp
 
         private void OnRequestServedFromCache(RequestServedFromCacheResponse response)
         {
-            var request = _networkEventManager.GetRequest(response.RequestId);
+            var request = this._networkEventManager.GetRequest(response.RequestId);
 
             if (request != null)
             {
@@ -554,15 +566,15 @@ namespace PuppeteerAot.Cdp
             // Request interception doesn't happen for data URLs with Network Service.
             if (_userRequestInterceptionEnabled && !e.Request.Url.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase))
             {
-                _networkEventManager.StoreRequestWillBeSent(e.RequestId, e);
+                this._networkEventManager.StoreRequestWillBeSent(e.RequestId, e);
 
-                var requestPausedEvent = _networkEventManager.GetRequestPaused(e.RequestId);
+                var requestPausedEvent = this._networkEventManager.GetRequestPaused(e.RequestId);
                 if (requestPausedEvent != null)
                 {
                     var fetchRequestId = requestPausedEvent.RequestId;
                     PatchRequestEventHeaders(e, requestPausedEvent);
                     await OnRequestAsync(client, e, fetchRequestId).ConfigureAwait(false);
-                    _networkEventManager.ForgetRequestPaused(e.RequestId);
+                    this._networkEventManager.ForgetRequestPaused(e.RequestId);
                 }
 
                 return;
@@ -590,19 +602,19 @@ namespace PuppeteerAot.Cdp
                 "Network.setUserAgentOverride",
                 new NetworkSetUserAgentOverrideRequest
                 {
-                    UserAgent = _userAgent,
-                    UserAgentMetadata = _userAgentMetadata,
+                    UserAgent = this._userAgent,
+                    UserAgentMetadata = this.userAgentMetadata,
                 }).ConfigureAwait(false);
         }
 
         private async Task ApplyProtocolRequestInterceptionAsync(ICDPSession client)
         {
-            _userCacheDisabled ??= false;
+            this._userCacheDisabled ??= false;
 
-            if (_protocolRequestInterceptionEnabled)
+            if (this._protocolRequestInterceptionEnabled)
             {
                 await Task.WhenAll(
-                    ApplyProtocolCacheDisabledAsync(client),
+                    this.ApplyProtocolCacheDisabledAsync(client),
                     client.SendAsync(
                         "Fetch.enable",
                         new FetchEnableRequest
@@ -614,7 +626,7 @@ namespace PuppeteerAot.Cdp
             else
             {
                 await Task.WhenAll(
-                    ApplyProtocolCacheDisabledAsync(client),
+                    this.ApplyProtocolCacheDisabledAsync(client),
                     client.SendAsync("Fetch.disable")).ConfigureAwait(false);
             }
         }
@@ -628,12 +640,12 @@ namespace PuppeteerAot.Cdp
 
             await client.SendAsync(
                 "Network.setCacheDisabled",
-                new NetworkSetCacheDisabledRequest(_userCacheDisabled.Value)).ConfigureAwait(false);
+                new NetworkSetCacheDisabledRequest(this._userCacheDisabled.Value)).ConfigureAwait(false);
         }
 
         private async Task ApplyNetworkConditionsAsync(ICDPSession client)
         {
-            if (_emulatedNetworkConditions == null)
+            if (this.emulatedNetworkConditions == null)
             {
                 return;
             }
@@ -642,10 +654,10 @@ namespace PuppeteerAot.Cdp
                 "Network.emulateNetworkConditions",
                 new NetworkEmulateNetworkConditionsRequest
                 {
-                    Offline = _emulatedNetworkConditions.Offline,
-                    Latency = _emulatedNetworkConditions.Latency,
-                    UploadThroughput = _emulatedNetworkConditions.Upload,
-                    DownloadThroughput = _emulatedNetworkConditions.Download,
+                    Offline = emulatedNetworkConditions.Offline,
+                    Latency = emulatedNetworkConditions.Latency,
+                    UploadThroughput = emulatedNetworkConditions.Upload,
+                    DownloadThroughput = emulatedNetworkConditions.Download,
                 }).ConfigureAwait(false);
         }
 

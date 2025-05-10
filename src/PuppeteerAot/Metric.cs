@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     public struct Metric
     {

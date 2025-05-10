@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Browser fetcher options used to construct a <see cref="BrowserFetcher"/>.

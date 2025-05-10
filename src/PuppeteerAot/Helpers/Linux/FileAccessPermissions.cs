@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot.Helpers.Linux
+namespace Puppeteer.Helpers.Linux
 {
     [Flags]
     public enum FileAccessPermissions : uint

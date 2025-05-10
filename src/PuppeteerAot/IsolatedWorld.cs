@@ -1,3 +1,7 @@
+// <copyright file="IsolatedWorld.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,11 +10,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// A LazyArg is an evaluation argument that will be resolved when the CDP call is built.
@@ -26,66 +30,107 @@ namespace PuppeteerAot
         private readonly TaskQueue _bindingQueue = new();
         private bool _detached;
         private TaskCompletionSource<ExecutionContext> _contextResolveTaskWrapper = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        private ExecutionContext _context;
+        private ExecutionContext? context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IsolatedWorld"/> class.
+        /// </summary>
+        /// <param name="frame">The frame associated with this isolated world.</param>
+        /// <param name="worker"></param>
+        /// <param name="timeoutSettings"></param>
+        /// <param name="isMainWorld"></param>
         public IsolatedWorld(
             Frame frame,
             WebWorker worker,
             TimeoutSettings timeoutSettings,
             bool isMainWorld) : base(timeoutSettings)
         {
-            Frame = frame;
-            Worker = worker;
-            IsMainWorld = isMainWorld;
-            _logger = Client.Connection.LoggerFactory.CreateLogger<IsolatedWorld>();
+            this.Frame = frame;
+            this.Worker = worker;
+            this.IsMainWorld = isMainWorld;
+            this._logger = Client.Connection.LoggerFactory.CreateLogger<IsolatedWorld>();
 
-            _detached = false;
-            FrameUpdated();
+            this._detached = false;
+            this.FrameUpdated();
         }
 
         /// <summary>
-        /// This property is not upstream. It's helpful for debugging.
+        /// Gets a value indicating whether this property is not upstream. It's helpful for debugging.
         /// </summary>
         public bool IsMainWorld { get; }
 
+        /// <summary>
+        /// Gets the frame associated with this isolated world.
+        /// </summary>
         public Frame Frame { get; }
 
-        public CDPSession Client => Frame?.Client ?? Worker?.Client;
+        /// <summary>
+        /// Gets the client associated with this isolated world.
+        /// </summary>
+        public CDPSession Client => this.Frame?.Client ?? Worker?.Client;
 
-        public bool HasContext => _contextResolveTaskWrapper?.Task.IsCompleted == true;
+        /// <summary>
+        /// Gets a value indicating whether gets the context associated with this isolated world.
+        /// </summary>
+        public bool HasContext => this._contextResolveTaskWrapper?.Task.IsCompleted == true;
 
+        /// <summary>
+        /// Gets the context associated with this isolated world.
+        /// </summary>
         public ConcurrentDictionary<string, Binding> Bindings { get; } = new();
 
-        public override IEnvironment Environment => (IEnvironment)Frame ?? Worker;
+        /// <summary>
+        /// Gets the context associated with this isolated world.
+        /// </summary>
+        public override IEnvironment Environment => (IEnvironment)this.Frame ?? this.Worker;
 
+        /// <summary>
+        /// Gets the worker associated with this isolated world.
+        /// </summary>
         private WebWorker Worker { get; }
 
+        /// <summary>
+        /// Disposes the isolated world.
+        /// </summary>
         public void Dispose()
         {
-            _bindingQueue.Dispose();
-            _context?.Dispose();
+            this._bindingQueue.Dispose();
+            this.context?.Dispose();
         }
 
+        /// <summary>
+        /// Asynchronously disposes the isolated world.
+        /// </summary>
+        /// <returns></returns>
         public async ValueTask DisposeAsync()
         {
-            await _bindingQueue.DisposeAsync().ConfigureAwait(false);
-            if (_context != null)
+            await this._bindingQueue.DisposeAsync().ConfigureAwait(false);
+            if (this.context != null)
             {
-                await _context.DisposeAsync().ConfigureAwait(false);
+                await this.context.DisposeAsync().ConfigureAwait(false);
             }
         }
 
-        public void FrameUpdated() => Client.MessageReceived += Client_MessageReceived;
+        /// <summary>
+        /// Sets the frame updated event handler.
+        /// </summary>
+        public void FrameUpdated() => this.Client.MessageReceived += this.Client_MessageReceived;
 
+        /// <summary>
+        /// Adds a binding to the context.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public async Task AddBindingToContextAsync(ExecutionContext context, string name)
         {
             // Previous operation added the binding so we are done.
-            if (_contextBindings.Contains(name))
+            if (this._contextBindings.Contains(name))
             {
                 return;
             }
 
-            await _bindingQueue.Enqueue(async () =>
+            await this._bindingQueue.Enqueue(async () =>
             {
                 var expression = BindingUtils.PageBindingInitString("internal", name);
                 try
@@ -96,7 +141,7 @@ namespace PuppeteerAot
                         new RuntimeAddBindingRequest
                         {
                             Name = name,
-                            ExecutionContextName = !string.IsNullOrEmpty(context.ContextName) ? context.ContextName : null,
+                            ExecutionContextName = !string.IsNullOrEmpty(this.context.ContextName) ? this.context.ContextName : null,
                             ExecutionContextId = string.IsNullOrEmpty(context.ContextName) ? context.ContextId : null,
                         }).ConfigureAwait(false);
 
@@ -224,8 +269,8 @@ namespace PuppeteerAot
         {
             _contextResolveTaskWrapper.TrySetException(new PuppeteerException("Execution Context was destroyed"));
             _contextResolveTaskWrapper = new TaskCompletionSource<ExecutionContext>(TaskCreationOptions.RunContinuationsAsynchronously);
-            _context?.Dispose();
-            _context = null;
+            this.context?.Dispose();
+            this.context = null;
             Frame?.ClearDocumentHandle();
         }
 
@@ -234,14 +279,19 @@ namespace PuppeteerAot
             ContextPayload contextPayload,
             IsolatedWorld world)
         {
-            _context = new ExecutionContext(
+            this.context = new ExecutionContext(
                 client,
                 contextPayload,
                 world);
 
-            SetContext(_context);
+            this.SetContext(this.context);
         }
 
+        /// <summary>
+        /// Sets the context for the isolated world.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void SetContext(ExecutionContext context)
         {
             if (context is null)

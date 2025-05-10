@@ -4,9 +4,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     public abstract class Response<TRequest>

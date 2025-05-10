@@ -3,11 +3,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     public class ChromeTargetManager : ITargetManager
     {
@@ -34,14 +35,14 @@ namespace PuppeteerAot.Cdp
             Browser browser,
             int targetDiscoveryTimeout = 0)
         {
-            _connection = connection;
-            _targetFilterFunc = targetFilterFunc;
-            _targetFactoryFunc = targetFactoryFunc;
-            _logger = _connection.LoggerFactory.CreateLogger<ChromeTargetManager>();
-            _connection.MessageReceived += OnMessageReceived;
-            _connection.SessionDetached += Connection_SessionDetached;
-            _targetDiscoveryTimeout = targetDiscoveryTimeout;
-            _browser = browser;
+            this._connection = connection;
+            this._targetFilterFunc = targetFilterFunc;
+            this._targetFactoryFunc = targetFactoryFunc;
+            this._logger = this._connection.LoggerFactory.CreateLogger<ChromeTargetManager>();
+            this._connection.MessageReceived += OnMessageReceived;
+            this._connection.SessionDetached += this.Connection_SessionDetached;
+            this._targetDiscoveryTimeout = targetDiscoveryTimeout;
+            this._browser = browser;
         }
 
         public event EventHandler<TargetChangedArgs> TargetAvailable;
@@ -238,24 +239,24 @@ namespace PuppeteerAot.Cdp
             var parentSession = sender as CDPSession;
 
             var targetInfo = e.TargetInfo;
-            var session = _connection.GetSession(e.SessionId) ?? throw new PuppeteerException($"Session {e.SessionId} was not created.");
+            var session = this._connection.GetSession(e.SessionId) ?? throw new PuppeteerException($"Session {e.SessionId} was not created.");
 
-            if (!_connection.IsAutoAttached(targetInfo.TargetId))
+            if (!this._connection.IsAutoAttached(targetInfo.TargetId))
             {
                 return;
             }
 
             if (targetInfo.Type == TargetType.ServiceWorker)
             {
-                await EnsureTargetsIdsForInitAsync().ConfigureAwait(false);
-                FinishInitializationIfReady(targetInfo.TargetId);
+                await this.EnsureTargetsIdsForInitAsync().ConfigureAwait(false);
+                this.FinishInitializationIfReady(targetInfo.TargetId);
                 await SilentDetach().ConfigureAwait(false);
-                if (_attachedTargetsByTargetId.ContainsKey(targetInfo.TargetId))
+                if (this._attachedTargetsByTargetId.ContainsKey(targetInfo.TargetId))
                 {
                     return;
                 }
 
-                var workerTarget = _targetFactoryFunc(targetInfo, null, null);
+                var workerTarget = this._targetFactoryFunc(targetInfo, null, null);
                 workerTarget.Initialize();
                 _attachedTargetsByTargetId.AddItem(targetInfo.TargetId, workerTarget);
                 TargetAvailable?.Invoke(this, new TargetChangedArgs { Target = workerTarget });
@@ -294,15 +295,15 @@ namespace PuppeteerAot.Cdp
 
             (parentSession ?? parentConnection as CDPSession)?.OnSessionReady(session);
 
-            await EnsureTargetsIdsForInitAsync().ConfigureAwait(false);
-            _targetsIdsForInit.Remove(target.TargetId);
+            await this.EnsureTargetsIdsForInitAsync().ConfigureAwait(false);
+            this._targetsIdsForInit.Remove(target.TargetId);
 
             if (!isExistingTarget)
             {
-                TargetAvailable?.Invoke(this, new TargetChangedArgs { Target = target });
+                this.TargetAvailable?.Invoke(this, new TargetChangedArgs { Target = target });
             }
 
-            FinishInitializationIfReady();
+            this.FinishInitializationIfReady();
 
             try
             {
@@ -360,16 +361,16 @@ namespace PuppeteerAot.Cdp
             _connection.Close(message);
         }
 
-        private void FinishInitializationIfReady(string targetId = null)
+        private void FinishInitializationIfReady(string? targetId = null)
         {
             if (targetId != null)
             {
-                _targetsIdsForInit.Remove(targetId);
+                this._targetsIdsForInit.Remove(targetId);
             }
 
-            if (_targetsIdsForInit.Count == 0)
+            if (this._targetsIdsForInit.Count == 0)
             {
-                _initializeCompletionSource.TrySetResult(true);
+                this._initializeCompletionSource.TrySetResult(true);
             }
         }
 

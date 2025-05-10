@@ -3,10 +3,10 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     public static class BindingUtils
     {
@@ -70,14 +70,25 @@ namespace PuppeteerAot
         {
             return $"({fun})({string.Join(",", args.Select(SerializeArgument))})";
 
-            static string SerializeArgument(object arg)
+            static string SerializeArgument(object? arg)
             {
-                return arg == null
-                    ? "undefined"
-                    : JsonSerializer.Serialize(arg, JsonHelper.DefaultJsonSerializerSettings);
+                if (arg == null)
+                {
+                    return "undefined";
+                }
+
+                var json = JsonSerializer.Serialize(arg, JsonHelper.DefaultJsonSerializerSettings);
+                return json;
             }
         }
 
+        /// <summary>
+        /// Executes a binding asynchronously within the specified execution context.
+        /// </summary>
+        /// <param name="context">The execution context in which the binding is executed.</param>
+        /// <param name="e">The binding call response containing the binding payload.</param>
+        /// <param name="pageBindings">A dictionary of page bindings available for execution.</param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         public static async Task ExecuteBindingAsync(ExecutionContext context, BindingCalledResponse e, ConcurrentDictionary<string, Binding> pageBindings)
         {
             var binding = pageBindings[e.BindingPayload.Name];

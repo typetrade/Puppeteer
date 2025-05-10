@@ -1,4 +1,4 @@
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     /// <summary>
     /// Set of configurable options for coverage.

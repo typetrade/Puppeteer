@@ -21,9 +21,9 @@
 //  * SOFTWARE.
 
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpDialog : Dialog

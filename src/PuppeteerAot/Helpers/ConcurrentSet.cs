@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 // namespace Roslyn.Utilities
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     /// <summary>
     /// A concurrent, simplified HashSet.

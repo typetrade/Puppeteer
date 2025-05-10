@@ -1,9 +1,9 @@
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.Media;
+using Puppeteer.Helpers.Json;
+using Puppeteer.Media;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter<DispatchKeyEventType>))]
     public enum DispatchKeyEventType

@@ -1,8 +1,12 @@
-using PuppeteerAot.Helpers.Json;
+// <copyright file="TargetType.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Target type.

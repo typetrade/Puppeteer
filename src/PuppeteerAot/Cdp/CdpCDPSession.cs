@@ -27,10 +27,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 // This is a pretty terrible name, but it matches upstream
 
@@ -71,9 +71,9 @@ public class CdpCDPSession : CDPSession
     }
 
     /// <inheritdoc/>
-    public override async Task<JsonElement> SendAsync(string method, object args = null, bool waitForCallback = true, CommandOptions options = null)
+    public override async Task<JsonElement> SendAsync(string method, object? args = null, bool waitForCallback = true, CommandOptions? options = null)
     {
-        if (Connection == null)
+        if (this.Connection == null)
         {
             throw new TargetClosedException(
                 $"Protocol error ({method}): Session closed. " +
@@ -82,10 +82,10 @@ public class CdpCDPSession : CDPSession
                 _closeReason);
         }
 
-        var id = GetMessageID();
-        var message = Connection.GetMessage(id, method, args, Id);
+        var id = this.GetMessageID();
+        var message = this.Connection.GetMessage(id, method, args, Id);
 
-        MessageTask callback = null;
+        MessageTask? callback = null;
         if (waitForCallback)
         {
             callback = new MessageTask
@@ -94,18 +94,18 @@ public class CdpCDPSession : CDPSession
                 Method = method,
                 Message = message,
             };
-            _callbacks[id] = callback;
+            this._callbacks[id] = callback;
         }
 
         try
         {
-            await Connection.RawSendAsync(message, options).ConfigureAwait(false);
+            await this.Connection.RawSendAsync(message, options).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            if (waitForCallback && _callbacks.TryRemove(id, out _))
+            if (waitForCallback && this._callbacks.TryRemove(id, out _))
             {
-                callback.TaskWrapper.TrySetException(new MessageException(ex.Message, ex));
+                callback?.TaskWrapper.TrySetException(new MessageException(ex.Message, ex));
             }
         }
 
@@ -154,8 +154,8 @@ public class CdpCDPSession : CDPSession
                 closeReason));
         }
 
-        _callbacks.Clear();
-        OnDisconnected();
-        Connection = null;
+        this._callbacks.Clear();
+        this.OnDisconnected();
+        this.Connection = null;
     }
 }

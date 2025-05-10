@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Input;
+using Puppeteer.Input;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
-    /// <inheritdoc cref="PuppeteerAot.IFrame" />
+    /// <inheritdoc cref="Puppeteer.IFrame" />
     public abstract class Frame : IFrame, IEnvironment
     {
-        private Task<ElementHandle> _documentTask;
+        private Task<ElementHandle>? documentTask;
 
         /// <inheritdoc />
         public event EventHandler FrameSwappedByActivation;
@@ -82,11 +82,11 @@ namespace PuppeteerAot
         public abstract Task<IResponse> GoToAsync(string url, NavigationOptions options);
 
         /// <inheritdoc/>
-        public Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[] waitUntil = null)
+        public Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[]? waitUntil = null)
             => GoToAsync(url, new NavigationOptions { Timeout = timeout, WaitUntil = waitUntil });
 
         /// <inheritdoc/>
-        public abstract Task<IResponse> WaitForNavigationAsync(NavigationOptions options = null);
+        public abstract Task<IResponse> WaitForNavigationAsync(NavigationOptions? options = null);
 
         /// <inheritdoc/>
         public Task<JsonElement> EvaluateExpressionAsync(string script) => MainRealm.EvaluateExpressionAsync(script);
@@ -107,7 +107,7 @@ namespace PuppeteerAot
         public Task<IJSHandle> EvaluateFunctionHandleAsync(string function, params object[] args) => MainRealm.EvaluateFunctionHandleAsync(function, args);
 
         /// <inheritdoc/>
-        public async Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions options = null)
+        public async Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions? options = null)
         {
             if (string.IsNullOrEmpty(selector))
             {
@@ -203,13 +203,13 @@ namespace PuppeteerAot
             }");
 
         /// <inheritdoc/>
-        public abstract Task SetContentAsync(string html, NavigationOptions options = null);
+        public abstract Task SetContentAsync(string html, NavigationOptions? options = null);
 
         /// <inheritdoc/>
         public Task<string> GetTitleAsync() => IsolatedRealm.EvaluateExpressionAsync<string>("document.title");
 
         /// <inheritdoc/>
-        public async Task ClickAsync(string selector, ClickOptions options = null)
+        public async Task ClickAsync(string selector, ClickOptions? options = null)
         {
             var handle = await QuerySelectorAsync(selector).ConfigureAwait(false);
 
@@ -262,7 +262,7 @@ namespace PuppeteerAot
         }
 
         /// <inheritdoc/>
-        public async Task TypeAsync(string selector, string text, TypeOptions options = null)
+        public async Task TypeAsync(string selector, string text, TypeOptions? options = null)
         {
             var handle = await QuerySelectorAsync(selector).ConfigureAwait(false);
 
@@ -274,45 +274,77 @@ namespace PuppeteerAot
             await handle.TypeAsync(text, options).ConfigureAwait(false);
         }
 
-        public void ClearDocumentHandle() => _documentTask = null;
+        /// <summary>
+        /// Clears the document handle.
+        /// </summary>
+        public void ClearDocumentHandle() => this.documentTask = null;
 
-        public void OnLoadingStarted() => HasStartedLoading = true;
+        /// <summary>
+        /// Sets the loading state.
+        /// </summary>
+        public void OnLoadingStarted() => this.HasStartedLoading = true;
 
+        /// <summary>
+        /// Sets the loading state.
+        /// </summary>
         public void OnLoadingStopped()
         {
-            LifecycleEvents.Add("DOMContentLoaded");
-            LifecycleEvents.Add("load");
-            LifecycleEvent?.Invoke(this, EventArgs.Empty);
+            this.LifecycleEvents.Add("DOMContentLoaded");
+            this.LifecycleEvents.Add("load");
+            this.LifecycleEvent?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Sets the loader id and clears the lifecycle events.
+        /// </summary>
+        /// <param name="loaderId"></param>
+        /// <param name="name"></param>
         public void OnLifecycleEvent(string loaderId, string name)
         {
             if (name == "init")
             {
-                LoaderId = loaderId;
-                LifecycleEvents.Clear();
+                this.LoaderId = loaderId;
+                this.LifecycleEvents.Clear();
             }
 
-            LifecycleEvents.Add(name);
-            LifecycleEvent?.Invoke(this, EventArgs.Empty);
+            this.LifecycleEvents.Add(name);
+            this.LifecycleEvent?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Sets the frame name and URL.
+        /// </summary>
+        /// <param name="framePayload"></param>
         public void Navigated(FramePayload framePayload)
         {
-            Name = framePayload.Name ?? string.Empty;
-            Url = framePayload.Url + framePayload.UrlFragment;
+            this.Name = framePayload.Name ?? string.Empty;
+            this.Url = framePayload.Url + framePayload.UrlFragment;
         }
 
+        /// <summary>
+        /// Sets the frame name and URL.
+        /// </summary>
+        /// <param name="e"></param>
         public void OnFrameNavigated(FrameNavigatedEventArgs e) => FrameNavigated?.Invoke(this, e);
 
+        /// <summary>
+        /// Sets the frame name and URL.
+        /// </summary>
         public void OnSwapped() => FrameSwapped?.Invoke(this, EventArgs.Empty);
 
+        /// <summary>
+        /// Sets the frame name and URL.
+        /// </summary>
+        /// <param name="url"></param>
         public void NavigatedWithinDocument(string url)
         {
             Url = url;
             FrameNavigatedWithinDocument?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Detaches the frame.
+        /// </summary>
         public void Detach()
         {
             Detached = true;
@@ -321,12 +353,19 @@ namespace PuppeteerAot
             FrameDetached?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Sets the frame name and URL.
+        /// </summary>
         public void OnFrameSwappedByActivation()
             => FrameSwappedByActivation?.Invoke(this, EventArgs.Empty);
 
-        public async Task<ElementHandle> FrameElementAsync()
+        /// <summary>
+        /// Gets the frame element.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ElementHandle?> FrameElementAsync()
         {
-            var parentFrame = ParentFrame;
+            var parentFrame = this.ParentFrame;
             if (parentFrame == null)
             {
                 return null;
@@ -350,7 +389,7 @@ namespace PuppeteerAot
                 }
                 catch
                 {
-                    Logger.LogWarning("FrameElementAsync: Error disposing iframe");
+                    this.Logger.LogWarning("FrameElementAsync: Error disposing iframe");
                 }
             }
 
@@ -365,9 +404,9 @@ namespace PuppeteerAot
 
         private Task<ElementHandle> GetDocumentAsync()
         {
-            if (_documentTask != null)
+            if (this.documentTask != null)
             {
-                return _documentTask;
+                return this.documentTask;
             }
 
             async Task<ElementHandle> EvaluateDocumentInContext()
@@ -382,9 +421,9 @@ namespace PuppeteerAot
                 return await MainRealm.TransferHandleAsync(document).ConfigureAwait(false) as ElementHandle;
             }
 
-            _documentTask = EvaluateDocumentInContext();
+            documentTask = EvaluateDocumentInContext();
 
-            return _documentTask;
+            return documentTask;
         }
     }
 }

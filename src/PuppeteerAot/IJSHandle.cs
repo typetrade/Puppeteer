@@ -1,11 +1,15 @@
+// <copyright file="IJSHandle.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// IJSHandle represents an in-page JavaScript object. JSHandles can be created with the <see cref="IPage.EvaluateExpressionHandleAsync(string)"/> and <see cref="IPage.EvaluateFunctionHandleAsync(string, object[])"/> methods.

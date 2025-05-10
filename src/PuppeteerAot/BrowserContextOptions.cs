@@ -6,11 +6,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.QueryHandlers;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
+using Puppeteer.QueryHandlers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// BrowserContext options.

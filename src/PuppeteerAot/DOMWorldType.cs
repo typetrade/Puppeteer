@@ -1,8 +1,8 @@
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter<DOMWorldType>))]
     public enum DOMWorldType

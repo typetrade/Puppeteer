@@ -1,14 +1,16 @@
+// <copyright file="Tracing.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// You can use <see cref="ITracing.StartAsync(TracingOptions)"/> and <see cref="ITracing.StopAsync"/> to create a trace file which can be opened in Chrome DevTools or timeline viewer.
@@ -60,7 +62,7 @@ namespace PuppeteerAot
         /// </summary>
         /// <returns>Start task.</returns>
         /// <param name="options">Tracing options.</param>
-        public Task StartAsync(TracingOptions options = null)
+        public Task StartAsync(TracingOptions? options = null)
         {
             if (_recording)
             {

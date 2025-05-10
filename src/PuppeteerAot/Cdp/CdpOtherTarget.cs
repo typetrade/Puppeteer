@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using PuppeteerAot.Helpers;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     /// <summary>
     /// Other target.

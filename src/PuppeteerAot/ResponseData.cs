@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Response that will fulfill a request.

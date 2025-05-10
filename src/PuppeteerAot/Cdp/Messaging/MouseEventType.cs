@@ -1,9 +1,9 @@
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.Input;
+using Puppeteer.Helpers.Json;
+using Puppeteer.Input;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter<MouseEventType>))]
     public enum MouseEventType

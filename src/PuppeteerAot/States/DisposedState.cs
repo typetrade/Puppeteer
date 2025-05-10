@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.States
+namespace Puppeteer.States
 {
     public class DisposedState : State
     {

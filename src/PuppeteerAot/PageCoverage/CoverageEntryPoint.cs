@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     public class CoverageEntryPoint : IComparable<CoverageEntryPoint>
     {

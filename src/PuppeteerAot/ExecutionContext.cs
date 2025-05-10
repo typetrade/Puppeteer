@@ -6,11 +6,11 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc cref="IExecutionContext"/>
     public sealed class ExecutionContext : IExecutionContext, IDisposable, IAsyncDisposable

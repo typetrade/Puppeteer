@@ -1,7 +1,11 @@
+// <copyright file="InitialState.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.States
+namespace Puppeteer.States
 {
     public class InitialState : State
     {

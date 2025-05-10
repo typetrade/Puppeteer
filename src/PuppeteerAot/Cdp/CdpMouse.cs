@@ -23,21 +23,24 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.Input;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
+using Puppeteer.Input;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc/>
 public class CdpMouse : Mouse
 {
+    /// <summary>
+    /// 
+    /// </summary>
     private readonly Keyboard _keyboard;
     private readonly MouseState _mouseState = new();
     private readonly TaskQueue _actionsQueue = new();
-    private readonly TaskQueue _multipleActionsQueue = new();
-    private MouseTransaction.TransactionData _inFlightTransaction = null;
+    private readonly TaskQueue multipleActionsQueue = new();
+    private MouseTransaction.TransactionData? inFlightTransaction;
     private CDPSession _client;
 
     /// <inheritdoc cref="Mouse"/>
@@ -48,7 +51,7 @@ public class CdpMouse : Mouse
     }
 
     /// <inheritdoc/>
-    public override async Task MoveAsync(decimal x, decimal y, MoveOptions options = null)
+    public override async Task MoveAsync(decimal x, decimal y, MoveOptions? options = null)
     {
         options ??= new MoveOptions();
 
@@ -86,11 +89,11 @@ public class CdpMouse : Mouse
     }
 
     /// <inheritdoc/>
-    public override Task ClickAsync(decimal x, decimal y, ClickOptions options = null)
+    public override Task ClickAsync(decimal x, decimal y, ClickOptions? options = null)
     {
         options ??= new ClickOptions();
 
-        return _multipleActionsQueue.Enqueue(async () =>
+        return multipleActionsQueue.Enqueue(async () =>
         {
             if (options.Delay > 0)
             {
@@ -112,7 +115,7 @@ public class CdpMouse : Mouse
     }
 
     /// <inheritdoc/>
-    public override Task DownAsync(ClickOptions options = null)
+    public override Task DownAsync(ClickOptions? options = null)
     {
         return WithTransactionAsync((updateState) =>
         {
@@ -143,7 +146,7 @@ public class CdpMouse : Mouse
     }
 
     /// <inheritdoc/>
-    public override Task UpAsync(ClickOptions options = null)
+    public override Task UpAsync(ClickOptions? options = null)
     {
         return WithTransactionAsync((updateState) =>
         {
@@ -195,7 +198,7 @@ public class CdpMouse : Mouse
     /// <inheritdoc/>
     public override Task<DragData> DragAsync(decimal startX, decimal startY, decimal endX, decimal endY)
     {
-        return _multipleActionsQueue.Enqueue(async () =>
+        return multipleActionsQueue.Enqueue(async () =>
         {
             var result = new TaskCompletionSource<DragData>();
 
@@ -261,7 +264,7 @@ public class CdpMouse : Mouse
     {
         // DragAsync is already using _multipleActionsQueue
         var data = await DragAsync(startX, startY, endX, endY).ConfigureAwait(false);
-        await _multipleActionsQueue.Enqueue(async () =>
+        await multipleActionsQueue.Enqueue(async () =>
         {
             await DragEnterAsync(endX, endY, data).ConfigureAwait(false);
             await DragOverAsync(endX, endY, data).ConfigureAwait(false);
@@ -279,7 +282,7 @@ public class CdpMouse : Mouse
     /// <inheritdoc/>
     public override Task ResetAsync()
     {
-        return _multipleActionsQueue.Enqueue(() =>
+        return multipleActionsQueue.Enqueue(() =>
         {
             var actions = new List<Task>();
             var state = GetState();
@@ -319,13 +322,13 @@ public class CdpMouse : Mouse
         if (disposing)
         {
             _actionsQueue.Dispose();
-            _multipleActionsQueue.Dispose();
+            multipleActionsQueue.Dispose();
         }
     }
 
     private MouseTransaction CreateTransaction()
     {
-        _inFlightTransaction = new MouseTransaction.TransactionData();
+        this.inFlightTransaction = new MouseTransaction.TransactionData();
 
         return new MouseTransaction()
         {
@@ -333,21 +336,21 @@ public class CdpMouse : Mouse
             {
                 if (updates.Position.HasValue)
                 {
-                    _inFlightTransaction.Position = updates.Position.Value;
+                    this.inFlightTransaction.Position = updates.Position.Value;
                 }
 
                 if (updates.Buttons.HasValue)
                 {
-                    _inFlightTransaction.Buttons = updates.Buttons.Value;
+                    this.inFlightTransaction.Buttons = updates.Buttons.Value;
                 }
             },
             Commit = () =>
             {
-                _mouseState.Position = _inFlightTransaction.Position ?? _mouseState.Position;
-                _mouseState.Buttons = _inFlightTransaction.Buttons ?? _mouseState.Buttons;
-                _inFlightTransaction = null;
+                _mouseState.Position = this.inFlightTransaction.Position ?? _mouseState.Position;
+                _mouseState.Buttons = this.inFlightTransaction.Buttons ?? _mouseState.Buttons;
+                this.inFlightTransaction = null;
             },
-            Rollback = () => _inFlightTransaction = null,
+            Rollback = () => this.inFlightTransaction = null,
         };
     }
 
@@ -407,16 +410,16 @@ public class CdpMouse : Mouse
             Buttons = _mouseState.Buttons,
         };
 
-        if (_inFlightTransaction != null)
+        if (this.inFlightTransaction != null)
         {
-            if (_inFlightTransaction.Position.HasValue)
+            if (this.inFlightTransaction.Position.HasValue)
             {
-                state.Position = _inFlightTransaction.Position.Value;
+                state.Position = this.inFlightTransaction.Position.Value;
             }
 
-            if (_inFlightTransaction.Buttons.HasValue)
+            if (this.inFlightTransaction.Buttons.HasValue)
             {
-                state.Buttons = _inFlightTransaction.Buttons.Value;
+                state.Buttons = this.inFlightTransaction.Buttons.Value;
             }
         }
 

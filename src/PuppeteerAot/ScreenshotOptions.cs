@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json.Serialization;
-using PuppeteerAot.Media;
+using Puppeteer.Media;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options to be used in <see cref="IPage.ScreenshotAsync(string, ScreenshotOptions)"/>, <see cref="IPage.ScreenshotStreamAsync(ScreenshotOptions)"/> and <see cref="IPage.ScreenshotDataAsync(ScreenshotOptions)"/>.

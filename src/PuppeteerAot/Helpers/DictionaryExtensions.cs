@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public static class DictionaryExtensions
     {

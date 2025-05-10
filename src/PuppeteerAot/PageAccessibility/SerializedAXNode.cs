@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace PuppeteerAot.PageAccessibility
+namespace Puppeteer.PageAccessibility
 {
     /// <summary>
     /// AXNode.
@@ -14,7 +14,7 @@ namespace PuppeteerAot.PageAccessibility
         public SerializedAXNode() => Children = Array.Empty<SerializedAXNode>();
 
         /// <summary>
-        /// The <see fref="https://www.w3.org/TR/wai-aria/#usage_intro">role</see>.
+        /// Gets or sets the <see fref="https://www.w3.org/TR/wai-aria/#usage_intro">role</see>.
         /// </summary>
         public string Role { get; set; }
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Page error event arguments.

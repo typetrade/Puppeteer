@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Transport
+// <copyright file="WebSocketFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Transport
 {
     using System;
     using System.Net.WebSockets;

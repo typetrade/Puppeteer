@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class EmulationSetEmulatedMediaFeatureRequest
     {

@@ -20,10 +20,10 @@
 //  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  * SOFTWARE.
 
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// Represents the source scheme of the origin that originally set the cookie. A value of

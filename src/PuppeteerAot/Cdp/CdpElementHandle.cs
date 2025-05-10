@@ -25,10 +25,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.QueryHandlers;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.QueryHandlers;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpElementHandle : ElementHandle

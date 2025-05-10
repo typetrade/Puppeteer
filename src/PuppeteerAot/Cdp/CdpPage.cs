@@ -28,22 +28,22 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Cdp.Messaging.Protocol.Network;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
-using PuppeteerAot.Media;
-using PuppeteerAot.PageAccessibility;
-using PuppeteerAot.PageCoverage;
-using StackTrace = PuppeteerAot.Cdp.Messaging.StackTrace;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging.Protocol.Network;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
+using Puppeteer.Media;
+using Puppeteer.PageAccessibility;
+using Puppeteer.PageCoverage;
+using StackTrace = Puppeteer.Cdp.Messaging.StackTrace;
 using Timer = System.Timers.Timer;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpPage : Page
 {
-    private static readonly Dictionary<string, decimal> _unitToPixels = new()
+    private static readonly Dictionary<string, decimal> unitToPixels = new()
     {
         ["px"] = 1,
         ["in"] = 96,
@@ -409,7 +409,7 @@ public class CdpPage : Page
         => FrameManager.NetworkManager.SetCacheEnabledAsync(enabled);
 
     /// <inheritdoc/>
-    public override Task SetUserAgentAsync(string userAgent, UserAgentMetadata userAgentData = null)
+    public override Task SetUserAgentAsync(string userAgent, UserAgentMetadata? userAgentData = null)
         => FrameManager.NetworkManager.SetUserAgentAsync(userAgent, userAgentData);
 
     /// <inheritdoc/>
@@ -426,7 +426,7 @@ public class CdpPage : Page
     }
 
     /// <inheritdoc/>
-    public override async Task WaitForNetworkIdleAsync(WaitForNetworkIdleOptions options = null)
+    public override async Task WaitForNetworkIdleAsync(WaitForNetworkIdleOptions? options = null)
     {
         var timeout = options?.Timeout ?? DefaultTimeout;
         var idleTime = options?.IdleTime ?? 500;
@@ -482,7 +482,7 @@ public class CdpPage : Page
     }
 
     /// <inheritdoc/>
-    public override async Task<IRequest> WaitForRequestAsync(Func<IRequest, bool> predicate, WaitForOptions options = null)
+    public override async Task<IRequest> WaitForRequestAsync(Func<IRequest, bool> predicate, WaitForOptions? options = null)
     {
         var timeout = options?.Timeout ?? DefaultTimeout;
         var requestTcs = new TaskCompletionSource<IRequest>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -513,7 +513,7 @@ public class CdpPage : Page
     }
 
     /// <inheritdoc/>
-    public override async Task<IFrame> WaitForFrameAsync(Func<IFrame, bool> predicate, WaitForOptions options = null)
+    public override async Task<IFrame> WaitForFrameAsync(Func<IFrame, bool> predicate, WaitForOptions? options = null)
     {
         if (predicate == null)
         {
@@ -581,7 +581,7 @@ public class CdpPage : Page
         => _emulationManager.EmulateTimezoneAsync(timezoneId);
 
     /// <inheritdoc/>
-    public override Task EmulateIdleStateAsync(EmulateIdleOverrides overrides = null)
+    public override Task EmulateIdleStateAsync(EmulateIdleOverrides? overrides = null)
         => _emulationManager.EmulateIdleStateAsync(overrides);
 
     /// <inheritdoc/>
@@ -589,15 +589,15 @@ public class CdpPage : Page
         => _emulationManager.EmulateCPUThrottlingAsync(factor);
 
     /// <inheritdoc/>
-    public override Task<IResponse> GoBackAsync(NavigationOptions options = null) => GoAsync(-1, options);
+    public override Task<IResponse?> GoBackAsync(NavigationOptions? options = null) => GoAsync(-1, options: options);
 
     /// <inheritdoc/>
-    public override Task<IResponse> GoForwardAsync(NavigationOptions options = null) => GoAsync(1, options);
+    public override Task<IResponse> GoForwardAsync(NavigationOptions? options = null) => GoAsync(1, options);
 
     /// <inheritdoc/>
     public override async Task<IResponse> WaitForResponseAsync(
         Func<IResponse, Task<bool>> predicate,
-        WaitForOptions options = null)
+        WaitForOptions? options = null)
     {
         var timeout = options?.Timeout ?? DefaultTimeout;
         var responseTcs = new TaskCompletionSource<IResponse>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -631,7 +631,7 @@ public class CdpPage : Page
     }
 
     /// <inheritdoc/>
-    public override async Task<FileChooser> WaitForFileChooserAsync(WaitForOptions options = null)
+    public override async Task<FileChooser> WaitForFileChooserAsync(WaitForOptions? options = null)
     {
         if (_fileChooserInterceptors.IsEmpty)
         {
@@ -684,7 +684,7 @@ public class CdpPage : Page
         FrameManager.NetworkManager.AuthenticateAsync(credentials);
 
     /// <inheritdoc/>
-    public override async Task CloseAsync(PageCloseOptions options = null)
+    public override async Task CloseAsync(PageCloseOptions? options = null)
     {
         if (Client?.Connection?.IsClosed ?? true)
         {
@@ -1225,7 +1225,7 @@ public class CdpPage : Page
             var text = parameter.ToString();
             var unit = text.Substring(text.Length - 2).ToLower(CultureInfo.CurrentCulture);
             string valueText;
-            if (_unitToPixels.ContainsKey(unit))
+            if (unitToPixels.ContainsKey(unit))
             {
                 valueText = text.Substring(0, text.Length - 2);
             }
@@ -1239,7 +1239,7 @@ public class CdpPage : Page
 
             if (decimal.TryParse(valueText, NumberStyles.Any, CultureInfo.InvariantCulture.NumberFormat, out var number))
             {
-                pixels = number * _unitToPixels[unit];
+                pixels = number * unitToPixels[unit];
             }
             else
             {
@@ -1273,7 +1273,7 @@ public class CdpPage : Page
             PrimaryTargetClient.SendAsync("Log.enable")).ConfigureAwait(false);
     }
 
-    private async Task<IResponse> GoAsync(int delta, NavigationOptions options)
+    private async Task<IResponse?> GoAsync(int delta, NavigationOptions options)
     {
         var history = await PrimaryTargetClient
             .SendAsync<PageGetNavigationHistoryResponse>("Page.getNavigationHistory").ConfigureAwait(false);
@@ -1300,7 +1300,7 @@ public class CdpPage : Page
         var omitBackgroundTask = options is { OmitBackground: true, Type: ScreenshotType.Png }
             ? _emulationManager.ResetDefaultBackgroundColorAsync()
             : Task.CompletedTask;
-        var setViewPortTask = (options?.FullPage == true && Viewport != null)
+        var setViewPortTask = options?.FullPage == true && Viewport != null
             ? SetViewportAsync(Viewport)
             : Task.CompletedTask;
         return Task.WhenAll(omitBackgroundTask, setViewPortTask);

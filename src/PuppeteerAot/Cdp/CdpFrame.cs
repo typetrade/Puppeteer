@@ -21,13 +21,13 @@
 //  * SOFTWARE.
 
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpFrame : Frame
@@ -57,17 +57,23 @@ public class CdpFrame : Frame
     public override CDPSession Client { get; protected set; }
 
     /// <inheritdoc/>
-    public override IPage Page => FrameManager.Page;
+    public override IPage Page => this.FrameManager.Page;
 
     /// <inheritdoc/>
-    public override bool IsOopFrame => Client != FrameManager.Client;
+    public override bool IsOopFrame => this.Client != this.FrameManager.Client;
 
     /// <inheritdoc/>
-    public override IReadOnlyCollection<IFrame> ChildFrames => FrameManager.FrameTree.GetChildFrames(Id);
+    public override IReadOnlyCollection<IFrame> ChildFrames => this.FrameManager.FrameTree.GetChildFrames(Id);
 
+    /// <summary>
+    /// Gets the frame manager.
+    /// </summary>
     public FrameManager FrameManager { get; }
 
-    public override Frame ParentFrame => FrameManager.FrameTree.GetParentFrame(Id);
+    /// <summary>
+    /// Gets the frame ID.
+    /// </summary>
+    public override Frame? ParentFrame => this.FrameManager.FrameTree.GetParentFrame(this.Id);
 
     /// <inheritdoc/>
     public override async Task<IResponse> GoToAsync(string url, NavigationOptions options)
@@ -80,14 +86,14 @@ public class CdpFrame : Frame
         }
 
         var referrer = string.IsNullOrEmpty(options.Referer)
-            ? FrameManager.NetworkManager.ExtraHTTPHeaders?.GetValueOrDefault(RefererHeaderName)
+            ? this.FrameManager.NetworkManager.ExtraHTTPHeaders?.GetValueOrDefault(RefererHeaderName)
             : options.Referer;
         var referrerPolicy = string.IsNullOrEmpty(options.ReferrerPolicy)
-            ? FrameManager.NetworkManager.ExtraHTTPHeaders?.GetValueOrDefault("referer-policy")
+            ? this.FrameManager.NetworkManager.ExtraHTTPHeaders?.GetValueOrDefault("referer-policy")
             : options.ReferrerPolicy;
-        var timeout = options.Timeout ?? FrameManager.TimeoutSettings.NavigationTimeout;
+        var timeout = options.Timeout ?? this.FrameManager.TimeoutSettings.NavigationTimeout;
 
-        using var watcher = new LifecycleWatcher(FrameManager.NetworkManager, this, options.WaitUntil, timeout);
+        using var watcher = new LifecycleWatcher(this.FrameManager.NetworkManager, this, options.WaitUntil, timeout);
         try
         {
             var navigateTask = NavigateAsync();
@@ -130,7 +136,7 @@ public class CdpFrame : Frame
     }
 
     /// <inheritdoc/>
-    public override async Task<IResponse> WaitForNavigationAsync(NavigationOptions options = null)
+    public override async Task<IResponse> WaitForNavigationAsync(NavigationOptions? options = null)
     {
         var timeout = options?.Timeout ?? FrameManager.TimeoutSettings.NavigationTimeout;
         using var watcher = new LifecycleWatcher(FrameManager.NetworkManager, this, options?.WaitUntil, timeout);
@@ -145,7 +151,7 @@ public class CdpFrame : Frame
     }
 
     /// <inheritdoc/>
-    public override async Task SetContentAsync(string html, NavigationOptions options = null)
+    public override async Task SetContentAsync(string html, NavigationOptions? options = null)
     {
         var waitUntil = options?.WaitUntil ?? new[] { WaitUntilNavigation.Load };
         var timeout = options?.Timeout ?? FrameManager.TimeoutSettings.NavigationTimeout;

@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Input
+// <copyright file="KeyDefinition.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Input
 {
     public class KeyDefinition
     {

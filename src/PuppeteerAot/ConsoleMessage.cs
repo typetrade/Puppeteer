@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
-namespace PuppeteerAot
+namespace Puppeteer
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// ConsoleMessage is part of <see cref="ConsoleEventArgs"/> used by <see cref="IPage.Console"/>.
     /// </summary>
@@ -14,12 +14,12 @@ namespace PuppeteerAot
         /// <param name="text">Text.</param>
         /// <param name="args">Arguments.</param>
         /// <param name="location">Message location.</param>
-        public ConsoleMessage(ConsoleType type, string text, IList<IJSHandle> args, ConsoleMessageLocation location = null)
+        public ConsoleMessage(ConsoleType type, string text, IList<IJSHandle>? args, ConsoleMessageLocation? location = null)
         {
-            Type = type;
-            Text = text;
-            Args = args;
-            Location = location;
+            this.Type = type;
+            this.Text = text;
+            this.Args = args;
+            this.Location = location;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace PuppeteerAot
         /// Gets the arguments.
         /// </summary>
         /// <value>The arguments.</value>
-        public IList<IJSHandle> Args { get; }
+        public IList<IJSHandle>? Args { get; }
 
         /// <summary>
         /// Gets the location.

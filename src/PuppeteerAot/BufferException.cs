@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     [Serializable]
     public class BufferException : PuppeteerException

@@ -1,4 +1,8 @@
-namespace PuppeteerAot
+// <copyright file="WaitForOptions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer
 {
     /// <summary>
     /// Timeout options.

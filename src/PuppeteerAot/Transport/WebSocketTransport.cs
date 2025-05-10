@@ -1,12 +1,16 @@
+// <copyright file="WebSocketTransport.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using PuppeteerAot.Helpers;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot.Transport
+namespace Puppeteer.Transport
 {
     /// <summary>
     /// Default web socket transport.
@@ -64,7 +68,7 @@ namespace PuppeteerAot.Transport
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="PuppeteerAot.Transport.IConnectionTransport"/> is closed.
+        /// Gets a value indicating whether this <see cref="Puppeteer.Transport.IConnectionTransport"/> is closed.
         /// </summary>
         public bool IsClosed { get; private set; }
 

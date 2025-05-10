@@ -1,8 +1,12 @@
+// <copyright file="IRequest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Whenever the page sends a request, the following events are emitted by puppeteer's page:
@@ -125,7 +129,7 @@ namespace PuppeteerAot
         /// <param name="priority">Optional intercept abort priority. If provided, intercept will be resolved using cooperative handling rules. Otherwise, intercept will be resolved immediately.
         /// IMPORTANT: If you set the priority, you will need to attach Request listener using <see cref="IPage.AddRequestInterceptor"/> instead of <see cref="IPage.Request"/>.</param>
         /// <returns>Task.</returns>
-        Task ContinueAsync(Payload payloadOverrides = null, int? priority = null);
+        Task ContinueAsync(Payload? payloadOverrides = null, int? priority = null);
 
         /// <summary>
         /// Fulfills request with given response. To use this, request interception should be enabled with <see cref="IPage.SetRequestInterceptionAsync(bool)"/>. Exception is thrown if request interception is not enabled.

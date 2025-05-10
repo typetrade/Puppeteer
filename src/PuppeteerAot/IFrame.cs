@@ -1,10 +1,14 @@
+// <copyright file="IFrame.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using PuppeteerAot.Input;
+using Puppeteer.Input;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Provides methods to interact with a single page frame in Chromium. One <see cref="IPage"/> instance might have multiple <see cref="IFrame"/> instances.
@@ -109,7 +113,7 @@ namespace PuppeteerAot
         /// <param name="options">click options.</param>
         /// <exception cref="SelectorException">If there's no element matching <paramref name="selector"/>.</exception>
         /// <returns>Task which resolves when the element matching <paramref name="selector"/> is successfully clicked.</returns>
-        Task ClickAsync(string selector, ClickOptions options = null);
+        Task ClickAsync(string selector, ClickOptions? options = null);
 
         /// <summary>
         /// Executes a script in browser context.
@@ -234,7 +238,7 @@ namespace PuppeteerAot
         /// property.</param>
         /// <param name="waitUntil">When to consider navigation succeeded, defaults to <see cref="WaitUntilNavigation.Load"/>. Given an array of <see cref="WaitUntilNavigation"/>, navigation is considered to be successful after all events have been fired.</param>
         /// <returns>Task which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.</returns>
-        Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[] waitUntil = null);
+        Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[]? waitUntil = null);
 
         /// <summary>
         /// Navigates to an url.
@@ -311,7 +315,7 @@ namespace PuppeteerAot
         /// <param name="options">The options.</param>
         /// <returns>Task.</returns>
         /// <seealso cref="IPage.SetContentAsync(string, NavigationOptions)"/>
-        Task SetContentAsync(string html, NavigationOptions options = null);
+        Task SetContentAsync(string html, NavigationOptions? options = null);
 
         /// <summary>
         /// Sends a <c>keydown</c>, <c>keypress</c>/<c>input</c>, and <c>keyup</c> event for each character in the text.
@@ -332,7 +336,7 @@ namespace PuppeteerAot
         /// </code>
         /// </example>
         /// <returns>Task.</returns>
-        Task TypeAsync(string selector, string text, TypeOptions options = null);
+        Task TypeAsync(string selector, string text, TypeOptions? options = null);
 
         /// <summary>
         /// Waits for an expression to be evaluated to a truthy value.
@@ -376,7 +380,7 @@ namespace PuppeteerAot
         /// ]]>
         /// </code>
         /// </example>
-        Task<IResponse> WaitForNavigationAsync(NavigationOptions options = null);
+        Task<IResponse> WaitForNavigationAsync(NavigationOptions? options = null);
 
         /// <summary>
         /// Waits for a selector to be added to the DOM.
@@ -387,7 +391,7 @@ namespace PuppeteerAot
         /// Resolves to `null` if waiting for `hidden: true` and selector is not found in DOM.</returns>
         /// <seealso cref="IPage.WaitForSelectorAsync(string, WaitForSelectorOptions)"/>
         /// <exception cref="WaitTaskTimeoutException">If timeout occurred.</exception>
-        Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions options = null);
+        Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions? options = null);
 
         /// <summary>
         /// This method is typically coupled with an action that triggers a device
@@ -399,11 +403,11 @@ namespace PuppeteerAot
         /// currently active device prompt.
         /// </summary>
         /// <example>
-        /// <code source="../PuppeteerAot.Tests/DeviceRequestPromptTests/WaitForDevicePromptTests.cs" region="IFrameWaitForDevicePromptAsyncUsage" lang="csharp"/>
+        /// <code source="../Puppeteer.Tests/DeviceRequestPromptTests/WaitForDevicePromptTests.cs" region="IFrameWaitForDevicePromptAsyncUsage" lang="csharp"/>
         /// </example>
         /// <param name="options">Optional waiting parameters.</param>
         /// <returns>A task that resolves after the page gets the prompt.</returns>
-        Task<DeviceRequestPrompt> WaitForDevicePromptAsync(WaitForOptions options = null);
+        Task<DeviceRequestPrompt> WaitForDevicePromptAsync(WaitForOptions? options = null);
 
         /// <summary>
         /// Fetches an element with <paramref name="selector"/>, scrolls it into view if needed, and then uses <see cref="Touchscreen"/> to tap in the center of the element.

@@ -2,7 +2,7 @@
 //using System.Text.Json;
 //using System.Text.Json.Serialization;
 
-//namespace PuppeteerAot.Helpers.Json
+//namespace Puppeteer.Helpers.Json
 //{
 //    public class FlexibleStringEnumConverter<TEnum> : JsonStringEnumConverter<TEnum>
 //        where TEnum : struct, Enum

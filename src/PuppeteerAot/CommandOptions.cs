@@ -1,4 +1,4 @@
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// Command options. See <see cref="ICDPConnection.SendAsync{T}(string, object, CommandOptions)"/>.

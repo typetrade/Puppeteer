@@ -1,7 +1,11 @@
+// <copyright file="IMouse.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     /// <summary>
     /// Provides methods to interact with the mouse.
@@ -15,14 +19,14 @@ namespace PuppeteerAot.Input
         /// <param name="y">The target mouse Y location to click.</param>
         /// <param name="options">Options to apply to the click operation.</param>
         /// <returns>Task.</returns>
-        Task ClickAsync(decimal x, decimal y, ClickOptions options = null);
+        Task ClickAsync(decimal x, decimal y, ClickOptions? options = null);
 
         /// <summary>
         /// Dispatches a <c>mousedown</c> event.
         /// </summary>
         /// <param name="options">Options to apply to the mouse down operation.</param>
         /// <returns>Task.</returns>
-        Task DownAsync(ClickOptions options = null);
+        Task DownAsync(ClickOptions? options = null);
 
         /// <summary>
         /// Performs a drag, dragenter, dragover, and drop in sequence.
@@ -79,14 +83,14 @@ namespace PuppeteerAot.Input
         /// <param name="y">The destination mouse Y coordinate.</param>
         /// <param name="options">Options to apply to the move operation.</param>
         /// <returns>Task.</returns>
-        Task MoveAsync(decimal x, decimal y, MoveOptions options = null);
+        Task MoveAsync(decimal x, decimal y, MoveOptions? options = null);
 
         /// <summary>
         /// Dispatches a <c>mouseup</c> event.
         /// </summary>
         /// <param name="options">Options to apply to the mouse up operation.</param>
         /// <returns>Task.</returns>
-        Task UpAsync(ClickOptions options = null);
+        Task UpAsync(ClickOptions? options = null);
 
         /// <summary>
         /// Dispatches a <c>wheel</c> event.

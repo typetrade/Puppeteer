@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Remote server address.

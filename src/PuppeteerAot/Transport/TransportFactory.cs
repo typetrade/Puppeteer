@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Transport
+// <copyright file="TransportFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Transport
 {
     using System;
     using System.Threading;

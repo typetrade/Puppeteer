@@ -1,7 +1,11 @@
+// <copyright file="IExecutionContext.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// The class represents a context for JavaScript execution. Examples of JavaScript contexts are:

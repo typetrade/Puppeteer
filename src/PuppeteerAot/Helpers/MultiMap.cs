@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public class MultiMap<TKey, TValue>
     {

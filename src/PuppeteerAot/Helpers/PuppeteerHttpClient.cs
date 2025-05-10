@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     /// <summary>
     /// PuppeteerHttpClient.

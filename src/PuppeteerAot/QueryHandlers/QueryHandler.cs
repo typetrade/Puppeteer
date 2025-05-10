@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.QueryHandlers
+namespace Puppeteer.QueryHandlers
 {
     public class QueryHandler
     {

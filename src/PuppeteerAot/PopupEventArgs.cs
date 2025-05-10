@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Popup event arguments. <see cref="IPage.Popup"/>.

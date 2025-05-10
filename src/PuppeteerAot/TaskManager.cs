@@ -1,9 +1,16 @@
+// <copyright file="TaskManager.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Linq;
-using PuppeteerAot.Helpers;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
+    /// <summary>
+    /// Manages the lifecycle of tasks that are waiting for a specific condition to be met.
+    /// </summary>
     public class TaskManager
     {
         private ConcurrentSet<WaitTask> WaitTasks { get; } = new();

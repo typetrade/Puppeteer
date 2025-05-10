@@ -1,12 +1,19 @@
-using System.Text.Json.Serialization;
+// <copyright file="TargetInfo.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
+    using System.Text.Json.Serialization;
+
     /// <summary>
     /// Target info.
     /// </summary>
     public class TargetInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TargetInfo"/> class.
+        /// </summary>
         public TargetInfo()
         {
         }
@@ -29,7 +36,7 @@ namespace PuppeteerAot
         /// Gets the target identifier.
         /// </summary>
         /// <value>The target identifier.</value>
-        //[JsonPropertyName("targetId")]
+        // [JsonPropertyName("targetId")]
         public string TargetId { get;  set; }
 
         /// <summary>

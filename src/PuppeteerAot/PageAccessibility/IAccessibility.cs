@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.PageAccessibility
+namespace Puppeteer.PageAccessibility
 {
     /// <summary>
     /// The Accessibility class provides methods for inspecting Chromium's accessibility tree.
@@ -19,6 +19,6 @@ namespace PuppeteerAot.PageAccessibility
         /// </summary>
         /// <returns>The async.</returns>
         /// <param name="options">Options.</param>
-        Task<SerializedAXNode> SnapshotAsync(AccessibilitySnapshotOptions options = null);
+        Task<SerializedAXNode> SnapshotAsync(AccessibilitySnapshotOptions? options = null);
     }
 }

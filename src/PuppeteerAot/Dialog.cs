@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// <see cref="Dialog"/> objects are dispatched by page via the 'dialog' event.

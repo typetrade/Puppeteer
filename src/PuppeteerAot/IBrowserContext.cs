@@ -1,8 +1,12 @@
+// <copyright file="IBrowserContext.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// BrowserContexts provide a way to operate multiple independent browser sessions. When a browser is launched, it has
@@ -113,6 +117,6 @@ namespace PuppeteerAot
         /// <param name="predicate">A function to be run for every target.</param>
         /// <param name="options">options.</param>
         /// <returns>Resolves to the first target found that matches the predicate function.</returns>
-        Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions options = null);
+        Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions? options = null);
     }
 }

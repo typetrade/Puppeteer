@@ -1,6 +1,10 @@
+// <copyright file="ITouchscreen.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     /// <summary>
     /// Provides methods to interact with the touch screen.

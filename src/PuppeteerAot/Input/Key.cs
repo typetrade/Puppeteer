@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Input
+// <copyright file="Key.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Input
 {
     /// <summary>
     /// Utility class to be used with <see cref="Keyboard"/> operations.

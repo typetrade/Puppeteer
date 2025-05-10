@@ -1,10 +1,14 @@
+// <copyright file="ICDPConnection.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Cdp;
+using Puppeteer.Cdp;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// An ICDPConnection is an object able to send and receive messages from the browser.
@@ -27,8 +31,8 @@ namespace PuppeteerAot
         /// </param>
         /// <param name="options">The options.</param>
         /// <returns>The task.</returns>
-        /// <exception cref="PuppeteerAot.PuppeteerException">If the <see cref="Connection"/> is closed.</exception>
-        Task<JsonElement> SendAsync(string method, object args = null, bool waitForCallback = true, CommandOptions options = null);
+        /// <exception cref="Puppeteer.PuppeteerException">If the <see cref="Connection"/> is closed.</exception>
+        Task<JsonElement> SendAsync(string method, object? args = null, bool waitForCallback = true, CommandOptions? options = null);
 
         /// <summary>
         /// Protocol methods can be called with this method.
@@ -38,6 +42,6 @@ namespace PuppeteerAot
         /// <param name="options">The options.</param>
         /// <typeparam name="T">Return type.</typeparam>
         /// <returns>The task.</returns>
-        Task<T> SendAsync<T>(string method, object args = null, CommandOptions options = null);
+        Task<T> SendAsync<T>(string method, object? args = null, CommandOptions? options = null);
     }
 }

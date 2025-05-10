@@ -22,11 +22,11 @@
 
 using System;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// Prompt manager.
@@ -34,19 +34,19 @@ namespace PuppeteerAot;
 public class DeviceRequestPromptManager
 {
     private readonly TimeoutSettings _timeoutSettings;
-    private ICDPSession _client;
+    private ICDPSession? client;
     private TaskCompletionSource<DeviceRequestPrompt> _deviceRequestPromptTcs;
 
     public DeviceRequestPromptManager(ICDPSession client, TimeoutSettings timeoutSettings)
     {
-        _client = client;
+        this.client = client;
         _timeoutSettings = timeoutSettings;
-        _client.MessageReceived += OnMessageReceived;
+        this.client.MessageReceived += OnMessageReceived;
     }
 
     public async Task<DeviceRequestPrompt> WaitForDevicePromptAsync(WaitForOptions options = default)
     {
-        if (_client == null)
+        if (this.client == null)
         {
             throw new PuppeteerException("Cannot wait for device prompt through detached session!");
         }
@@ -57,7 +57,7 @@ public class DeviceRequestPromptManager
         if (needsEnable)
         {
             _deviceRequestPromptTcs = new TaskCompletionSource<DeviceRequestPrompt>();
-            enableTask = _client.SendAsync("DeviceAccess.enable");
+            enableTask = this.client.SendAsync("DeviceAccess.enable");
         }
 
         var timeout = options?.Timeout ?? _timeoutSettings.Timeout;
@@ -78,14 +78,14 @@ public class DeviceRequestPromptManager
                     OnDeviceRequestPrompted(e.MessageData.ToObject<DeviceAccessDeviceRequestPromptedResponse>(true));
                     break;
                 case "Target.detachedFromTarget":
-                    _client = null;
+                    this.client = null;
                     break;
             }
         }
         catch (Exception ex)
         {
             var message = $"Connection failed to process {e.MessageID}. {ex.Message}. {ex.StackTrace}";
-            (_client as CDPSession)?.Close(message);
+            (this.client as CDPSession)?.Close(message);
         }
     }
 
@@ -96,13 +96,13 @@ public class DeviceRequestPromptManager
             return;
         }
 
-        if (_client == null)
+        if (this.client == null)
         {
             _deviceRequestPromptTcs.TrySetException(new PuppeteerException("Session closed. Most likely the target has been closed."));
             return;
         }
 
-        var devicePrompt = new DeviceRequestPrompt(_client, _timeoutSettings, e);
+        var devicePrompt = new DeviceRequestPrompt(this.client, _timeoutSettings, e);
         _deviceRequestPromptTcs.TrySetResult(devicePrompt);
     }
 }

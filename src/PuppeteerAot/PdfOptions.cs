@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using PuppeteerAot.Media;
+using Puppeteer.Media;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options to be used in <see cref="IPage.PdfAsync(string, PdfOptions)"/>, <see cref="IPage.PdfStreamAsync(PdfOptions)"/> and <see cref="IPage.PdfDataAsync(PdfOptions)"/>.
@@ -10,7 +10,7 @@ namespace PuppeteerAot
     public record PdfOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PuppeteerAot.PdfOptions"/> class.
+        /// Initializes a new instance of the <see cref="Puppeteer.PdfOptions"/> class.
         /// </summary>
         public PdfOptions()
         {

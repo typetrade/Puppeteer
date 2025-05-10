@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Mobile;
+using Puppeteer.Mobile;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Provides a method to launch a Chromium instance.
@@ -39,7 +39,7 @@ namespace PuppeteerAot
         public static IReadOnlyDictionary<DeviceDescriptorName, DeviceDescriptor> Devices => DeviceDescriptors.ToReadOnly();
 
         /// <summary>
-        /// Returns a list of network conditions to be used with <seealso cref="IPage.EmulateNetworkConditionsAsync(PuppeteerAot.NetworkConditions)"/>.
+        /// Returns a list of network conditions to be used with <seealso cref="IPage.EmulateNetworkConditionsAsync(Puppeteer.NetworkConditions)"/>.
         /// Actual list of conditions can be found in <seealso cref="PredefinedNetworkConditions.Conditions"/>.
         /// </summary>
         /// <example>
@@ -61,7 +61,7 @@ namespace PuppeteerAot
         /// </summary>
         /// <returns>Chromium arguments.</returns>
         /// <param name="options">Options.</param>
-        public static string[] GetDefaultArgs(LaunchOptions options = null)
+        public static string[] GetDefaultArgs(LaunchOptions? options = null)
             => (options?.Browser ?? SupportedBrowser.Firefox) == SupportedBrowser.Firefox
                 ? FirefoxLauncher.GetDefaultArgs(options ?? new LaunchOptions())
                 : ChromeLauncher.GetDefaultArgs(options ?? new LaunchOptions());
@@ -84,7 +84,7 @@ namespace PuppeteerAot
         /// - <c>PUPPETEER_EXECUTABLE_PATH</c> - specify an executable path to be used in <see cref="Puppeteer.LaunchAsync(LaunchOptions, ILoggerFactory)"/>.
         ///   **BEWARE**: Puppeteer is only <see href="https://github.com/GoogleChrome/puppeteer/#q-why-doesnt-puppeteer-vxxx-work-with-chromium-vyyy">guaranteed to work</see> with the bundled Chromium, use at your own risk.
         /// </remarks>
-        public static Task<IBrowser> LaunchAsync(LaunchOptions options, ILoggerFactory loggerFactory = null)
+        public static Task<IBrowser> LaunchAsync(LaunchOptions options, ILoggerFactory? loggerFactory = null)
             => new Launcher(loggerFactory).LaunchAsync(options);
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace PuppeteerAot
         /// <param name="options">Options for connecting.</param>
         /// <param name="loggerFactory">The logger factory.</param>
         /// <returns>A connected browser.</returns>
-        public static Task<IBrowser> ConnectAsync(ConnectOptions options, ILoggerFactory loggerFactory = null)
+        public static Task<IBrowser> ConnectAsync(ConnectOptions options, ILoggerFactory? loggerFactory = null)
             => new Launcher(loggerFactory).ConnectAsync(options);
 
         /// <summary>

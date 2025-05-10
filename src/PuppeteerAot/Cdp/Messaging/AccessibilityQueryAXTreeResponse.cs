@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using static PuppeteerAot.Cdp.Messaging.AccessibilityGetFullAXTreeResponse;
+using static Puppeteer.Cdp.Messaging.AccessibilityGetFullAXTreeResponse;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class AccessibilityQueryAXTreeResponse
     {

@@ -4,13 +4,13 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Input;
-using PuppeteerAot.Media;
-using PuppeteerAot.Mobile;
-using PuppeteerAot.PageAccessibility;
-using PuppeteerAot.PageCoverage;
+using Puppeteer.Input;
+using Puppeteer.Media;
+using Puppeteer.Mobile;
+using Puppeteer.PageAccessibility;
+using Puppeteer.PageCoverage;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Provides methods to interact with a single tab in Chromium. One <see cref="IBrowser"/> instance might have multiple <see cref="IPage"/> instances.
@@ -53,7 +53,7 @@ namespace PuppeteerAot
         event EventHandler<ConsoleEventArgs> Console;
 
         /// <summary>
-        /// Raised when a JavaScript dialog appears, such as <c>alert</c>, <c>prompt</c>, <c>confirm</c> or <c>beforeunload</c>. Puppeteer can respond to the dialog via <see cref="Dialog"/>'s <see cref="PuppeteerAot.Dialog.Accept(string)"/> or <see cref="PuppeteerAot.Dialog.Dismiss"/> methods.
+        /// Raised when a JavaScript dialog appears, such as <c>alert</c>, <c>prompt</c>, <c>confirm</c> or <c>beforeunload</c>. Puppeteer can respond to the dialog via <see cref="Dialog"/>'s <see cref="Puppeteer.Dialog.Accept(string)"/> or <see cref="Puppeteer.Dialog.Dismiss"/> methods.
         /// </summary>
         event EventHandler<DialogEventArgs> Dialog;
 
@@ -354,14 +354,14 @@ namespace PuppeteerAot
         /// <param name="options">click options.</param>
         /// <exception cref="SelectorException">If there's no element matching <paramref name="selector"/>.</exception>
         /// <returns>Task which resolves when the element matching <paramref name="selector"/> is successfully clicked.</returns>
-        Task ClickAsync(string selector, ClickOptions options = null);
+        Task ClickAsync(string selector, ClickOptions? options = null);
 
         /// <summary>
         /// Closes the page.
         /// </summary>
         /// <param name="options">Close options.</param>
         /// <returns>Task.</returns>
-        Task CloseAsync(PageCloseOptions options = null);
+        Task CloseAsync(PageCloseOptions? options = null);
 
         /// <summary>
         /// Deletes cookies from the page.
@@ -417,7 +417,7 @@ namespace PuppeteerAot
         /// </example>
         /// <param name="idleOverrides">Overrides.</param>
         /// <returns>A task that resolves when the message has been sent to the browser.</returns>
-        Task EmulateIdleStateAsync(EmulateIdleOverrides idleOverrides = null);
+        Task EmulateIdleStateAsync(EmulateIdleOverrides? idleOverrides = null);
 
         /// <summary>
         /// Given an array of media feature objects, emulates CSS media features on the page.
@@ -779,7 +779,7 @@ namespace PuppeteerAot
         /// <returns>Task that resolves to the main resource response. In case of multiple redirects,
         /// the navigation will resolve with the response of the last redirect. If can not go back, resolves to null.</returns>
         /// <param name="options">Navigation parameters.</param>
-        Task<IResponse> GoBackAsync(NavigationOptions options = null);
+        Task<IResponse?> GoBackAsync(NavigationOptions? options = null);
 
         /// <summary>
         /// Navigate to the next page in history.
@@ -787,7 +787,7 @@ namespace PuppeteerAot
         /// <returns>Task that resolves to the main resource response. In case of multiple redirects,
         /// the navigation will resolve with the response of the last redirect. If can not go forward, resolves to null.</returns>
         /// <param name="options">Navigation parameters.</param>
-        Task<IResponse> GoForwardAsync(NavigationOptions options = null);
+        Task<IResponse> GoForwardAsync(NavigationOptions? options = null);
 
         /// <summary>
         /// Navigates to an url.
@@ -797,7 +797,7 @@ namespace PuppeteerAot
         /// <param name="waitUntil">When to consider navigation succeeded, defaults to <see cref="WaitUntilNavigation.Load"/>. Given an array of <see cref="WaitUntilNavigation"/>, navigation is considered to be successful after all events have been fired.</param>
         /// <returns>Task which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.</returns>
         /// <seealso cref="GoToAsync(string, NavigationOptions)"/>
-        Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[] waitUntil = null);
+        Task<IResponse> GoToAsync(string url, int? timeout = null, WaitUntilNavigation[]? waitUntil = null);
 
         /// <summary>
         /// Navigates to an url.
@@ -811,7 +811,7 @@ namespace PuppeteerAot
         /// - the main resource failed to load.
         ///
         /// <see cref="GoToAsync(string, int?, WaitUntilNavigation[])"/> will not throw an error when any valid HTTP status code is returned by the remote server,
-        /// including 404 "Not Found" and 500 "Internal Server Error".  The status code for such responses can be retrieved by calling <see cref="PuppeteerAot.IResponse.Status"/>
+        /// including 404 "Not Found" and 500 "Internal Server Error".  The status code for such responses can be retrieved by calling <see cref="Puppeteer.IResponse.Status"/>
         ///
         /// > **NOTE** <see cref="GoToAsync(string, int?, WaitUntilNavigation[])"/> either throws an error or returns a main resource response.
         /// The only exceptions are navigation to `about:blank` or navigation to the same URL with a different hash, which would succeed and return `null`.
@@ -952,7 +952,7 @@ namespace PuppeteerAot
         /// <param name="waitUntil">When to consider navigation succeeded, defaults to <see cref="WaitUntilNavigation.Load"/>. Given an array of <see cref="WaitUntilNavigation"/>, navigation is considered to be successful after all events have been fired.</param>
         /// <returns>Task which resolves to the main resource response. In case of multiple redirects, the navigation will resolve with the response of the last redirect.</returns>
         /// <seealso cref="ReloadAsync(NavigationOptions)"/>
-        Task<IResponse> ReloadAsync(int? timeout = null, WaitUntilNavigation[] waitUntil = null);
+        Task<IResponse> ReloadAsync(int? timeout = null, WaitUntilNavigation[]? waitUntil = null);
 
         /// <summary>
         /// Reloads the page.
@@ -1063,7 +1063,7 @@ namespace PuppeteerAot
         /// <param name="options">The navigations options.</param>
         /// <returns>Task.</returns>
         /// <seealso cref="IFrame.SetContentAsync(string, NavigationOptions)"/>
-        Task SetContentAsync(string html, NavigationOptions options = null);
+        Task SetContentAsync(string html, NavigationOptions? options = null);
 
         /// <summary>
         /// Clears all of the current cookies and then sets the cookies for the page.
@@ -1117,8 +1117,8 @@ namespace PuppeteerAot
         Task SetOfflineModeAsync(bool value);
 
         /// <summary>
-        /// Activating request interception enables <see cref="PuppeteerAot.IRequest.AbortAsync(RequestAbortErrorCode, int?)">request.AbortAsync</see>,
-        /// <see cref="PuppeteerAot.IRequest.ContinueAsync(Payload, int?)">request.ContinueAsync</see> and <see cref="PuppeteerAot.IRequest.RespondAsync(ResponseData, int?)">request.RespondAsync</see> methods.
+        /// Activating request interception enables <see cref="Puppeteer.IRequest.AbortAsync(RequestAbortErrorCode, int?)">request.AbortAsync</see>,
+        /// <see cref="Puppeteer.IRequest.ContinueAsync(Payload, int?)">request.ContinueAsync</see> and <see cref="Puppeteer.IRequest.RespondAsync(ResponseData, int?)">request.RespondAsync</see> methods.
         /// </summary>
         /// <returns>The request interception task.</returns>
         /// <param name="value">Whether to enable request interception..</param>
@@ -1130,7 +1130,7 @@ namespace PuppeteerAot
         /// <param name="userAgent">Specific user agent to use in this page.</param>
         /// <param name="userAgentData">Specific user agent client hint data to use in this page.</param>
         /// <returns>Task.</returns>
-        Task SetUserAgentAsync(string userAgent, UserAgentMetadata userAgentData = null);
+        Task SetUserAgentAsync(string userAgent, UserAgentMetadata? userAgentData = null);
 
         /// <summary>
         /// Sets the viewport.
@@ -1180,7 +1180,7 @@ namespace PuppeteerAot
         /// </code>
         /// </example>
         /// <returns>Task.</returns>
-        Task TypeAsync(string selector, string text, TypeOptions options = null);
+        Task TypeAsync(string selector, string text, TypeOptions? options = null);
 
         /// <summary>
         /// Waits for an expression to be evaluated to a truthy value.
@@ -1189,7 +1189,7 @@ namespace PuppeteerAot
         /// <param name="options">Optional waiting parameters.</param>
         /// <returns>A task that resolves when the <c>script</c> returns a truthy value.</returns>
         /// <seealso cref="IFrame.WaitForExpressionAsync(string, WaitForFunctionOptions)"/>
-        Task<IJSHandle> WaitForExpressionAsync(string script, WaitForFunctionOptions options = null);
+        Task<IJSHandle> WaitForExpressionAsync(string script, WaitForFunctionOptions? options = null);
 
         /// <summary>
         /// Waits for a frame.
@@ -1204,7 +1204,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching frame was attached to the page.</returns>
         /// <param name="url">Frame url.</param>
         /// <param name="options">Options.</param>
-        public Task<IFrame> WaitForFrameAsync(string url, WaitForOptions options = null);
+        public Task<IFrame> WaitForFrameAsync(string url, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a frame.
@@ -1219,7 +1219,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching frame was attached to the page.</returns>
         /// <param name="predicate">Function which looks for a matching frame.</param>
         /// <param name="options">Options.</param>
-        public Task<IFrame> WaitForFrameAsync(Func<IFrame, bool> predicate, WaitForOptions options = null);
+        public Task<IFrame> WaitForFrameAsync(Func<IFrame, bool> predicate, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a page to open a file picker.
@@ -1246,7 +1246,7 @@ namespace PuppeteerAot
         /// </example>
         /// <param name="options">Optional waiting parameters.</param>
         /// <returns>A task that resolves after a page requests a file picker.</returns>
-        Task<FileChooser> WaitForFileChooserAsync(WaitForOptions options = null);
+        Task<FileChooser> WaitForFileChooserAsync(WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a function to be evaluated to a truthy value.
@@ -1256,7 +1256,7 @@ namespace PuppeteerAot
         /// <param name="args">Arguments to pass to <c>script</c>.</param>
         /// <returns>A task that resolves when the <c>script</c> returns a truthy value.</returns>
         /// <seealso cref="IFrame.WaitForFunctionAsync(string, WaitForFunctionOptions, object[])"/>
-        Task<IJSHandle> WaitForFunctionAsync(string script, WaitForFunctionOptions options = null, params object[] args);
+        Task<IJSHandle> WaitForFunctionAsync(string script, WaitForFunctionOptions? options = null, params object[] args);
 
         /// <summary>
         /// Waits for a function to be evaluated to a truthy value.
@@ -1287,7 +1287,7 @@ namespace PuppeteerAot
         /// ]]>
         /// </code>
         /// </example>
-        Task<IResponse> WaitForNavigationAsync(NavigationOptions options = null);
+        Task<IResponse> WaitForNavigationAsync(NavigationOptions? options = null);
 
         /// <summary>
         /// Waits for Network Idle.
@@ -1302,7 +1302,7 @@ namespace PuppeteerAot
         /// ]]>
         /// </code>
         /// </example>
-        Task WaitForNetworkIdleAsync(WaitForNetworkIdleOptions options = null);
+        Task WaitForNetworkIdleAsync(WaitForNetworkIdleOptions? options = null);
 
         /// <summary>
         /// Waits for a request.
@@ -1318,7 +1318,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching request was made.</returns>
         /// <param name="predicate">Function which looks for a matching request.</param>
         /// <param name="options">Options.</param>
-        Task<IRequest> WaitForRequestAsync(Func<IRequest, bool> predicate, WaitForOptions options = null);
+        Task<IRequest> WaitForRequestAsync(Func<IRequest, bool> predicate, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a request.
@@ -1334,7 +1334,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching request was made.</returns>
         /// <param name="url">URL to wait for.</param>
         /// <param name="options">Options.</param>
-        Task<IRequest> WaitForRequestAsync(string url, WaitForOptions options = null);
+        Task<IRequest> WaitForRequestAsync(string url, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a response.
@@ -1350,7 +1350,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching response is received.</returns>
         /// <param name="predicate">Function which looks for a matching response.</param>
         /// <param name="options">Options.</param>
-        Task<IResponse> WaitForResponseAsync(Func<IResponse, bool> predicate, WaitForOptions options = null);
+        Task<IResponse> WaitForResponseAsync(Func<IResponse, bool> predicate, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a response.
@@ -1366,7 +1366,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching response is received.</returns>
         /// <param name="predicate">Function which looks for a matching response.</param>
         /// <param name="options">Options.</param>
-        Task<IResponse> WaitForResponseAsync(Func<IResponse, Task<bool>> predicate, WaitForOptions options = null);
+        Task<IResponse> WaitForResponseAsync(Func<IResponse, Task<bool>> predicate, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a response.
@@ -1382,7 +1382,7 @@ namespace PuppeteerAot
         /// <returns>A task which resolves when a matching response is received.</returns>
         /// <param name="url">URL to wait for.</param>
         /// <param name="options">Options.</param>
-        Task<IResponse> WaitForResponseAsync(string url, WaitForOptions options = null);
+        Task<IResponse> WaitForResponseAsync(string url, WaitForOptions? options = null);
 
         /// <summary>
         /// Waits for a selector to be added to the DOM.
@@ -1392,7 +1392,7 @@ namespace PuppeteerAot
         /// <returns>A task that resolves when element specified by selector string is added to DOM.
         /// Resolves to `null` if waiting for `hidden: true` and selector is not found in DOM.</returns>
         /// <seealso cref="IFrame.WaitForSelectorAsync(string, WaitForSelectorOptions)"/>
-        Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions options = null);
+        Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions? options = null);
 
         /// <summary>
         /// This method is typically coupled with an action that triggers a device
@@ -1404,11 +1404,11 @@ namespace PuppeteerAot
         /// currently active device prompt.
         /// </summary>
         /// <example>
-        /// <code source="../PuppeteerAot.Tests/DeviceRequestPromptTests/WaitForDevicePromptTests.cs" region="IPageWaitForDevicePromptAsyncUsage" lang="csharp"/>
+        /// <code source="../Puppeteer.Tests/DeviceRequestPromptTests/WaitForDevicePromptTests.cs" region="IPageWaitForDevicePromptAsyncUsage" lang="csharp"/>
         /// </example>
         /// <param name="options">Optional waiting parameters.</param>
         /// <returns>A task that resolves after the page gets the prompt.</returns>
-        Task<DeviceRequestPrompt> WaitForDevicePromptAsync(WaitForOptions options = null);
+        Task<DeviceRequestPrompt> WaitForDevicePromptAsync(WaitForOptions? options = null);
 
         /// <summary>
         /// <see cref="IRequest.RespondAsync"/>, <see cref="IRequest.AbortAsync"/>, and <see cref="IRequest.ContinueAsync"/> can accept an optional `priority` to activate Cooperative Intercept Mode.

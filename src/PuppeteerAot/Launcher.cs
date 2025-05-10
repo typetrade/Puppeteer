@@ -5,11 +5,11 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.BrowserData;
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.BrowserData;
+using Puppeteer.Cdp;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Launcher controls the creation of processes or the connection remote ones.
@@ -24,7 +24,7 @@ namespace PuppeteerAot
         /// Initializes a new instance of the <see cref="Launcher"/> class.
         /// </summary>
         /// <param name="loggerFactory">Logger factory.</param>
-        public Launcher(ILoggerFactory loggerFactory = null) => _loggerFactory = loggerFactory ?? new LoggerFactory();
+        public Launcher(ILoggerFactory? loggerFactory = null) => _loggerFactory = loggerFactory ?? new LoggerFactory();
 
         /// <summary>
         /// Gets the process, if any was created by this launcher.
@@ -65,7 +65,7 @@ namespace PuppeteerAot
             {
                 await Process.StartAsync().ConfigureAwait(false);
 
-                Connection connection = null;
+                Connection? connection = null;
                 try
                 {
                     connection = await Connection
@@ -119,7 +119,7 @@ namespace PuppeteerAot
                 throw new PuppeteerException("Exactly one of browserWSEndpoint or browserURL must be passed to puppeteer.connect");
             }
 
-            Connection connection = null;
+            Connection? connection = null;
             try
             {
                 var browserWSEndpoint = string.IsNullOrEmpty(options.BrowserURL)

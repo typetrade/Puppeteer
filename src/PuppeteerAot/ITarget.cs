@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Target.
@@ -32,7 +32,7 @@ namespace PuppeteerAot
         string TargetId { get; }
 
         /// <summary>
-        /// Gets the type. It will be <see cref="PuppeteerAot.TargetInfo.Type"/>.
+        /// Gets the type. It will be <see cref="Puppeteer.TargetInfo.Type"/>.
         /// Can be `"page"`, `"background_page"`, `"service_worker"`, `"shared_worker"`, `"browser"` or `"other"`.
         /// </summary>
         /// <value>The type.</value>

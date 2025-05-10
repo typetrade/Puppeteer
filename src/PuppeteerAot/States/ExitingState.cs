@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PuppeteerAot.Helpers;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot.States
+namespace Puppeteer.States
 {
     public class ExitingState : State
     {

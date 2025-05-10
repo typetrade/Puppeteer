@@ -1,9 +1,13 @@
+// <copyright file="IElementHandle.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using PuppeteerAot.Input;
+using Puppeteer.Input;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
 
 
@@ -40,12 +44,12 @@ namespace PuppeteerAot
         public Task<BoxModelPoint> ClickablePointAsync(Offset? offset = null);
 
         /// <summary>
-        /// Scrolls element into view if needed, and then uses <see cref="PuppeteerAot.IPage.Mouse"/> to click in the center of the element.
+        /// Scrolls element into view if needed, and then uses <see cref="Puppeteer.IPage.Mouse"/> to click in the center of the element.
         /// </summary>
         /// <param name="options">click options.</param>
         /// <exception cref="PuppeteerException">if the element is detached from DOM.</exception>
         /// <returns>Task which resolves when the element is successfully clicked.</returns>
-        Task ClickAsync(ClickOptions options = null);
+        Task ClickAsync(ClickOptions? options = null);
 
         /// <summary>
         /// Resolves the frame associated with the element..
@@ -136,7 +140,7 @@ namespace PuppeteerAot
         /// If <c>key</c> is a single character and no modifier keys besides <c>Shift</c> are being held down, a <c>keypress</c>/<c>input</c> event will also be generated. The <see cref="DownOptions.Text"/> option can be specified to force an input event to be generated.
         /// </remarks>
         /// <returns>Task which resolves when the key is successfully pressed.</returns>
-        Task PressAsync(string key, PressOptions options = null);
+        Task PressAsync(string key, PressOptions? options = null);
 
         /// <summary>
         /// Runs <c>element.querySelectorAll</c> within the page. If no elements match the selector, the return value resolve to <see cref="Array.Empty{T}"/>.
@@ -181,14 +185,14 @@ namespace PuppeteerAot
         Task ScreenshotAsync(string file, ElementScreenshotOptions options);
 
         /// <summary>
-        /// This method scrolls element into view if needed, and then uses <seealso cref="PuppeteerAot.IPage.ScreenshotBase64Async(ScreenshotOptions)"/> to take a screenshot of the element.
+        /// This method scrolls element into view if needed, and then uses <seealso cref="Puppeteer.IPage.ScreenshotBase64Async(ScreenshotOptions)"/> to take a screenshot of the element.
         /// If the element is detached from DOM, the method throws an error.
         /// </summary>
         /// <returns>Task which resolves to a <see cref="string"/> containing the image data as base64.</returns>
         Task<string> ScreenshotBase64Async();
 
         /// <summary>
-        /// This method scrolls element into view if needed, and then uses <seealso cref="PuppeteerAot.IPage.ScreenshotBase64Async(ScreenshotOptions)"/> to take a screenshot of the element.
+        /// This method scrolls element into view if needed, and then uses <seealso cref="Puppeteer.IPage.ScreenshotBase64Async(ScreenshotOptions)"/> to take a screenshot of the element.
         /// If the element is detached from DOM, the method throws an error.
         /// </summary>
         /// <returns>Task which resolves to a <see cref="string"/> containing the image data as base64.</returns>
@@ -196,14 +200,14 @@ namespace PuppeteerAot
         Task<string> ScreenshotBase64Async(ElementScreenshotOptions options);
 
         /// <summary>
-        /// This method scrolls element into view if needed, and then uses <seealso cref="PuppeteerAot.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
+        /// This method scrolls element into view if needed, and then uses <seealso cref="Puppeteer.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
         /// If the element is detached from DOM, the method throws an error.
         /// </summary>
         /// <returns>Task which resolves to a <see cref="byte"/>[] containing the image data.</returns>
         Task<byte[]> ScreenshotDataAsync();
 
         /// <summary>
-        /// This method scrolls element into view if needed, and then uses <seealso cref="PuppeteerAot.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
+        /// This method scrolls element into view if needed, and then uses <seealso cref="Puppeteer.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
         /// If the element is detached from DOM, the method throws an error.
         /// </summary>
         /// <returns>Task which resolves to a <see cref="byte"/>[] containing the image data.</returns>
@@ -211,14 +215,14 @@ namespace PuppeteerAot
         Task<byte[]> ScreenshotDataAsync(ElementScreenshotOptions options);
 
         /// <summary>
-        /// This method scrolls element into view if needed, and then uses <seealso cref="PuppeteerAot.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
+        /// This method scrolls element into view if needed, and then uses <seealso cref="Puppeteer.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
         /// If the element is detached from DOM, the method throws an error.
         /// </summary>
         /// <returns>Task which resolves to a <see cref="Stream"/> containing the image data.</returns>
         Task<Stream> ScreenshotStreamAsync();
 
         /// <summary>
-        /// This method scrolls element into view if needed, and then uses <seealso cref="PuppeteerAot.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
+        /// This method scrolls element into view if needed, and then uses <seealso cref="Puppeteer.IPage.ScreenshotDataAsync(ScreenshotOptions)"/> to take a screenshot of the element.
         /// If the element is detached from DOM, the method throws an error.
         /// </summary>
         /// <returns>Task which resolves to a <see cref="Stream"/> containing the image data.</returns>
@@ -267,7 +271,7 @@ namespace PuppeteerAot
         /// </code>
         /// </example>
         /// <returns>Task.</returns>
-        Task TypeAsync(string text, TypeOptions options = null);
+        Task TypeAsync(string text, TypeOptions? options = null);
 
         /// <summary>
         /// Uploads files.
@@ -293,7 +297,7 @@ namespace PuppeteerAot
         /// <param name="options">Optional waiting parameters.</param>
         /// <returns>A task that resolves when element specified by selector string is added to DOM.
         /// Resolves to `null` if waiting for `hidden: true` and selector is not found in DOM.</returns>
-        Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions options = null);
+        Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions? options = null);
 
         /// <summary>
         /// Checks if an element is visible using the same mechanism as <see cref="WaitForSelectorAsync"/>.

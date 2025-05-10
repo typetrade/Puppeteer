@@ -1,4 +1,8 @@
-namespace PuppeteerAot
+// <copyright file="UserAgentMetadata.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer
 {
     /// <summary>
     ///  Used to specify User Agent Cient Hints to emulate. See https://wicg.github.io/ua-client-hints

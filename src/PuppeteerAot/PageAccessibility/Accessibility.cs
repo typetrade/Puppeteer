@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.PageAccessibility;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.PageAccessibility
+namespace Puppeteer.PageAccessibility
 {
     /// <inheritdoc/>
     public class Accessibility : IAccessibility
@@ -13,11 +14,11 @@ namespace PuppeteerAot.PageAccessibility
         public Accessibility(CDPSession client) => _client = client;
 
         /// <inheritdoc/>
-        public async Task<SerializedAXNode> SnapshotAsync(AccessibilitySnapshotOptions options = null)
+        public async Task<SerializedAXNode> SnapshotAsync(AccessibilitySnapshotOptions? options = null)
         {
             var response = await _client.SendAsync<AccessibilityGetFullAXTreeResponse>("Accessibility.getFullAXTree").ConfigureAwait(false);
             var nodes = response.Nodes;
-            object backendNodeId = null;
+            object? backendNodeId = null;
             if (options?.Root != null)
             {
                 var node = await _client.SendAsync<DomDescribeNodeResponse>("DOM.describeNode", new DomDescribeNodeRequest
@@ -74,7 +75,7 @@ namespace PuppeteerAot.PageAccessibility
             }
         }
 
-        private SerializedAXNode[] SerializeTree(AXNode node, List<AXNode> whitelistedNodes = null)
+        private SerializedAXNode[] SerializeTree(AXNode node, List<AXNode>? whitelistedNodes = null)
         {
             var children = new List<SerializedAXNode>();
             foreach (var child in node.Children)

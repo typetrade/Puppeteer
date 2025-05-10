@@ -1,6 +1,6 @@
-using PuppeteerAot.Input;
+using Puppeteer.Input;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class InputDispatchTouchEventRequest
     {

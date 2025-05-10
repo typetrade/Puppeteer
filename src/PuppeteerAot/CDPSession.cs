@@ -2,11 +2,12 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer;
+using Puppeteer.Cdp;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     public abstract class CDPSession : ICDPSession
@@ -33,21 +34,24 @@ namespace PuppeteerAot
         /// <inheritdoc/>
         public ILoggerFactory LoggerFactory => Connection.LoggerFactory;
 
-        public Connection Connection { get; set; }
+        /// <summary>
+        /// Gets or sets the connection.
+        /// </summary>
+        public Connection? Connection { get; set; }
 
         public Target Target { get; set; }
 
         public abstract CDPSession ParentSession { get; }
 
         /// <inheritdoc/>
-        public async Task<T> SendAsync<T>(string method, object args = null, CommandOptions options = null)
+        public async Task<T> SendAsync<T>(string method, object? args = null, CommandOptions? options = null)
         {
             var content = await SendAsync(method, args, true, options).ConfigureAwait(false);
             return content.ToObject<T>(true);
         }
 
         /// <inheritdoc/>
-        public abstract Task<JsonElement> SendAsync(string method, object args = null, bool waitForCallback = true, CommandOptions options = null);
+        public abstract Task<JsonElement> SendAsync(string method, object? args = null, bool waitForCallback = true, CommandOptions? options = null);
 
         /// <inheritdoc/>
         public abstract Task DetachAsync();

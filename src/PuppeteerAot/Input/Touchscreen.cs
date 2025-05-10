@@ -1,6 +1,10 @@
+// <copyright file="Touchscreen.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     /// <inheritdoc/>
     public abstract class Touchscreen : ITouchscreen

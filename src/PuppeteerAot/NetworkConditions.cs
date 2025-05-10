@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options to be used in <see cref="IPage.EmulateNetworkConditionsAsync(NetworkConditions)"/>.

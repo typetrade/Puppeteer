@@ -1,4 +1,4 @@
-namespace PuppeteerAot.PageAccessibility
+namespace Puppeteer.PageAccessibility
 {
     /// <summary>
     /// <see cref="IAccessibility.SnapshotAsync(AccessibilitySnapshotOptions)"/>.

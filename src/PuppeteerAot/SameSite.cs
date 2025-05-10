@@ -1,7 +1,7 @@
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// SameSite values in cookies.

@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// This is a DisposableStack in puppeteer. We don't need to dispose objects manually.

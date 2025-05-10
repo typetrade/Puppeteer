@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// You can use <see cref="ITracing.StartAsync(TracingOptions)"/> and <see cref="ITracing.StopAsync"/> to create a trace file which can be opened in Chrome DevTools or timeline viewer.
@@ -23,7 +23,7 @@ namespace PuppeteerAot
         /// </summary>
         /// <returns>Start task.</returns>
         /// <param name="options">Tracing options.</param>
-        Task StartAsync(TracingOptions options = null);
+        Task StartAsync(TracingOptions? options = null);
 
         /// <summary>
         /// Stops tracing.

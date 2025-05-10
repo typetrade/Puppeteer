@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PuppeteerAot.Media
+namespace Puppeteer.Media
 {
     /// <summary>
     /// margin options used in <see cref="PdfOptions"/>.
@@ -9,7 +9,7 @@ namespace PuppeteerAot.Media
     public class MarginOptions : IEquatable<MarginOptions>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PuppeteerAot.Media.MarginOptions"/> class.
+        /// Initializes a new instance of the <see cref="Puppeteer.Media.MarginOptions"/> class.
         /// </summary>
         public MarginOptions()
         {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using PuppeteerAot.BrowserData;
-using PuppeteerAot.Helpers;
+using Puppeteer.BrowserData;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// BrowserFetcher can download and manage different versions of Chromium.

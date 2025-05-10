@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace PuppeteerAot.Helpers.Json
+namespace Puppeteer.Helpers.Json
 {
     public static class EnumHelper
     {

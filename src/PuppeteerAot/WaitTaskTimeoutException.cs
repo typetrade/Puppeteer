@@ -1,7 +1,11 @@
+// <copyright file="WaitTaskTimeoutException.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Runtime.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Timeout exception that might be thrown by <c>WaitFor</c> methods in <see cref="Frame"/>.

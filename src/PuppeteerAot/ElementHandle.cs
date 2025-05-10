@@ -6,14 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Input;
-using PuppeteerAot.QueryHandlers;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Input;
+using Puppeteer.QueryHandlers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
-    /// <inheritdoc cref="PuppeteerAot.IElementHandle" />
+    /// <inheritdoc cref="Puppeteer.IElementHandle" />
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public abstract class ElementHandle : JSHandle, IElementHandle
     {
@@ -73,7 +73,7 @@ namespace PuppeteerAot
         public Task<byte[]> ScreenshotDataAsync() => ScreenshotDataAsync(new ElementScreenshotOptions());
 
         /// <inheritdoc/>
-        public async Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions options = null)
+        public async Task<IElementHandle> WaitForSelectorAsync(string selector, WaitForSelectorOptions? options = null)
         {
             if (string.IsNullOrEmpty(selector))
             {
@@ -141,7 +141,7 @@ namespace PuppeteerAot
             });
 
         /// <inheritdoc/>
-        public Task ClickAsync(ClickOptions options = null)
+        public Task ClickAsync(ClickOptions? options = null)
             => BindIsolatedHandleAsync<IElementHandle, ElementHandle>(async handle =>
             {
                 await handle.ScrollIntoViewIfNeededAsync().ConfigureAwait(false);
@@ -200,7 +200,7 @@ namespace PuppeteerAot
             BindIsolatedHandleAsync<JsonElement, ElementHandle>(handle => handle.EvaluateFunctionAsync("element => element.focus()"));
 
         /// <inheritdoc/>
-        public Task TypeAsync(string text, TypeOptions options = null)
+        public Task TypeAsync(string text, TypeOptions? options = null)
             => BindIsolatedHandleAsync<IElementHandle, ElementHandle>(async handle =>
             {
                 await handle.FocusAsync().ConfigureAwait(false);
@@ -209,7 +209,7 @@ namespace PuppeteerAot
             });
 
         /// <inheritdoc/>
-        public Task PressAsync(string key, PressOptions options = null)
+        public Task PressAsync(string key, PressOptions? options = null)
             => BindIsolatedHandleAsync<IElementHandle, ElementHandle>(async handle =>
             {
                 await handle.FocusAsync().ConfigureAwait(false);
@@ -831,12 +831,7 @@ namespace PuppeteerAot
 
             while (parentFrame != null)
             {
-                var handle = await frame.FrameElementAsync().ConfigureAwait(false);
-                if (handle == null)
-                {
-                    throw new PuppeteerException("Unsupported frame type");
-                }
-
+                var handle = await frame.FrameElementAsync().ConfigureAwait(false) ?? throw new PuppeteerException("Unsupported frame type");
                 var parentBox = await handle.EvaluateFunctionAsync<Point?>(@"element => {
                     // Element is not visible.
                     if (element.getClientRects().length === 0) {

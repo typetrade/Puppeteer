@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Data returned by the drag methods.

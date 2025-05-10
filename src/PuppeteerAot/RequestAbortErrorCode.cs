@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Abort error codes. used by <see cref="IRequest.AbortAsync(RequestAbortErrorCode, int?)"/>.

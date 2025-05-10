@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using PuppeteerAot.BrowserData;
-using PuppeteerAot.Helpers;
+using Puppeteer.BrowserData;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Represents a Firefox process and any associated temporary user data directory that have created
@@ -99,7 +99,7 @@ namespace PuppeteerAot
                 firefoxArgs.Add("--remote-debugging-port=0");
             }
 
-            TempDirectory tempUserDataDirectory = null;
+            TempDirectory? tempUserDataDirectory = null;
 
             if (!firefoxArgs.Contains("-profile") && !firefoxArgs.Contains("--profile"))
             {

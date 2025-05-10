@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     /// <summary>
     /// 下载进度条.

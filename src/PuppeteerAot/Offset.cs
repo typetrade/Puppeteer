@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Offset used in conjunction with <see cref="ElementHandle.ClickablePointAsync(Offset?)"/>.

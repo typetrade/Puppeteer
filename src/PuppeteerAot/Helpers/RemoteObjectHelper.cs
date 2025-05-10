@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
 
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public class RemoteObjectHelper
     {

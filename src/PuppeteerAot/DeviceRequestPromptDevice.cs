@@ -1,4 +1,4 @@
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// Device in a request prompt.

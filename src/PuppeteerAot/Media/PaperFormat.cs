@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PuppeteerAot.Media
+namespace Puppeteer.Media
 {
     /// <summary>
     /// Paper format.

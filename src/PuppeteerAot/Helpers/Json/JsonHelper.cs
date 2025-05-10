@@ -1,9 +1,9 @@
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
-namespace PuppeteerAot.Helpers.Json
+namespace Puppeteer.Helpers.Json
 {
     public static class JsonHelper
     {

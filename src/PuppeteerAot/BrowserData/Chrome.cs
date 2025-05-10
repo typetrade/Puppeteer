@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     /// <summary>
     /// Chrome info.

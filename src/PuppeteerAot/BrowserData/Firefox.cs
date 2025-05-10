@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     /// <summary>
     /// Chrome info.

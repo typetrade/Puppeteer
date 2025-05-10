@@ -24,9 +24,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpBrowserContext : BrowserContext
@@ -56,17 +57,17 @@ public class CdpBrowserContext : BrowserContext
             .Where(p => p != null).ToArray();
 
     /// <inheritdoc/>
-    public override Task<IPage> NewPageAsync() => _browser.CreatePageInContextAsync(Id);
+    public override Task<IPage> NewPageAsync() => this._browser.CreatePageInContextAsync(this.Id);
 
     /// <inheritdoc/>
     public override Task CloseAsync()
     {
-        if (Id == null)
+        if (this.Id == null)
         {
             throw new PuppeteerException("Non-incognito profiles cannot be closed!");
         }
 
-        return _browser.DisposeContextAsync(Id);
+        return this._browser.DisposeContextAsync(this.Id);
     }
 
     /// <inheritdoc/>

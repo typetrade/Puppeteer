@@ -1,4 +1,4 @@
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     /// <summary>
     /// Coverage data for a source range.

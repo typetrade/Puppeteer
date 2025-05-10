@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// <see cref="FileChooser"/> objects are returned via the <seealso cref="IPage.WaitForFileChooserAsync(WaitForOptions)"/> method.

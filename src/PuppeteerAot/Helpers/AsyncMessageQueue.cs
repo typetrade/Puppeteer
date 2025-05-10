@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     /// <summary>
     /// Provides an async queue for responses for <see cref="CDPSession.SendAsync"/>, so that responses can be handled
@@ -19,7 +19,7 @@ namespace PuppeteerAot.Helpers
         private readonly ILogger _logger;
         private bool _disposed;
 
-        public AsyncMessageQueue(bool enqueueAsyncMessages, ILogger logger = null)
+        public AsyncMessageQueue(bool enqueueAsyncMessages, ILogger? logger = null)
         {
             _enqueueAsyncMessages = enqueueAsyncMessages;
             _logger = logger ?? NullLogger.Instance;

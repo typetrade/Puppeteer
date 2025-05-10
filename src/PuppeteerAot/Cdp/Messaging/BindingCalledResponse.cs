@@ -1,7 +1,7 @@
 using System.Text.Json;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class BindingCalledResponse
     {

@@ -1,7 +1,11 @@
-using PuppeteerAot.Helpers.Json;
+// <copyright file="WaitForFunctionPollingOption.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Puppeteer.Helpers.Json;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// An interval at which the <c>pageFunction</c> is executed.

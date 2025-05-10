@@ -1,6 +1,10 @@
+// <copyright file="IKeyboard.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     /// <summary>
     /// Keyboard provides an api for managing a virtual keyboard. The high level api is <see cref="TypeAsync(string, TypeOptions)"/>, which takes raw characters and generates proper keydown, keypress/input, and keyup events on your page.
@@ -20,7 +24,7 @@ namespace PuppeteerAot.Input
         /// After the key is pressed once, subsequent calls to <see cref="DownAsync(string, DownOptions)"/> will have <see href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat">repeat</see> set to <c>true</c>. To release the key, use <see cref="UpAsync(string)"/>.
         /// </remarks>
         /// <returns>Task.</returns>
-        Task DownAsync(string key, DownOptions options = null);
+        Task DownAsync(string key, DownOptions? options = null);
 
         /// <summary>
         /// Shortcut for <see cref="DownAsync(string, DownOptions)"/> and <see cref="UpAsync(string)"/>.
@@ -32,7 +36,7 @@ namespace PuppeteerAot.Input
         /// Modifier keys DO effect <see cref="IElementHandle.PressAsync(string, PressOptions)"/>. Holding down <c>Shift</c> will type the text in upper case.
         /// </remarks>
         /// <returns>Task.</returns>
-        Task PressAsync(string key, PressOptions options = null);
+        Task PressAsync(string key, PressOptions? options = null);
 
         /// <summary>
         /// Dispatches a <c>keypress</c> and <c>input</c> event. This does not send a <c>keydown</c> or <c>keyup</c> event.
@@ -50,7 +54,7 @@ namespace PuppeteerAot.Input
         /// To press a special key, like <c>Control</c> or <c>ArrowDown</c>, use <see cref="PressAsync(string, PressOptions)"/>.
         /// </remarks>
         /// <returns>Task.</returns>
-        Task TypeAsync(string text, TypeOptions options = null);
+        Task TypeAsync(string text, TypeOptions? options = null);
 
         /// <summary>
         /// Dispatches a <c>keyup</c> event.

@@ -1,8 +1,12 @@
-using System;
-using System.Threading.Tasks;
+// <copyright file="IConnectionTransport.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace PuppeteerAot.Transport
+namespace Puppeteer.Transport
 {
+    using System;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Connection transport abstraction.
     /// </summary>
@@ -19,7 +23,7 @@ namespace PuppeteerAot.Transport
         event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="PuppeteerAot.Transport.IConnectionTransport"/> is closed.
+        /// Gets a value indicating whether this <see cref="Puppeteer.Transport.IConnectionTransport"/> is closed.
         /// </summary>
         bool IsClosed { get; }
 

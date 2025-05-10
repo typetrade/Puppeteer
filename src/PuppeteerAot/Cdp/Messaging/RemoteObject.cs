@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     /// <summary>
     /// Remote object is a mirror object referencing original JavaScript object.

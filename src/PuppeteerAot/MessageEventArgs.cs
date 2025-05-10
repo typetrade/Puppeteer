@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// <seealso cref="CDPSession.MessageReceived"/> arguments.

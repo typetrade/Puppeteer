@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers.Json;
-using static PuppeteerAot.Cdp.Messaging.AccessibilityGetFullAXTreeResponse;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers.Json;
+using static Puppeteer.Cdp.Messaging.AccessibilityGetFullAXTreeResponse;
 
-namespace PuppeteerAot.QueryHandlers
+namespace Puppeteer.QueryHandlers
 {
     public class AriaQueryHandler : QueryHandler
     {

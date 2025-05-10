@@ -1,9 +1,13 @@
+// <copyright file="ICDPSession.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp;
+using Puppeteer.Cdp;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// The CDPSession instances are used to talk raw Chrome Devtools Protocol:
@@ -64,7 +68,7 @@ namespace PuppeteerAot
         /// Detaches session from target. Once detached, session won't emit any events and can't be used to send messages.
         /// </summary>
         /// <returns>A Task that when awaited detaches from the session target.</returns>
-        /// <exception cref="T:PuppeteerAot.PuppeteerException">If the <see cref="Connection"/> is closed.</exception>
+        /// <exception cref="T:Puppeteer.PuppeteerException">If the <see cref="Connection"/> is closed.</exception>
         Task DetachAsync();
     }
 }

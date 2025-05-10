@@ -1,9 +1,13 @@
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+// <copyright file="Target.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
+    using System;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Target.
     /// </summary>

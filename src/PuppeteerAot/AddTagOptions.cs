@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options used by <see cref="IPage.AddScriptTagAsync(AddTagOptions)"/> &amp; <see cref="IPage.AddStyleTagAsync(AddTagOptions)"/>.

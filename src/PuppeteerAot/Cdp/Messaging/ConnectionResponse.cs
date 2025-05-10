@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class ConnectionResponse
     {

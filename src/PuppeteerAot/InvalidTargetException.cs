@@ -1,7 +1,11 @@
+// <copyright file="InvalidTargetException.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Runtime.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     [Serializable]
     public class InvalidTargetException : PuppeteerException

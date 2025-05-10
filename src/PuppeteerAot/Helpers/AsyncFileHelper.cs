@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     /// <summary>
     /// Provides static methods for asynchronous file access.

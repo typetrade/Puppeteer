@@ -1,4 +1,8 @@
-namespace PuppeteerAot
+// <copyright file="SupportedBrowser.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer
 {
     /// <summary>
     /// Supported Browser.

@@ -1,8 +1,12 @@
+// <copyright file="State.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.States
+namespace Puppeteer.States
 {
     /// <summary>
     /// Represents state machine for Base process instances. The happy path runs along the

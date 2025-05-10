@@ -1,6 +1,6 @@
 using System;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     /// <summary>
     /// Chrome release channels.

@@ -1,34 +1,40 @@
+// <copyright file="AXNode.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.PageAccessibility
+namespace Puppeteer.PageAccessibility
 {
+    /// <summary>
+    /// AXNode.
+    /// </summary>
     public class AXNode
     {
-        private readonly string _name;
-        private readonly bool _richlyEditable;
-        private readonly bool _editable;
-        private readonly bool _hidden;
-        private readonly string _role;
-        private readonly bool _ignored;
-        private bool? _cachedHasFocusableChild;
+        private readonly string name;
+        private readonly bool richlyEditable;
+        private readonly bool editable;
+        private readonly bool hidden;
+        private readonly string role;
+        private readonly bool ignored;
+        private bool? cachedHasFocusableChild;
 
         private AXNode(AccessibilityGetFullAXTreeResponse.AXTreeNode payload)
         {
             Payload = payload;
 
-            _name = payload.Name != null ? payload.Name.Value.GetString() : string.Empty;
-            _role = payload.Role != null ? payload.Role.Value.GetString() : "Unknown";
-            _ignored = payload.Ignored;
+            name = payload.Name != null ? payload.Name.Value.GetString() : string.Empty;
+            role = payload.Role != null ? payload.Role.Value.GetString() : "Unknown";
+            ignored = payload.Ignored;
 
-            _richlyEditable = payload.Properties?.FirstOrDefault(p => p.Name == "editable")?.Value.Value.GetString() == "richtext";
-            _editable |= _richlyEditable;
-            _hidden = payload.Properties?.FirstOrDefault(p => p.Name == "hidden")?.Value.Value.GetBoolean() == true;
+            richlyEditable = payload.Properties?.FirstOrDefault(p => p.Name == "editable")?.Value.Value.GetString() == "richtext";
+            editable |= richlyEditable;
+            hidden = payload.Properties?.FirstOrDefault(p => p.Name == "hidden")?.Value.Value.GetBoolean() == true;
             Focusable = payload.Properties?.FirstOrDefault(p => p.Name == "focusable")?.Value.Value.GetBoolean() == true;
         }
 
@@ -96,7 +102,7 @@ namespace PuppeteerAot.PageAccessibility
             // HTML5 Specs should be hidden from screen readers.
             // (Note that whilst ARIA buttons can have only presentational children, HTML5
             // buttons are allowed to have content.)
-            switch (_role)
+            switch (role)
             {
                 case "doc-cover":
                 case "graphics-symbol":
@@ -116,12 +122,12 @@ namespace PuppeteerAot.PageAccessibility
                 return false;
             }
 
-            if (Focusable && !string.IsNullOrEmpty(_name))
+            if (Focusable && !string.IsNullOrEmpty(name))
             {
                 return true;
             }
 
-            if (_role == "heading" && !string.IsNullOrEmpty(_name))
+            if (role == "heading" && !string.IsNullOrEmpty(name))
             {
                 return true;
             }
@@ -131,7 +137,7 @@ namespace PuppeteerAot.PageAccessibility
 
         public bool IsControl()
         {
-            switch (_role)
+            switch (role)
             {
                 case "button":
                 case "checkbox":
@@ -162,12 +168,12 @@ namespace PuppeteerAot.PageAccessibility
 
         public bool IsInteresting(bool insideControl)
         {
-            if (_role == "Ignored" || _hidden || _ignored)
+            if (role == "Ignored" || hidden || ignored)
             {
                 return false;
             }
 
-            if (Focusable || _richlyEditable)
+            if (Focusable || richlyEditable)
             {
                 return true;
             }
@@ -184,7 +190,7 @@ namespace PuppeteerAot.PageAccessibility
                 return false;
             }
 
-            return IsLeafNode() && !string.IsNullOrEmpty(_name);
+            return IsLeafNode() && !string.IsNullOrEmpty(name);
         }
 
         public SerializedAXNode Serialize()
@@ -216,7 +222,7 @@ namespace PuppeteerAot.PageAccessibility
 
             var node = new SerializedAXNode
             {
-                Role = _role,
+                Role = role,
                 Name = properties.GetValueOrDefault("name").GetString(),
                 Value = properties.GetValueOrDefault("value").GetString(),
                 Description = properties.GetValueOrDefault("description").GetString(),
@@ -228,7 +234,7 @@ namespace PuppeteerAot.PageAccessibility
 
                 // RootWebArea's treat focus differently than other nodes. They report whether their frame  has focus,
                 // not whether focus is specifically on the root node.
-                Focused = properties.GetValueOrDefault("focused").GetBoolean() == true && _role != "RootWebArea",
+                Focused = properties.GetValueOrDefault("focused").GetBoolean() == true && role != "RootWebArea",
                 Modal = properties.GetValueOrDefault("modal").GetBoolean() ,
                 Multiline = properties.GetValueOrDefault("multiline").GetBoolean(),
                 Multiselectable = properties.GetValueOrDefault("multiselectable").GetBoolean(),
@@ -250,17 +256,17 @@ namespace PuppeteerAot.PageAccessibility
         }
 
         private bool IsPlainTextField()
-            => !_richlyEditable && (_editable || _role == "textbox" || _role == "ComboBox" || _role == "searchbox");
+            => !richlyEditable && (editable || role == "textbox" || role == "ComboBox" || role == "searchbox");
 
         private bool IsTextOnlyObject()
-            => _role == "LineBreak" ||
-                _role == "text" ||
-                _role == "InlineTextBox" ||
-                _role == "StaticText";
+            => role == "LineBreak" ||
+                role == "text" ||
+                role == "InlineTextBox" ||
+                role == "StaticText";
 
         private bool HasFocusableChild()
         {
-            return _cachedHasFocusableChild ??= Children.Any(c => c.Focusable || c.HasFocusableChild());
+            return cachedHasFocusableChild ??= Children.Any(c => c.Focusable || c.HasFocusableChild());
         }
 
         private string GetIfNotFalse(string value) => value != null && value != "false" ? value : null;

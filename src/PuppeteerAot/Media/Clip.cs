@@ -1,4 +1,4 @@
-namespace PuppeteerAot.Media
+namespace Puppeteer.Media
 {
     /// <summary>
     /// Clip data.

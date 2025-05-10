@@ -1,29 +1,33 @@
+// <copyright file="Mouse.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
 
 /*
     The implementation of transactions is not the same as in the original Puppeteer
     due to the differences in the threading model.
 */
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     /// <inheritdoc/>
     public abstract class Mouse : IMouse
     {
         /// <inheritdoc/>
-        public abstract Task MoveAsync(decimal x, decimal y, MoveOptions options = null);
+        public abstract Task MoveAsync(decimal x, decimal y, MoveOptions? options = null);
 
         /// <inheritdoc/>
-        public abstract Task ClickAsync(decimal x, decimal y, ClickOptions options = null);
+        public abstract Task ClickAsync(decimal x, decimal y, ClickOptions? options = null);
 
         /// <inheritdoc/>
-        public abstract Task DownAsync(ClickOptions options = null);
+        public abstract Task DownAsync(ClickOptions? options = null);
 
         /// <inheritdoc/>
-        public abstract Task UpAsync(ClickOptions options = null);
+        public abstract Task UpAsync(ClickOptions? options = null);
 
         /// <inheritdoc/>
         public abstract Task WheelAsync(decimal deltaX, decimal deltaY);

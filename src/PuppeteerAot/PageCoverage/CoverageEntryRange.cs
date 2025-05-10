@@ -1,4 +1,4 @@
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     /// <summary>
     /// Script range.

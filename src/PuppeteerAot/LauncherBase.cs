@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.States;
+using Puppeteer.Helpers;
+using Puppeteer.States;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Represents a Base process and any associated temporary user data directory that have created

@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// This is a DisposableStack in puppeteer. We don't need to dispose objects manually.

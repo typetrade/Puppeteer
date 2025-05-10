@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     // This class represents both InternalQueryHandler and CustomQueryHandler upstream.
 

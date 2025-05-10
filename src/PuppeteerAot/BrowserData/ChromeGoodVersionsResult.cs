@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     public class ChromeGoodVersionsResult
     {

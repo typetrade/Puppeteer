@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// <see cref="IPage.FrameAttached"/>, <see cref="IPage.FrameDetached"/> and <see cref="IPage.FrameNavigated"/> arguments.

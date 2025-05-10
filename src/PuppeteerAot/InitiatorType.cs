@@ -1,8 +1,12 @@
-using PuppeteerAot.Helpers.Json;
+// <copyright file="InitiatorType.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using Puppeteer.Helpers.Json;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot;
+namespace Puppeteer;
 
 /// <summary>
 /// Type of the <see cref="Initiator"/>.

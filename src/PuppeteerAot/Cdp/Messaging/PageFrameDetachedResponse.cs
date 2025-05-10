@@ -1,7 +1,7 @@
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Helpers.Json;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter<FrameDetachedReason>))]
     public enum FrameDetachedReason

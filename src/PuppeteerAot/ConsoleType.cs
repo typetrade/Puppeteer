@@ -1,9 +1,9 @@
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers.Json;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Console type used on <see cref="ConsoleMessage"/>.

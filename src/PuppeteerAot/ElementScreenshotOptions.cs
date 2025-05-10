@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options to be used in <see cref="IElementHandle.ScreenshotAsync(string, ElementScreenshotOptions)"/>, <see cref="IElementHandle.ScreenshotStreamAsync(ElementScreenshotOptions)"/> and <see cref="IElementHandle.ScreenshotDataAsync(ElementScreenshotOptions)"/>.

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer;
+using Puppeteer.Cdp;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     public abstract class Browser : IBrowser
@@ -74,7 +75,7 @@ namespace PuppeteerAot
         public abstract ITarget[] Targets();
 
         /// <inheritdoc/>
-        public abstract Task<IBrowserContext> CreateBrowserContextAsync(BrowserContextOptions options = null);
+        public abstract Task<IBrowserContext> CreateBrowserContextAsync(BrowserContextOptions? options = null);
 
         /// <inheritdoc/>
         public abstract IBrowserContext[] BrowserContexts();
@@ -98,14 +99,14 @@ namespace PuppeteerAot
         public abstract Task CloseAsync();
 
         /// <inheritdoc/>
-        public async Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions options = null)
+        public async Task<ITarget> WaitForTargetAsync(Func<ITarget, bool>? predicate, WaitForOptions? options = null)
         {
             if (predicate == null)
             {
                 throw new ArgumentNullException(nameof(predicate));
             }
 
-            var timeout = options?.Timeout ?? DefaultWaitForTimeout;
+            var timeout = options?.Timeout ?? this.DefaultWaitForTimeout;
             var targetCompletionSource = new TaskCompletionSource<ITarget>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             void TargetHandler(object sender, TargetChangedArgs e)
@@ -118,10 +119,10 @@ namespace PuppeteerAot
 
             try
             {
-                TargetCreated += TargetHandler;
-                TargetChanged += TargetHandler;
+                this.TargetCreated += TargetHandler;
+                this.TargetChanged += TargetHandler;
 
-                var existingTarget = Targets().FirstOrDefault(predicate);
+                var existingTarget = this.Targets().FirstOrDefault(predicate);
                 if (existingTarget != null)
                 {
                     return existingTarget;
@@ -131,13 +132,13 @@ namespace PuppeteerAot
             }
             finally
             {
-                TargetCreated -= TargetHandler;
-                TargetChanged -= TargetHandler;
+                this.TargetCreated -= TargetHandler;
+                this.TargetChanged -= TargetHandler;
             }
         }
 
         /// <inheritdoc/>
-        public void RegisterCustomQueryHandler(string name, CustomQueryHandler queryHandler)
+        public void RegisterCustomQueryHandler(string name, CustomQueryHandler? queryHandler)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -149,21 +150,21 @@ namespace PuppeteerAot
                 throw new ArgumentNullException(nameof(queryHandler));
             }
 
-            Connection.CustomQuerySelectorRegistry.RegisterCustomQueryHandler(name, queryHandler);
+            this.Connection.CustomQuerySelectorRegistry.RegisterCustomQueryHandler(name, queryHandler);
         }
 
         /// <inheritdoc/>
         public void UnregisterCustomQueryHandler(string name)
-            => Connection.CustomQuerySelectorRegistry.UnregisterCustomQueryHandler(name);
+            => this.Connection.CustomQuerySelectorRegistry.UnregisterCustomQueryHandler(name);
 
         /// <inheritdoc/>
         public void ClearCustomQueryHandlers()
-            => Connection.CustomQuerySelectorRegistry.ClearCustomQueryHandlers();
+            => this.Connection.CustomQuerySelectorRegistry.ClearCustomQueryHandlers();
 
         /// <inheritdoc />
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -174,56 +175,56 @@ namespace PuppeteerAot
         /// <returns>ValueTask.</returns>
         public async ValueTask DisposeAsync()
         {
-            await CloseAsync().ConfigureAwait(false);
-            await ScreenshotTaskQueue.DisposeAsync().ConfigureAwait(false);
+            await this.CloseAsync().ConfigureAwait(false);
+            await this.ScreenshotTaskQueue.DisposeAsync().ConfigureAwait(false);
             GC.SuppressFinalize(this);
         }
 
         public IEnumerable<string> GetCustomQueryHandlerNames()
-            => Connection.CustomQuerySelectorRegistry.GetCustomQueryHandlerNames();
+            => this.Connection.CustomQuerySelectorRegistry.GetCustomQueryHandlerNames();
 
         /// <summary>
         /// Closes <see cref="Connection"/> and any Chromium <see cref="Process"/> that was
         /// created by Puppeteer.
         /// </summary>
         /// <param name="disposing">Indicates whether disposal was initiated by <see cref="Dispose()"/> operation.</param>
-        protected virtual void Dispose(bool disposing) => _ = CloseAsync()
+        protected virtual void Dispose(bool disposing) => _ = this.CloseAsync()
             .ContinueWith(
-                _ => ScreenshotTaskQueue.DisposeAsync(),
+                _ => this.ScreenshotTaskQueue.DisposeAsync(),
                 TaskScheduler.Default);
 
         /// <summary>
         /// Emits <see cref="Closed"/> event.
         /// </summary>
-        protected void OnClosed() => Closed?.Invoke(this, EventArgs.Empty);
+        protected void OnClosed() => this.Closed?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Emits <see cref="Disconnected"/> event.
         /// </summary>
-        protected void OnDisconnected() => Disconnected?.Invoke(this, EventArgs.Empty);
+        protected void OnDisconnected() => this.Disconnected?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Emits <see cref="TargetChanged"/> event.
         /// </summary>
         /// <param name="e">The event arguments.</param>
-        protected void OnTargetChanged(TargetChangedArgs e) => TargetChanged?.Invoke(this, e);
+        protected void OnTargetChanged(TargetChangedArgs e) => this.TargetChanged?.Invoke(this, e);
 
         /// <summary>
         /// Emits <see cref="TargetCreated"/> event.
         /// </summary>
         /// <param name="e">The event arguments.</param>
-        protected void OnTargetCreated(TargetChangedArgs e) => TargetCreated?.Invoke(this, e);
+        protected void OnTargetCreated(TargetChangedArgs e) => this.TargetCreated?.Invoke(this, e);
 
         /// <summary>
         /// Emits <see cref="TargetDestroyed"/> event.
         /// </summary>
         /// <param name="e">The event arguments.</param>
-        protected void OnTargetDestroyed(TargetChangedArgs e) => TargetDestroyed?.Invoke(this, e);
+        protected void OnTargetDestroyed(TargetChangedArgs e) => this.TargetDestroyed?.Invoke(this, e);
 
         /// <summary>
         /// Emits <see cref="TargetDiscovered"/> event.
         /// </summary>
         /// <param name="e">The event arguments.</param>
-        protected void OnTargetDiscovered(TargetChangedArgs e) => TargetDiscovered?.Invoke(this, e);
+        protected void OnTargetDiscovered(TargetChangedArgs e) => this.TargetDiscovered?.Invoke(this, e);
     }
 }

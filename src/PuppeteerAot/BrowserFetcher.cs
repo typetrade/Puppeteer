@@ -9,17 +9,17 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using PuppeteerAot.BrowserData;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Linux;
-using static PuppeteerAot.BrowserFetcherOptions;
+using Puppeteer.BrowserData;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Linux;
+using static Puppeteer.BrowserFetcherOptions;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <inheritdoc/>
     public class BrowserFetcher : IBrowserFetcher
     {
-        private const string PublishSingleFileLocalApplicationDataFolderName = "PuppeteerAot";
+        private const string PublishSingleFileLocalApplicationDataFolderName = "Puppeteer";
 
         private static readonly Dictionary<SupportedBrowser, Func<Platform, string, string, string>> _downloadsUrl = new()
         {
@@ -39,7 +39,7 @@ namespace PuppeteerAot
             CacheDir = GetBrowsersLocation();
             Platform = GetCurrentPlatform();
             Browser = SupportedBrowser.Chrome;
-            _customFileDownload = _httpClient.DownloadFileAsync;
+            _customFileDownload = this._httpClient.DownloadFileAsync;
         }
 
         /// <inheritdoc cref="BrowserFetcher"/>
@@ -47,18 +47,18 @@ namespace PuppeteerAot
         {
         }
 
-        /// <inheritdoc cref="BrowserFetcher"/>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BrowserFetcher"/> class.
+        /// </summary>
+        /// <param name="options"></param>
         public BrowserFetcher(BrowserFetcherOptions options)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            ArgumentNullException.ThrowIfNull(options);
 
-            Browser = options.Browser;
-            CacheDir = string.IsNullOrEmpty(options.Path) ? GetBrowsersLocation() : options.Path;
-            Platform = options.Platform ?? GetCurrentPlatform();
-            _customFileDownload = options.CustomFileDownload ?? _httpClient.DownloadFileAsync;
+            this.Browser = options.Browser;
+            this.CacheDir = string.IsNullOrEmpty(options.Path) ? GetBrowsersLocation() : options.Path;
+            this.Platform = options.Platform ?? GetCurrentPlatform();
+            this._customFileDownload = options.CustomFileDownload ?? this._httpClient.DownloadFileAsync;
         }
 
         /// <inheritdoc/>
@@ -81,14 +81,14 @@ namespace PuppeteerAot
         {
             get
             {
-                return _httpClient?.WebProxy;
+                return this._httpClient.WebProxy;
             }
 
             set
             {
-                if (_httpClient != null)
+                if (this._httpClient != null)
                 {
-                    _httpClient.WebProxy = value;
+                    this._httpClient.WebProxy = value;
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace PuppeteerAot
             try
             {
                 var url = GetDownloadURL(Browser, Platform, BaseUrl, revision);
-                return await _httpClient.CanDownloadAsync(url).ConfigureAwait(false);
+                return await this._httpClient.CanDownloadAsync(url).ConfigureAwait(false);
             }
             catch (WebException)
             {
@@ -243,11 +243,11 @@ namespace PuppeteerAot
 
         private async Task<InstalledBrowser> DownloadAsync(SupportedBrowser browser, string buildId)
         {
-            var url = _downloadsUrl[browser](Platform, buildId, BaseUrl);
+            var url = _downloadsUrl[browser](this.Platform, buildId, this.BaseUrl);
             var fileName = url.Split('/').Last();
-            var cache = new Cache(CacheDir);
-            var archivePath = Path.Combine(CacheDir, fileName);
-            var downloadFolder = new DirectoryInfo(CacheDir);
+            var cache = new Cache(this.CacheDir);
+            var archivePath = Path.Combine(this.CacheDir, fileName);
+            var downloadFolder = new DirectoryInfo(this.CacheDir);
 
             if (!downloadFolder.Exists)
             {
@@ -256,7 +256,7 @@ namespace PuppeteerAot
 
             if (DownloadProgressChanged != null)
             {
-                _httpClient.DownloadProgressChanged += DownloadProgressChanged;
+                this._httpClient.DownloadProgressChanged += DownloadProgressChanged;
             }
 
             var outputPath = cache.GetInstallationDir(browser, Platform, buildId);
@@ -316,7 +316,6 @@ namespace PuppeteerAot
 
                     var mountPath = volumes.Captures[0];
                     var appFile = new DirectoryInfo(mountPath.Value).GetDirectories("*.app").FirstOrDefault();
-
                     if (appFile == null)
                     {
                         mountAndCopyTcs.TrySetException(new PuppeteerException($"Cannot find app in {mountPath.Value}"));

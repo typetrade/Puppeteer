@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace PuppeteerAot.Mobile
+namespace Puppeteer.Mobile
 {
     /// <summary>
     /// Device descriptors.

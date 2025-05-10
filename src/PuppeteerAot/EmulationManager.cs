@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Media;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Media;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     public class EmulationManager
     {
@@ -70,7 +70,7 @@ namespace PuppeteerAot
                 new EmulationSetCPUThrottlingRateRequest { Rate = factor ?? 1, });
         }
 
-        public async Task EmulateIdleStateAsync(EmulateIdleOverrides overrides = null)
+        public async Task EmulateIdleStateAsync(EmulateIdleOverrides? overrides = null)
         {
             if (overrides != null)
             {

@@ -1,11 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
+// <copyright file="IResponse.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Text.Json;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// <see cref="IResponse"/> class represents responses which are received by page.
     /// </summary>

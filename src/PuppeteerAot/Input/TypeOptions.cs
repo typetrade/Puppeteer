@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Input
+// <copyright file="TypeOptions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Input
 {
     /// <summary>
     /// Options to use when typing.

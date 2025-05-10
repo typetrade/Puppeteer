@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     public class Cache
     {
@@ -16,15 +16,19 @@ namespace PuppeteerAot.BrowserData
         public string GetBrowserRoot(SupportedBrowser browser) => Path.Combine(_rootDir, browser.ToString());
 
         public string GetInstallationDir(SupportedBrowser browser, Platform platform, string buildId)
-            => Path.Combine(GetBrowserRoot(browser), $"{platform}-{buildId}");
+            => Path.Combine(this.GetBrowserRoot(browser), $"{platform}-{buildId}");
 
-        public IEnumerable<InstalledBrowser> GetInstalledBrowsers()
+        /// <summary>
+        /// Get installed browsers.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<InstalledBrowser?> GetInstalledBrowsers()
         {
-            var rootInfo = new DirectoryInfo(_rootDir);
+            var rootInfo = new DirectoryInfo(this._rootDir);
 
             if (!rootInfo.Exists)
             {
-                return Array.Empty<InstalledBrowser>();
+                return Array.Empty<InstalledBrowser?>();
             }
 
             var browserNames = Enum.GetNames(typeof(SupportedBrowser)).Select(browser => browser.ToUpperInvariant());
@@ -33,12 +37,12 @@ namespace PuppeteerAot.BrowserData
             return browsers.SelectMany(browser =>
             {
                 var browserEnum = (SupportedBrowser)Enum.Parse(typeof(SupportedBrowser), browser.Name, ignoreCase: true);
-                var dirInfo = new DirectoryInfo(GetBrowserRoot(browserEnum));
+                var dirInfo = new DirectoryInfo(this.GetBrowserRoot(browserEnum));
                 var dirs = dirInfo.GetDirectories();
 
                 return dirs.Select(dir =>
                 {
-                    var result = ParseFolderPath(dir);
+                    var result = this.ParseFolderPath(dir);
 
                     if (result == null)
                     {

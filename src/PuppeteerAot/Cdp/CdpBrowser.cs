@@ -26,9 +26,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpBrowser : Browser
@@ -50,8 +51,8 @@ public class CdpBrowser : Browser
         bool ignoreHTTPSErrors,
         ViewPortOptions defaultViewport,
         LauncherBase launcher,
-        Func<Target, bool> targetFilter = null,
-        Func<Target, bool> isPageTargetFunc = null)
+        Func<Target, bool>? targetFilter = null,
+        Func<Target, bool>? isPageTargetFunc = null)
     {
         BrowserType = browser;
         IgnoreHTTPSErrors = ignoreHTTPSErrors;
@@ -129,7 +130,7 @@ public class CdpBrowser : Browser
     public override Task CloseAsync() => _closeTask ??= CloseCoreAsync();
 
     /// <inheritdoc/>
-    public override async Task<IBrowserContext> CreateBrowserContextAsync(BrowserContextOptions options = null)
+    public override async Task<IBrowserContext> CreateBrowserContextAsync(BrowserContextOptions? options = null)
     {
         var response = await Connection.SendAsync<CreateBrowserContextResponse>(
             "Target.createBrowserContext",
@@ -161,9 +162,9 @@ public class CdpBrowser : Browser
         bool ignoreHTTPSErrors,
         ViewPortOptions defaultViewPort,
         LauncherBase launcher,
-        Func<Target, bool> targetFilter = null,
-        Func<Target, bool> isPageTargetCallback = null,
-        Action<IBrowser> initAction = null)
+        Func<Target, bool>? targetFilter = null,
+        Func<Target, bool>? isPageTargetCallback = null,
+        Action<IBrowser>? initAction = null)
     {
         var browser = new CdpBrowser(
             browserToCreate,

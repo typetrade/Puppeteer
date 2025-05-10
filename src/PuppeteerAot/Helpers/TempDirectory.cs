@@ -1,10 +1,14 @@
+// <copyright file="TempDirectory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using PathHelper = System.IO.Path;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     /// <summary>
     /// Represents a directory that is deleted on disposal.

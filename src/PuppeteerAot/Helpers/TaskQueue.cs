@@ -1,8 +1,12 @@
+// <copyright file="TaskQueue.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public sealed class TaskQueue : IDisposable, IAsyncDisposable
     {

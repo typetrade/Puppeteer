@@ -1,6 +1,6 @@
-using PuppeteerAot.PageCoverage;
+using Puppeteer.PageCoverage;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class ProfilerTakePreciseCoverageResponse
     {

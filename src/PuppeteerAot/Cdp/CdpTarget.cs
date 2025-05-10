@@ -22,9 +22,11 @@
 
 using System;
 using System.Threading.Tasks;
-using PuppeteerAot.Helpers;
+using Puppeteer;
+using Puppeteer.Cdp;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc />
 public class CdpTarget : Target

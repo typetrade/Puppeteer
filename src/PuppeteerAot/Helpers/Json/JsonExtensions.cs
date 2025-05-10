@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 
-namespace PuppeteerAot.Helpers.Json
+namespace Puppeteer.Helpers.Json
 {
     /// <summary>
     /// A set of extension methods for JsonElement.

@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Input
+// <copyright file="ClickOptions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Input
 {
     /// <summary>
     /// Options to use when clicking.

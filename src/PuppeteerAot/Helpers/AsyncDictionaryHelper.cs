@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public class AsyncDictionaryHelper<TKey, TValue>
     {

@@ -1,7 +1,7 @@
 using System;
-using PuppeteerAot.Media;
+using Puppeteer.Media;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Bounding box data returned by <see cref="IElementHandle.BoundingBoxAsync"/>.
@@ -49,34 +49,34 @@ namespace PuppeteerAot
         public decimal Width { get; set; }
 
         /// <summary>
-        /// The height of the element in pixels.
+        /// Gets or sets the height of the element in pixels.
         /// </summary>
         /// <value>The height.</value>
         public decimal Height { get; set; }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            if (obj == null || this.GetType() != obj.GetType())
             {
                 return false;
             }
 
-            return Equals((BoundingBox)obj);
+            return this.Equals((BoundingBox)obj);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="PuppeteerAot.BoundingBox"/> is equal to the current <see cref="T:PuppeteerAot.BoundingBox"/>.
+        /// Determines whether the specified <see cref="Puppeteer.BoundingBox"/> is equal to the current <see cref="T:Puppeteer.BoundingBox"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="PuppeteerAot.BoundingBox"/> to compare with the current <see cref="T:PuppeteerAot.BoundingBox"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="PuppeteerAot.BoundingBox"/> is equal to the current
-        /// <see cref="T:PuppeteerAot.BoundingBox"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(BoundingBox obj)
+        /// <param name="obj">The <see cref="Puppeteer.BoundingBox"/> to compare with the current <see cref="T:Puppeteer.BoundingBox"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="Puppeteer.BoundingBox"/> is equal to the current
+        /// <see cref="T:Puppeteer.BoundingBox"/>; otherwise, <c>false</c>.</returns>
+        public bool Equals(BoundingBox? obj)
             => obj != null &&
-                obj.X == X &&
-                obj.Y == Y &&
-                obj.Height == Height &&
-                obj.Width == Width;
+                obj.X == this.X &&
+                obj.Y == this.Y &&
+                obj.Height == this.Height &&
+                obj.Width == this.Width;
 
         /// <inheritdoc/>
         public override int GetHashCode()

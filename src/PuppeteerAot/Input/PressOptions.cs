@@ -1,4 +1,8 @@
-namespace PuppeteerAot.Input
+// <copyright file="PressOptions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Puppeteer.Input
 {
     /// <summary>
     /// options to use when pressing a key.

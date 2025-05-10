@@ -22,10 +22,10 @@
 
 using System;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Input;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Input;
 
-namespace PuppeteerAot.Cdp;
+namespace Puppeteer.Cdp;
 
 /// <inheritdoc/>
 public class CdpTouchscreen : Touchscreen

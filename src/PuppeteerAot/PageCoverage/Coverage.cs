@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     /// <inheritdoc/>
     public class Coverage : ICoverage
@@ -17,14 +17,14 @@ namespace PuppeteerAot.PageCoverage
         }
 
         /// <inheritdoc/>
-        public Task StartJSCoverageAsync(CoverageStartOptions options = null)
+        public Task StartJSCoverageAsync(CoverageStartOptions? options = null)
             => _jsCoverage.StartAsync(options ?? new CoverageStartOptions());
 
         /// <inheritdoc/>
         public Task<JSCoverageEntry[]> StopJSCoverageAsync() => _jsCoverage.StopAsync();
 
         /// <inheritdoc/>
-        public Task StartCSSCoverageAsync(CoverageStartOptions options = null)
+        public Task StartCSSCoverageAsync(CoverageStartOptions? options = null)
             => _cssCoverage.StartAsync(options ?? new CoverageStartOptions());
 
         /// <inheritdoc/>

@@ -1,4 +1,4 @@
-namespace PuppeteerAot.PageCoverage
+namespace Puppeteer.PageCoverage
 {
     /// <summary>
     /// Coverage report for all non-anonymous scripts.

@@ -1,9 +1,13 @@
+// <copyright file="IBrowser.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Provides methods to interact with a browser.
@@ -148,7 +152,7 @@ namespace PuppeteerAot
         /// ]]>
         /// </code>
         /// </example>
-        Task<IBrowserContext> CreateBrowserContextAsync(BrowserContextOptions options = null);
+        Task<IBrowserContext> CreateBrowserContextAsync(BrowserContextOptions? options = null);
 
         /// <summary>
         /// Disconnects Puppeteer from the browser, but leaves the process running. After calling <see cref="Disconnect"/>, the browser object is considered disposed and cannot be used anymore.
@@ -181,7 +185,7 @@ namespace PuppeteerAot
 
         /// <summary>
         /// Returns a Task which resolves to an array of all open pages.
-        /// Non visible pages, such as <c>"background_page"</c>, will not be listed here. You can find them using <see cref="PuppeteerAot.Target.PageAsync"/>.
+        /// Non visible pages, such as <c>"background_page"</c>, will not be listed here. You can find them using <see cref="Puppeteer.Target.PageAsync"/>.
         /// </summary>
         /// <returns>Task which resolves to an array of all open pages inside the Browser.
         /// In case of multiple browser contexts, the method will return an array with all the pages in all browser contexts.
@@ -208,7 +212,7 @@ namespace PuppeteerAot
         /// <param name="predicate">A function to be run for every target.</param>
         /// <param name="options">options.</param>
         /// <returns>Resolves to the first target found that matches the predicate function.</returns>
-        Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions options = null);
+        Task<ITarget> WaitForTargetAsync(Func<ITarget, bool> predicate, WaitForOptions? options = null);
 
         /// <summary>
         /// Registers a custom query handler.
@@ -222,7 +226,7 @@ namespace PuppeteerAot
         /// </example>
         /// <param name="name">The name that the custom query handler will be registered under.</param>
         /// <param name="queryHandler">The query handler to register.</param>
-        void RegisterCustomQueryHandler(string name, CustomQueryHandler queryHandler);
+        void RegisterCustomQueryHandler(string name, CustomQueryHandler? queryHandler);
 
         /// <summary>
         /// Unregister a custom query handler.

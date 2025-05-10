@@ -1,6 +1,10 @@
+// <copyright file="KeyDefinitions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     public static class KeyDefinitions
     {

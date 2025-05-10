@@ -1,4 +1,4 @@
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options for <see cref="IPage.EmulateIdleStateAsync(EmulateIdleOverrides)"/>.

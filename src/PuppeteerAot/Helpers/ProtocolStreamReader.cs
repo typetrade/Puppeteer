@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.Cdp.Messaging;
 
-namespace PuppeteerAot.Helpers
+namespace Puppeteer.Helpers
 {
     public static class ProtocolStreamReader
     {
@@ -52,7 +52,7 @@ namespace PuppeteerAot.Helpers
 
         public static async Task<byte[]> ReadProtocolStreamByteAsync(CDPSession client, string handle, string path)
         {
-            IEnumerable<byte> result = null;
+            IEnumerable<byte>? result = null;
             var eof = false;
             var fs = !string.IsNullOrEmpty(path) ? AsyncFileHelper.CreateStream(path, FileMode.Create) : null;
 

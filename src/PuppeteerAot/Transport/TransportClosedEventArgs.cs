@@ -1,6 +1,10 @@
+// <copyright file="TransportClosedEventArgs.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 
-namespace PuppeteerAot.Transport
+namespace Puppeteer.Transport
 {
     /// <summary>
     /// <see cref="IConnectionTransport.Closed"/>.
@@ -8,7 +12,7 @@ namespace PuppeteerAot.Transport
     public class TransportClosedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PuppeteerAot.Transport.TransportClosedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="Puppeteer.Transport.TransportClosedEventArgs"/> class.
         /// </summary>
         /// <param name="closeReason">Close reason.</param>
         public TransportClosedEventArgs(string closeReason) => CloseReason = closeReason;

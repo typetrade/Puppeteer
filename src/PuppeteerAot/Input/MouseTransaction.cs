@@ -1,6 +1,10 @@
+// <copyright file="MouseTransaction.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 
-namespace PuppeteerAot.Input
+namespace Puppeteer.Input
 {
     public class MouseTransaction
     {

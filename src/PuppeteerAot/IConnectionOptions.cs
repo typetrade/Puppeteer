@@ -1,9 +1,13 @@
+// <copyright file="IConnectionOptions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Net.WebSockets;
-using PuppeteerAot.Cdp;
-using PuppeteerAot.Transport;
+using Puppeteer.Cdp;
+using Puppeteer.Transport;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Options for <see cref="Connection"/> creation.

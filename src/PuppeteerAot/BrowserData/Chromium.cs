@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     public class Chromium
     {

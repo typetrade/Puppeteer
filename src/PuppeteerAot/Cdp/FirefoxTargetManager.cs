@@ -4,11 +4,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
-using PuppeteerAot.Helpers.Json;
+using Puppeteer;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
+using Puppeteer.Helpers.Json;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     public class FirefoxTargetManager : ITargetManager
     {
@@ -147,7 +148,7 @@ namespace PuppeteerAot.Cdp
             parentSession?.OnSessionReady(session);
         }
 
-        private void FinishInitializationIfReady(string targetId = null)
+        private void FinishInitializationIfReady(string? targetId = null)
         {
             if (targetId != null)
             {

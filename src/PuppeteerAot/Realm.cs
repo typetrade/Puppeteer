@@ -1,9 +1,9 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using PuppeteerAot.Input;
+using Puppeteer.Input;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     public abstract class Realm
     {

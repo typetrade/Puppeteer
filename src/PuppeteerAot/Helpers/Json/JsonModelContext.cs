@@ -1,9 +1,9 @@
-using PuppeteerAot.BrowserData;
-using PuppeteerAot.Cdp.Messaging;
+using Puppeteer.BrowserData;
+using Puppeteer.Cdp.Messaging;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace PuppeteerAot.Helpers.Json
+namespace Puppeteer.Helpers.Json
 {
     /// <summary>
     /// JsonModelContext.

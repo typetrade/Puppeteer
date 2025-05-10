@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace PuppeteerAot.Helpers.Linux
+namespace Puppeteer.Helpers.Linux
 {
     public static class LinuxSysCall
     {

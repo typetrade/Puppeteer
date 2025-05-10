@@ -4,10 +4,10 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using PuppeteerAot.Cdp.Messaging;
-using PuppeteerAot.Helpers;
+using Puppeteer.Cdp.Messaging;
+using Puppeteer.Helpers;
 
-namespace PuppeteerAot.Cdp
+namespace Puppeteer.Cdp
 {
     public sealed class LifecycleWatcher : IDisposable
     {

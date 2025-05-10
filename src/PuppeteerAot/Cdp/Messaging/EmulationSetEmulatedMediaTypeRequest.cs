@@ -1,6 +1,6 @@
-using PuppeteerAot.Media;
+using Puppeteer.Media;
 
-namespace PuppeteerAot.Cdp.Messaging
+namespace Puppeteer.Cdp.Messaging
 {
     public class EmulationSetEmulatedMediaTypeRequest
     {

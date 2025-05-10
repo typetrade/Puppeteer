@@ -1,6 +1,10 @@
+// <copyright file="MessageReceivedEventArgs.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 
-namespace PuppeteerAot.Transport
+namespace Puppeteer.Transport
 {
     /// <summary>
     /// Message received event arguments.
@@ -9,7 +13,7 @@ namespace PuppeteerAot.Transport
     public class MessageReceivedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PuppeteerAot.Transport.MessageReceivedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="Puppeteer.Transport.MessageReceivedEventArgs"/> class.
         /// </summary>
         /// <param name="message">Message.</param>
         public MessageReceivedEventArgs(string message) => Message = message;

@@ -1,6 +1,10 @@
+// <copyright file="TracingOptions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System.Collections.Generic;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     /// <summary>
     /// Tracing options used on <see cref="ITracing.StartAsync(TracingOptions)"/>.

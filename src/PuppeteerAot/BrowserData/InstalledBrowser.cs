@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace PuppeteerAot.BrowserData
+namespace Puppeteer.BrowserData
 {
     /// <summary>
     /// Installed browser info.

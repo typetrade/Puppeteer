@@ -1,9 +1,13 @@
+// <copyright file="WaitTask.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PuppeteerAot
+namespace Puppeteer
 {
     public sealed class WaitTask : IDisposable
     {
@@ -18,7 +22,7 @@ namespace PuppeteerAot
         private readonly TaskCompletionSource<IJSHandle> _result = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
         private bool _isDisposed;
-        private IJSHandle _poller;
+        private IJSHandle? poller;
         private bool _terminated;
 
         public WaitTask(
@@ -29,7 +33,7 @@ namespace PuppeteerAot
             int? pollingInterval,
             int timeout,
             IElementHandle root,
-            object[] args = null)
+            object[]? args = null)
         {
             if (string.IsNullOrEmpty(fn))
             {
@@ -86,7 +90,7 @@ namespace PuppeteerAot
             {
                 if (_pollingInterval.HasValue)
                 {
-                    _poller = await _realm.EvaluateFunctionHandleAsync(
+                    this.poller = await this._realm.EvaluateFunctionHandleAsync(
                             @"
                             ({IntervalPoller, createFunction}, ms, fn, ...args) => {
                                 const fun = createFunction(fn);
@@ -103,7 +107,7 @@ namespace PuppeteerAot
                 }
                 else if (_polling == WaitForFunctionPollingOption.Raf)
                 {
-                    _poller = await _realm.EvaluateFunctionHandleAsync(
+                    this.poller = await this._realm.EvaluateFunctionHandleAsync(
                             @"
                             ({RAFPoller, createFunction}, fn, ...args) => {
                                 const fun = createFunction(fn);
@@ -119,7 +123,7 @@ namespace PuppeteerAot
                 }
                 else
                 {
-                    _poller = await _realm.EvaluateFunctionHandleAsync(
+                    this.poller = await this._realm.EvaluateFunctionHandleAsync(
                             @"
                             ({MutationPoller, createFunction}, root, fn, ...args) => {
                                 const fun = createFunction(fn);
@@ -136,9 +140,9 @@ namespace PuppeteerAot
                 }
 
                 // Note that FrameWaitForFunctionTests listen for this particular message to orchestrate the test execution
-                await _poller.EvaluateFunctionAsync("poller => poller.start()").ConfigureAwait(false);
+                await this.poller.EvaluateFunctionAsync("poller => poller.start()").ConfigureAwait(false);
 
-                var success = await _poller.EvaluateFunctionHandleAsync("poller => poller.result()").ConfigureAwait(false);
+                var success = await this.poller.EvaluateFunctionHandleAsync("poller => poller.result()").ConfigureAwait(false);
                 _result.TrySetResult(success);
                 await TerminateAsync().ConfigureAwait(false);
             }
@@ -152,7 +156,12 @@ namespace PuppeteerAot
             }
         }
 
-        public async Task TerminateAsync(Exception exception = null)
+        /// <summary>
+        /// Terminates the wait task.
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public async Task TerminateAsync(Exception? exception = null)
         {
             // The timeout timer might call this method on cleanup
             if (_terminated)
@@ -169,7 +178,7 @@ namespace PuppeteerAot
                 _result.TrySetException(exception);
             }
 
-            if (_poller is { } poller)
+            if (this.poller is { } poller)
             {
                 await using (poller.ConfigureAwait(false))
                 {
@@ -179,7 +188,7 @@ namespace PuppeteerAot
                             await poller.stop();
                         }").ConfigureAwait(false);
 
-                        _poller = null;
+                        this.poller = null;
                     }
                     catch (Exception)
                     {
