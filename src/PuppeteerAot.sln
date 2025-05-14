@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34511.98
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PuppeteerAot", "PuppeteerAot\PuppeteerAot.csproj", "{D42867FB-F842-49E2-9828-6F88FCA5ED12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppeteer", "PuppeteerAot\Puppeteer.csproj", "{D42867FB-F842-49E2-9828-6F88FCA5ED12}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleAot", "SampleAot\SampleAot.csproj", "{46B4FC9B-BAB6-4CAA-A4B9-ED5C319AF10B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "SampleAot\Sample.csproj", "{46B4FC9B-BAB6-4CAA-A4B9-ED5C319AF10B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

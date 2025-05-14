@@ -1,5 +1,5 @@
 ﻿using System;
-using PuppeteerAot;
+using Puppeteer;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -9,7 +9,7 @@ namespace SampleAot
     {
         public static async Task Run(IBrowser browser, string url,
             string cookieString, string jsCode, int timeDelay,
-            string keyword = "今天天气怎么样？", Action<string> action = null)
+            string keyword = "今天天气怎么样？", Action<string>? action = null)
         {
 
             await using var page = await browser.NewPageAsync();
@@ -43,9 +43,8 @@ namespace SampleAot
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.ToString());
             }
-
 
             await page.SetUserAgentAsync("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0");
             await page.GoToAsync(url);
@@ -62,10 +61,9 @@ namespace SampleAot
             // 监听 SSE 消息
             page.Response += async (sender, e) =>
             {
-
                 if (e.Response.Request.ResourceType == ResourceType.EventSource)
                 {
-
+                    await Task.Delay(1);
                 }
             };
 
@@ -104,7 +102,7 @@ namespace SampleAot
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex.ToString());
                 }
             } while (!isOk);
 
